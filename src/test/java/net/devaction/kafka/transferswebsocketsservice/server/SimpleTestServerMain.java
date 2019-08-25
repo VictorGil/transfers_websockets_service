@@ -3,6 +3,8 @@ package net.devaction.kafka.transferswebsocketsservice.server;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import javax.websocket.server.ServerEndpointConfig;
+
 import org.glassfish.tyrus.server.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +21,9 @@ public class SimpleTestServerMain{
         new SimpleTestServerMain().runServer();    
     }
     
-    public void runServer() {        
-        Server server = new Server("localhost", 38201, "/endpoint01", null, 
-                SimpleTestEndPoint.class);
+    public void runServer() {
+        Server server = new Server("localhost", 38201, "/endpoint", null, 
+                ServerTestEndPoint.class);
 
         try {
             log.info("Going to start the WebSockets server");
