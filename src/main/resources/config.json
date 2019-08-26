@@ -1,0 +1,5 @@
+{
+    "server_host": "localhost",
+    "server_port": 38201,
+    "context_path": "/endpoint"
+}

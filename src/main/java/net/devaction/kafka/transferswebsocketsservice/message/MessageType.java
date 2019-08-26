@@ -10,5 +10,3 @@ public enum MessageType{
     BALANCE_REQUEST,
     TRANSFER_INFO_REQUEST
 }
-
-
