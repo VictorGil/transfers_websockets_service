@@ -32,5 +32,3 @@ public class TransferIdKeyValueMapper implements KeyValueMapper<String, Transfer
         return transfer.getId();
     }
 }
-
-
