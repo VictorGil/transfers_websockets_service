@@ -8,7 +8,7 @@ package net.devaction.kafka.transferswebsocketsservice.message;
  */
 public enum MessageType{
     BALANCE_REQUEST,
-    TRANSFER_REQUEST
+    TRANSFER_INFO_REQUEST
 }
 
 
