@@ -1,4 +1,4 @@
-package net.devaction.kafka.transferswebsocketsservice.message;
+package net.devaction.kafka.transferswebsocketsservice.message.incoming;
 
 /**
  * @author Víctor Gil
