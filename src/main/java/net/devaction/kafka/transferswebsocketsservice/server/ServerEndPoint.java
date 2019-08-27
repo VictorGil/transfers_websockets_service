@@ -35,7 +35,7 @@ public class ServerEndPoint{
     
     @OnMessage
     public void onMessage(MessageWrapper messageWrapper, Session session) {
-        log.debug("Message received: {}", messageWrapper);
+        log.debug("Session {}. Message received: {}", session.getId(), messageWrapper);
         
         MessageWrapperProcessorSingletonProvider.
                 getProcessor().process(messageWrapper, session);

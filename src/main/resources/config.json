@@ -1,5 +1,7 @@
 {
     "server_host": "localhost",
     "server_port": 38201,
-    "context_path": "/endpoint"
+    "context_path": "/endpoint",
+    "kafka_bootstrap_servers": "localhost:9092",
+    "kafka_schema_registry_URL": "http://localhost:8081"
 }

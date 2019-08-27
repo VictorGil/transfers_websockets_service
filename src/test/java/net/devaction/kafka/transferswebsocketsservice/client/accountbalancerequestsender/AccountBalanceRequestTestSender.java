@@ -9,28 +9,38 @@ import java.util.Arrays;
 import javax.websocket.ClientEndpointConfig;
 import javax.websocket.Decoder;
 import javax.websocket.Encoder;
+import javax.websocket.Session;
 
 import org.glassfish.tyrus.client.ClientManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import net.devaction.kafka.transferswebsocketsservice.message.MessageType;
+import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapperDecoder;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapperEncoder;
+import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceRequest;
 
 /**
  * @author Víctor Gil
  *
  * since August 2019
  */
-public class AccountBalanceRequestSender{
+public class AccountBalanceRequestTestSender{
     private static final Logger log = LoggerFactory.getLogger(
-            AccountBalanceRequestSender.class);
+            AccountBalanceRequestTestSender.class);
+    
+    private ObjectMapper mapper = new ObjectMapper();
     
     public static void main(String[] args) {
-        new AccountBalanceRequestSender().run();
+        new AccountBalanceRequestTestSender().run();
     }
     
-    private void run() {       
+    private void run() {
+        Session session = null;
         try {
             final ClientEndpointConfig cec = ClientEndpointConfig.Builder.create()
                     .encoders(Arrays.<Class<? extends Encoder>>asList(MessageWrapperEncoder.class))
@@ -38,9 +48,13 @@ public class AccountBalanceRequestSender{
                     .build();
 
             final ClientManager client = ClientManager.createClient();
-            client.connectToServer(new ClientEndPoint(), cec, 
+            session = client.connectToServer(new ClientEndPoint(), cec, 
                     new URI("ws://localhost:38201/endpoint/001"));   
             
+            MessageWrapper messageWrapper = createMessageWrapper();
+            log.debug("Going to send a message: {}", messageWrapper);
+                        
+            session.getBasicRemote().sendObject(messageWrapper);           
         } catch (Exception ex) {
             log.error("{}", ex, ex);
         }
@@ -59,5 +73,25 @@ public class AccountBalanceRequestSender{
             log.error("{}", ex, ex);
         }
         log.info("Exiting");
-    }   
+    }
+    
+    private MessageWrapper createMessageWrapper() throws IOException{
+            AccountBalanceRequest request = createAccountBalance();
+        String json;
+           
+        try{
+            json = mapper.writeValueAsString(request);
+        } catch (JsonProcessingException ex){
+            log.error("{}", ex, ex);
+            throw ex;
+        }
+     
+        return new MessageWrapper(MessageType.BALANCE_REQUEST.name(), json);        
+    }
+   
+    private AccountBalanceRequest createAccountBalance() {
+
+        AccountBalanceRequest request = new AccountBalanceRequest("28a090daa001");
+        return request;
+    }     
 }

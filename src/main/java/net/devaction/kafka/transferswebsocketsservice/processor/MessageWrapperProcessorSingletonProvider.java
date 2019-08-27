@@ -11,12 +11,13 @@ package net.devaction.kafka.transferswebsocketsservice.processor;
 public class MessageWrapperProcessorSingletonProvider{
     private MessageWrapperProcessorSingletonProvider() {}
     
-    private static final MessageWrapperProcessor PROCESSOR = 
-            new MessageWrapperProcessorImpl(
-                    new AccountBalanceRequestProcessorImpl(), 
-                    new TransferInfoRequestProcessorImpl());
+    private static MessageWrapperProcessor processor;             
 
     public static MessageWrapperProcessor getProcessor(){
-        return PROCESSOR;
+        return processor;
     }
+
+    public static void setProcessor(MessageWrapperProcessor processor){
+        MessageWrapperProcessorSingletonProvider.processor = processor;
+    }    
 }
