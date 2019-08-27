@@ -30,14 +30,14 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferI
  *
  * since August 2019
  */
-public class AccountBalanceRequestTestSender{
+public class RequestTestSender{
     private static final Logger log = LoggerFactory.getLogger(
-            AccountBalanceRequestTestSender.class);
+            RequestTestSender.class);
     
     private ObjectMapper mapper = new ObjectMapper();
     
     public static void main(String[] args) {
-        new AccountBalanceRequestTestSender().run();
+        new RequestTestSender().run();
     }
     
     private void run() {
