@@ -11,10 +11,12 @@ import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 import org.apache.kafka.streams.KafkaStreams.State;
+import org.apache.kafka.streams.kstream.Consumed;
+import org.apache.kafka.streams.kstream.Grouped;
+import org.apache.kafka.streams.kstream.KGroupedStream;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
 import org.apache.kafka.streams.kstream.Materialized;
-import org.apache.kafka.streams.kstream.Produced;
 import org.apache.kafka.streams.state.KeyValueBytesStoreSupplier;
 import org.apache.kafka.streams.state.QueryableStoreTypes;
 import org.apache.kafka.streams.state.ReadOnlyKeyValueStore;
@@ -34,7 +36,6 @@ import net.devaction.kafka.avro.util.TransferConverter;
 import net.devaction.kafka.streams.ExceptionHandler;
 import net.devaction.kafka.transferswebsocketsservice.transferretriever.DummyReducer;
 import net.devaction.kafka.transferswebsocketsservice.transferretriever.TransferIdKeyValueMapper;
-import net.devaction.kafka.transferswebsocketsservice.transferretriever.TransferIdKeyValueMapper2;
 
 /**
  * @author Víctor Gil
@@ -131,29 +132,19 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
                         schemaRegistryUrl),
                 isKeySerde);
         
-        //KStream<String, Transfer> accountIdKeyStream = builder.stream(TRANSFERS_TOPIC);
-        //KStream<String, Transfer> transferIdKeyStream = accountIdKeyStream.selectKey(new TransferIdKeyValueMapper());
+        KStream<String, Transfer> accountIdKeyTransfersStream = builder.stream(TRANSFERS_TOPIC, 
+                Consumed.with(stringSerde, transferSerde));
         
-        //KStream<String, Transfer> transferIdKeyStream = accountIdKeyStream.map(new TransferIdKeyValueMapper2());
+        // We are "re-keying" the data from the "transfers" topic
+        KGroupedStream<String, Transfer> groupStream = accountIdKeyTransfersStream.groupBy(
+                new TransferIdKeyValueMapper(), Grouped.with(stringSerde, transferSerde));
         
-        //transferIdKeyStream.to("transfers-rekeyed", Produced.with(stringSerde, transferSerde));
-        
-        /*
-        return transferIdKeyStream.groupByKey().reduce(
+        return groupStream.reduce(
                 new DummyReducer(), 
                 Materialized.<String,Transfer>as(transferStoreSupplier)
                         .withKeySerde(stringSerde)
                         .withValueSerde(transferSerde)
-                        .withCachingDisabled());
-        */
-        
-        return builder.table(
-                //"transfers-rekeyed",
-                TRANSFERS_TOPIC,
-                Materialized.<String,Transfer>as(transferStoreSupplier)
-                        .withKeySerde(stringSerde)
-                        .withValueSerde(transferSerde)
-                        .withCachingDisabled());   
+                        .withCachingDisabled());        
     }
 
     @Override

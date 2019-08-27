@@ -113,7 +113,7 @@ public class RequestTestSender{
     } 
     
     private TransferInfoRequest createTransferInfoRequest() {
-        //return new TransferInfoRequest("b8ed64d9e1b7"); // transfer id
-        return new TransferInfoRequest("28a090daa001"); // account id 
+        return new TransferInfoRequest("5eb0f2dfd9c3"); // transfer id
+        //return new TransferInfoRequest("28a090daa001"); // account id 
     }
 }

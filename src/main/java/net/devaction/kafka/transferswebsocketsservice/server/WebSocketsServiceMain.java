@@ -107,7 +107,9 @@ public class WebSocketsServiceMain implements SignalHandler{
     }
     
     private void stop() {
-        server.stop();
+        if (server != null)
+            server.stop();
+        
         storesManager.stop();
     }
 }
