@@ -9,6 +9,8 @@ import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigValues;
+import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManager;
+import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManagerImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperProcessor;
@@ -22,10 +24,6 @@ import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSende
 import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSenderImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSenderImpl;
-import net.devaction.kafka.transferswebsocketsservice.transferretriever.TransferRetriever;
-import net.devaction.kafka.transferswebsocketsservice.transferretriever.TransferRetrieverImpl;
-import net.devaction.kafka.transferswebsocketsservice.accountbalanceretriever.AccountBalanceRetriever;
-import net.devaction.kafka.transferswebsocketsservice.accountbalanceretriever.AccountBalanceRetrieverImpl;
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigReader;
 
 /**
@@ -38,8 +36,7 @@ public class WebSocketsServiceMain implements SignalHandler{
 
     private static final String WINCH_SIGNAL = "WINCH";
     
-    private AccountBalanceRetriever abRetriever;
-    private TransferRetriever transferRetriever;
+    private LocalStoresManager storesManager;
     
     private WebSocketsServer server;
     
@@ -59,24 +56,20 @@ public class WebSocketsServiceMain implements SignalHandler{
             return;
         }
         
-        abRetriever = new AccountBalanceRetrieverImpl();
-        abRetriever.start(configValues.getKafkaBootstrapServers(), 
+        storesManager = new LocalStoresManagerImpl();
+        storesManager.start(configValues.getKafkaBootstrapServers(), 
                 configValues.getKafkaSchemaRegistryUrl());
         
         MessageSender messageSender = new MessageSenderImpl();        
         AccountBalanceSender abSender = new AccountBalanceSenderImpl(messageSender);
         
         AccountBalanceRequestProcessor abReqProcessor = 
-                new AccountBalanceRequestProcessorImpl(abRetriever, abSender);
-        
-        transferRetriever = new TransferRetrieverImpl();
-        transferRetriever.start(configValues.getKafkaBootstrapServers(), 
-                configValues.getKafkaSchemaRegistryUrl());
+                new AccountBalanceRequestProcessorImpl(storesManager, abSender);
         
         TransferSender transferSender = new TransferSenderImpl(messageSender); 
                 
         TransferInfoRequestProcessor tiReqProcessor = 
-                new TransferInfoRequestProcessorImpl(transferRetriever, transferSender);
+                new TransferInfoRequestProcessorImpl(storesManager, transferSender);
         
         MessageWrapperProcessor messageProcessor = new MessageWrapperProcessorImpl(
                 abReqProcessor, tiReqProcessor);
@@ -115,7 +108,6 @@ public class WebSocketsServiceMain implements SignalHandler{
     
     private void stop() {
         server.stop();
-        abRetriever.stop();
-        transferRetriever.stop(); 
+        storesManager.stop();
     }
 }
