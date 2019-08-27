@@ -1,4 +1,4 @@
-# Transfers Recording Service
+# Transfers Websockets Service
   
 This is an example/PoC of how to extend the event-driven paradigm all the way to the end user's
 Web browser using WebSockets.  
