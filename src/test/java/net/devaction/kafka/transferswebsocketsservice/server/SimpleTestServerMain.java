@@ -21,7 +21,7 @@ public class SimpleTestServerMain{
     
     public void runServer() {
         Server server = new Server("localhost", 38201, "/endpoint", null, 
-                ServerEndPoint.class);
+                ServerTestEndPoint.class);
 
         try {
             log.info("Going to start the WebSockets server");

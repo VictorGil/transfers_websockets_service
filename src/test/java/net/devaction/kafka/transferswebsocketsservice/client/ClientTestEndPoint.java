@@ -34,7 +34,7 @@ public class ClientTestEndPoint extends Endpoint{
         
         log.debug("Going to send a message.");
         try{
-            session.getBasicRemote().sendText("hello");
+            session.getBasicRemote().sendText("hello from " + this.getClass().getSimpleName());
         } catch (IOException ex){
             log.error("Session: {}. Unable to send message: {}", 
                     session.getId(), ex, ex);

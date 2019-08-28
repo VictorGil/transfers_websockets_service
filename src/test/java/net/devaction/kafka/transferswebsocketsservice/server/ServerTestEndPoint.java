@@ -1,5 +1,7 @@
 package net.devaction.kafka.transferswebsocketsservice.server;
 
+import java.util.Set;
+
 import javax.websocket.CloseReason;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
@@ -29,6 +31,19 @@ public class ServerTestEndPoint{
     @OnMessage
     public void onMessage(String message, Session session) {
         log.debug("Message received: {}", message);
+        
+        log.debug("Going to send a message to all the open sessions");
+        Set<Session> sessions = session.getOpenSessions();
+        int i = 0;
+        for (Session sessionAux: sessions) {            
+            if (sessionAux.isOpen()) {
+                i++;                
+                sessionAux.getAsyncRemote().sendText(
+                        String.format("Message #%d to server session %s", 
+                                i, session.getId()));
+                log.trace("Message asynchronously being sent to {} session", sessionAux.getId());
+            }            
+        }
     }
     
     @OnError
