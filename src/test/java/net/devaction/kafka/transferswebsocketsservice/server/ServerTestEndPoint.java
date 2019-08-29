@@ -38,12 +38,18 @@ public class ServerTestEndPoint{
         for (Session sessionAux: sessions) {            
             if (sessionAux.isOpen()) {
                 i++;                
-                sessionAux.getAsyncRemote().sendText(
-                        String.format("Message #%d to server session %s", 
-                                i, session.getId()));
+                
+                sendTextMessage(sessionAux, i);
+                
                 log.trace("Message asynchronously being sent to {} session", sessionAux.getId());
             }            
         }
+    }
+    
+    private void sendTextMessage(Session session, int i) {
+        session.getAsyncRemote().sendText(
+                String.format("Message #%d to server session %s", 
+                        i, session.getId()));        
     }
     
     @OnError

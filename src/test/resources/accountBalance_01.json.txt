@@ -1,0 +1,7 @@
+{  
+  "accountId":  "8e47db6abb06",
+  "clientId":   "9c394758ba6b",
+  "transferId": "af139a2e1327",
+  "balance":    54221.76,
+  "version":    96
+}

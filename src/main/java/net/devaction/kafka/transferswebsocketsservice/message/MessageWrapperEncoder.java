@@ -18,11 +18,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class MessageWrapperEncoder implements Encoder.Text<MessageWrapper>{
     private static final Logger log = LoggerFactory.getLogger(MessageWrapperEncoder.class);
 
-    private ObjectMapper mapper;
+    private final ObjectMapper mapper = new ObjectMapper();
     
     @Override
     public void init(EndpointConfig config){
-        mapper = new ObjectMapper();        
+        // Nothing to do      
     }
     
     @Override
