@@ -23,8 +23,7 @@ public class JsonDeserializer{
     private final ObjectMapper objectMapper = new ObjectMapper();
     
     public <T> T deserializeFromFile(String filename, Class<T> clazz) throws Exception{
-        byte[] jsonBytes = null;
-        
+        byte[] jsonBytes = null;        
         try {
             jsonBytes = readFromClasspath(filename);
         } catch (Exception ex) {
@@ -33,8 +32,7 @@ public class JsonDeserializer{
             throw ex;
         }
         
-        T objT = null;
-        
+        T objT = null;        
         try {
             objT = objectMapper.readValue(jsonBytes, clazz);
         } catch(IOException ex) {
@@ -55,8 +53,7 @@ public class JsonDeserializer{
             throw new IOException(errorMessage);
         }
         
-        final URI uri = url.toURI();
-        
+        final URI uri = url.toURI();        
         Path path = Paths.get(uri);
         
         return Files.readAllBytes(path);
