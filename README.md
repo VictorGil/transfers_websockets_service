@@ -5,8 +5,9 @@ Web browser using WebSockets.
   
 Related repositories:   
  - [transfers_api](https://github.com/VictorGil/transfers_api/)
- - [transfers_recording_service](https://github.com/VictorGil/transfers_recording_service/)  
-  
+ - [transfers_recording_service](https://github.com/VictorGil/transfers_recording_service/)
+ - [transfers_frontend](https://github.com/VictorGil/transfers_frontend/)  
+
 ## Requirements
   
  - Maven 3  
