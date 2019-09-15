@@ -52,8 +52,8 @@ public class RequestTestSender{
             session = client.connectToServer(new ClientEndPoint(), cec, 
                     new URI("ws://localhost:38201/endpoint/001"));   
             
-            //MessageWrapper messageWrapper = createBalanceRequestMessageWrapper();
-            MessageWrapper messageWrapper = createTransferRequestMessageWrapper();
+            MessageWrapper messageWrapper = createBalanceRequestMessageWrapper();
+            //MessageWrapper messageWrapper = createTransferRequestMessageWrapper();
             
             log.debug("Going to send a message: {}", messageWrapper);
                         
@@ -83,7 +83,11 @@ public class RequestTestSender{
         
         String json;           
         try{
+            
             json = mapper.writeValueAsString(request);
+            log.debug("{} JSON string:\n{}", 
+                    AccountBalanceRequest.class.getSimpleName(), json);
+            
         } catch (JsonProcessingException ex){
             log.error("{}", ex, ex);
             throw ex;
@@ -99,6 +103,9 @@ public class RequestTestSender{
         
         try{
             json = mapper.writeValueAsString(request);
+            log.debug("{} JSON string:\n{}", 
+                    TransferInfoRequest.class.getSimpleName(), json);
+            
         } catch (JsonProcessingException ex){
             log.error("{}", ex, ex);
             throw ex;
@@ -108,12 +115,14 @@ public class RequestTestSender{
     
     private AccountBalanceRequest createAccountBalanceRequest() {
 
-        AccountBalanceRequest request = new AccountBalanceRequest("28a090daa001");
+        // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa001");
+        // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa002");
+        AccountBalanceRequest request = new AccountBalanceRequest("28a090daa003");
         return request;
     } 
     
     private TransferInfoRequest createTransferInfoRequest() {
         return new TransferInfoRequest("5eb0f2dfd9c3"); // transfer id
-        //return new TransferInfoRequest("28a090daa001"); // account id 
+        //return new TransferInfoRequest("28a090daa001"); // account id --> won't work, as expected
     }
 }

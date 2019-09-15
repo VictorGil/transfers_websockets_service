@@ -153,7 +153,7 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
         
         if (accountBalance == null) {
             log.error("The account with id {} has not been set up", accountId);
-            return null;
+            return AccountBalanceEntity.createNAobject(accountId);
         }
         
         return AccountBalanceConverter.convertToPojo(accountBalance);

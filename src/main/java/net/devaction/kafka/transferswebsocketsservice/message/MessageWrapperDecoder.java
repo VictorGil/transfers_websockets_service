@@ -33,7 +33,7 @@ public class MessageWrapperDecoder implements Decoder.Text<MessageWrapper>{
 
     @Override
     public MessageWrapper decode(String jsonString) throws DecodeException{        
-        log.debug("JSON to be decoded: {}", jsonString);
+        log.trace("JSON to be decoded: {}", jsonString);
         MessageWrapper messageWrapper = null;
         try{
             messageWrapper = mapper.readValue(jsonString, MessageWrapper.class);
