@@ -41,11 +41,9 @@ public class TransferSenderImpl implements TransferSender{
             return;
         }
 
-        MessageWrapper message = new MessageWrapper(MessageType.TRANSFER_DATA.name(),
+        MessageWrapper message = new MessageWrapper(MessageType.TRANSFER_DATA_RESPONSE.name(),
                 json);
         
         messageSender.send(message, session);
     }
 }
-
-

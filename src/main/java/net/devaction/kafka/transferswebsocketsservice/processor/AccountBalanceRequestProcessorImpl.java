@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import net.devaction.entity.AccountBalanceEntity;
 import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManager;
+import net.devaction.kafka.transferswebsocketsservice.message.MessageType;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceRequest;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSender;
 
@@ -34,6 +35,6 @@ public class AccountBalanceRequestProcessorImpl implements
                 session.getId(), request);
         
         AccountBalanceEntity balance = storesManager.getBalance(request.getAccountId());
-        sender.send(balance, session);
+        sender.send(balance, session, MessageType.BALANCE_DATA_RESPONSE);
     }
 }

@@ -40,14 +40,15 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
     @Override
     public void process(MessageWrapper messageWrapper, Session session){
         AccountBalanceRequest accountBalanceRequest;
+        
         if (messageWrapper.getType()
-                .equalsIgnoreCase(MessageType.BALANCE_REQUEST.name())) {
+                .equalsIgnoreCase(MessageType.BALANCE_DATA_REQUEST.name())) {
             try{
                 accountBalanceRequest = mapper.readValue(messageWrapper.getPayload(), 
                         AccountBalanceRequest.class);
             } catch (IOException ex){
                 log.error("Unable to deserialize {} message payload: {}",
-                        MessageType.BALANCE_REQUEST.name(), 
+                        MessageType.BALANCE_DATA_REQUEST.name(), 
                         messageWrapper, ex);
                 return;
             }
@@ -55,15 +56,21 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
             accountBalanceRequestProcessor.process(accountBalanceRequest, session);
         }
         
+        if (messageWrapper.getType()
+                .equalsIgnoreCase(MessageType.BALANCE_DATA_SUBSCRIPTION.name())) {
+         
+            // TODO 
+        }
+        
         TransferInfoRequest transferInfoRequest;
         if (messageWrapper.getType()
-                .equalsIgnoreCase(MessageType.TRANSFER_INFO_REQUEST.name())) {
+                .equalsIgnoreCase(MessageType.TRANSFER_DATA_REQUEST.name())) {
             try{
                 transferInfoRequest = mapper.readValue(messageWrapper.getPayload(), 
                         TransferInfoRequest.class);
             } catch (IOException ex){
                 log.error("Unable to deserialize {} message payload: {}",
-                        MessageType.TRANSFER_INFO_REQUEST.name(), 
+                        MessageType.TRANSFER_DATA_REQUEST.name(), 
                         messageWrapper);
                 return;
             }

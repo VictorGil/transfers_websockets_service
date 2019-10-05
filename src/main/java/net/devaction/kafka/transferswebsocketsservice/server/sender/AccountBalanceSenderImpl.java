@@ -29,7 +29,15 @@ public class AccountBalanceSenderImpl implements AccountBalanceSender{
     }
 
     @Override
-    public void send(AccountBalanceEntity accountBalance, Session session){
+    public void send(AccountBalanceEntity accountBalance, Session session, 
+            MessageType messageType){
+        
+        if (messageType != MessageType.BALANCE_DATA_RESPONSE ||
+                messageType != MessageType.BALANCE_DATA_UPDATE) {
+            
+            log.error("Incorrect message type: {}", messageType);
+        }
+        
         String json;
         try{
             json = mapper.writeValueAsString(accountBalance);
@@ -40,7 +48,7 @@ public class AccountBalanceSenderImpl implements AccountBalanceSender{
             return;
         }
         
-        MessageWrapper message = new MessageWrapper(MessageType.BALANCE_DATA.name(),
+        MessageWrapper message = new MessageWrapper(messageType.name(),
                 json);
         
         messageSender.send(message, session);

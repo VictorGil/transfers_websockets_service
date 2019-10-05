@@ -3,8 +3,8 @@ package net.devaction.kafka.transferswebsocketsservice.server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-//We are aware that this class is not part of the Java API
-//but we need it
+// We are aware that this class is not part of the Java API
+// but we need it
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
@@ -39,6 +39,9 @@ public class WebSocketsServiceMain implements SignalHandler{
     private LocalStoresManager storesManager;
     
     private WebSocketsServer server;
+    
+    // TODO
+    // private AccountBalanceConsumer balanceConsumer;
     
     public static void main(String[] args){
         new WebSocketsServiceMain().run();

@@ -93,7 +93,7 @@ public class RequestTestSender{
             throw ex;
         }
      
-        return new MessageWrapper(MessageType.BALANCE_REQUEST.name(), json);        
+        return new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), json);        
     }
    
     private MessageWrapper createTransferRequestMessageWrapper() throws JsonProcessingException {
@@ -110,14 +110,14 @@ public class RequestTestSender{
             log.error("{}", ex, ex);
             throw ex;
         }
-        return  new MessageWrapper(MessageType.TRANSFER_INFO_REQUEST.name(), json);
+        return  new MessageWrapper(MessageType.TRANSFER_DATA_REQUEST.name(), json);
     }
     
     private AccountBalanceRequest createAccountBalanceRequest() {
 
         // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa001");
-        // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa002");
-        AccountBalanceRequest request = new AccountBalanceRequest("28a090daa003");
+        AccountBalanceRequest request = new AccountBalanceRequest("28a090daa002");
+        // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa003");
         return request;
     } 
     

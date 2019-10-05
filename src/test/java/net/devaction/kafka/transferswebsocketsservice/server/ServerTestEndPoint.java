@@ -119,7 +119,7 @@ public class ServerTestEndPoint{
             throw ex;
         }
         
-        final MessageWrapper message = new MessageWrapper(MessageType.BALANCE_DATA.name(),
+        final MessageWrapper message = new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(),
                 balanceJson);
         
         String messageJson;

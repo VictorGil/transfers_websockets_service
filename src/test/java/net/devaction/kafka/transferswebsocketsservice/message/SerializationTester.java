@@ -25,7 +25,7 @@ public class SerializationTester{
     }
     
     private void run1() {
-        MessageWrapper messageWrapper = new MessageWrapper(MessageType.BALANCE_REQUEST.name(), "whatever");
+        MessageWrapper messageWrapper = new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), "whatever");
         log.info("Going to serialize: {}", messageWrapper);
         String json = null;
         try{
@@ -37,7 +37,7 @@ public class SerializationTester{
     }
     
     private void run2() {
-        MessageWrapper messageWrapper = new MessageWrapper(MessageType.BALANCE_REQUEST.name(), "whatever");
+        MessageWrapper messageWrapper = new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), "whatever");
         log.info("Going to serialize: {}", messageWrapper);
         String json = null;
         try{
