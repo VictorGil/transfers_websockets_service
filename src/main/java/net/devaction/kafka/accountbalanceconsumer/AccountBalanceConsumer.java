@@ -31,7 +31,7 @@ public class AccountBalanceConsumer{
     
     private Consumer<String, AccountBalance> consumer;
     
-    private final AccountBalanceProcessor processor;
+    private final AccountBalanceUpdateProcessor processor;
     
     private final String bootstrapServers;
     private final String schemaRegistryUrl;
@@ -39,10 +39,11 @@ public class AccountBalanceConsumer{
     private volatile boolean stop;
     private boolean seekFromBeginning;
     
-    private static final String TOPIC = "accountBalances";
+    private static final String TOPIC = "account-balances";
     
     public AccountBalanceConsumer(String bootstrapServers, String schemaRegistryUrl,
-            AccountBalanceProcessor processor) {
+            AccountBalanceUpdateProcessor processor) {
+        
         this.bootstrapServers = bootstrapServers;
         this.schemaRegistryUrl = schemaRegistryUrl;
         this.processor = processor;         
@@ -99,6 +100,7 @@ public class AccountBalanceConsumer{
         if (seekFromBeginning)
             seekFromBeginning();
     }
+    
     private void seekFromBeginning() {
         while (consumer.assignment().isEmpty()){
             log.trace("Going to perform a dummy poll");

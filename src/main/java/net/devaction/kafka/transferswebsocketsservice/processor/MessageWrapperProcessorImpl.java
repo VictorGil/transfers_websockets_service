@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageType;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceRequest;
+import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceSubscriptionRequest;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferInfoRequest;
 
 /**
@@ -24,25 +25,29 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
 
     private final AccountBalanceRequestProcessor accountBalanceRequestProcessor;
     private final TransferInfoRequestProcessor transferInfoRequestProcessor;
+    private final AccountBalanceSubscriptionRequestProcessor accountBalanceSubscriptionRequestProcessor;
     
     private final ObjectMapper mapper;
     
     public MessageWrapperProcessorImpl(
             AccountBalanceRequestProcessor accountBalanceRequestProcessor,
+            AccountBalanceSubscriptionRequestProcessor accountBalanceSubscriptionRequestProcessor,
             TransferInfoRequestProcessor transferInfoRequestProcessor) {
         
         this.accountBalanceRequestProcessor = accountBalanceRequestProcessor;
         this.transferInfoRequestProcessor = transferInfoRequestProcessor;
+        this.accountBalanceSubscriptionRequestProcessor = accountBalanceSubscriptionRequestProcessor;
         
         mapper = new ObjectMapper();
     }
     
     @Override
     public void process(MessageWrapper messageWrapper, Session session){
-        AccountBalanceRequest accountBalanceRequest;
-        
+       
         if (messageWrapper.getType()
                 .equalsIgnoreCase(MessageType.BALANCE_DATA_REQUEST.name())) {
+            AccountBalanceRequest accountBalanceRequest;
+            
             try{
                 accountBalanceRequest = mapper.readValue(messageWrapper.getPayload(), 
                         AccountBalanceRequest.class);
@@ -58,8 +63,19 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
         
         if (messageWrapper.getType()
                 .equalsIgnoreCase(MessageType.BALANCE_DATA_SUBSCRIPTION.name())) {
-         
-            // TODO 
+            AccountBalanceSubscriptionRequest accountBalanceSubscriptionRequest;
+            
+            try{
+                accountBalanceSubscriptionRequest = mapper.readValue(messageWrapper.getPayload(), 
+                        AccountBalanceSubscriptionRequest.class);
+            } catch (IOException ex){
+                log.error("Unable to deserialize {} message payload: {}",
+                        MessageType.BALANCE_DATA_SUBSCRIPTION.name(), 
+                        messageWrapper, ex);
+                return;
+            }
+            
+            accountBalanceSubscriptionRequestProcessor.process(accountBalanceSubscriptionRequest, session);
         }
         
         TransferInfoRequest transferInfoRequest;

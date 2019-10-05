@@ -7,7 +7,7 @@ import net.devaction.kafka.avro.AccountBalance;
  *
  * since September 2019
  */
-public interface AccountBalanceProcessor{
+public interface AccountBalanceUpdateProcessor{
 
     public void process(AccountBalance accountBalance);
 }

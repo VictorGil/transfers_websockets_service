@@ -13,17 +13,23 @@ import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresMan
 import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManagerImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessorImpl;
+import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceSubscriptionRequestProcessor;
+import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceSubscriptionRequestProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperProcessorSingletonProvider;
 import net.devaction.kafka.transferswebsocketsservice.processor.TransferInfoRequestProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.TransferInfoRequestProcessorImpl;
+import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatesproducer.UpdatesDispatcher;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSenderImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSenderImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSenderImpl;
+import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer;
+import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessor;
+import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigReader;
 
 /**
@@ -40,8 +46,7 @@ public class WebSocketsServiceMain implements SignalHandler{
     
     private WebSocketsServer server;
     
-    // TODO
-    // private AccountBalanceConsumer balanceConsumer;
+    private AccountBalanceConsumer balanceConsumer;
     
     public static void main(String[] args){
         new WebSocketsServiceMain().run();
@@ -60,6 +65,8 @@ public class WebSocketsServiceMain implements SignalHandler{
         }
         
         storesManager = new LocalStoresManagerImpl();
+        
+        log.info("Going to start the Kafka local stores.");
         storesManager.start(configValues.getKafkaBootstrapServers(), 
                 configValues.getKafkaSchemaRegistryUrl());
         
@@ -74,12 +81,17 @@ public class WebSocketsServiceMain implements SignalHandler{
         TransferInfoRequestProcessor tiReqProcessor = 
                 new TransferInfoRequestProcessorImpl(storesManager, transferSender);
         
+        UpdatesDispatcher updatesDispatcher = new UpdatesDispatcher(abSender);
+        AccountBalanceSubscriptionRequestProcessor abSubsReqProcessor =
+                new AccountBalanceSubscriptionRequestProcessorImpl(updatesDispatcher);
+        
         MessageWrapperProcessor messageProcessor = new MessageWrapperProcessorImpl(
-                abReqProcessor, tiReqProcessor);
+                abReqProcessor, abSubsReqProcessor, tiReqProcessor);
         
         MessageWrapperProcessorSingletonProvider.setProcessor(messageProcessor);
         
         server = new WebSocketsServerImpl();
+        log.info("Going to start the WebSockets server.");
         try{
             server.start(configValues.getServerHost(), 
                     configValues.getServerPort(), 
@@ -89,6 +101,12 @@ public class WebSocketsServiceMain implements SignalHandler{
                     + "configuration values: {}", configValues, ex);            
             stop();        
         }
+        
+        AccountBalanceUpdateProcessor abUpdateProcessor = new AccountBalanceUpdateProcessorImpl(updatesDispatcher);
+        log.info("Going to start the account balance Kafka consumer.");
+        balanceConsumer = new AccountBalanceConsumer(configValues.getKafkaBootstrapServers(),
+                configValues.getKafkaSchemaRegistryUrl(), abUpdateProcessor);
+        balanceConsumer.start();
     }
     
     @Override
@@ -110,9 +128,16 @@ public class WebSocketsServiceMain implements SignalHandler{
     }
     
     private void stop() {
-        if (server != null)
-            server.stop();
+        if (balanceConsumer != null) {
+            balanceConsumer.stop();
+        }
         
-        storesManager.stop();
+        if (server != null) {
+            server.stop();
+        }
+        
+        if (storesManager != null) {
+            storesManager.stop();
+        }        
     }
 }

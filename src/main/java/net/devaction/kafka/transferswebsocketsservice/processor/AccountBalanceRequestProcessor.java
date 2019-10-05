@@ -12,5 +12,4 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBa
 public interface AccountBalanceRequestProcessor{
 
     void process(AccountBalanceRequest request, Session session);
-
 }
