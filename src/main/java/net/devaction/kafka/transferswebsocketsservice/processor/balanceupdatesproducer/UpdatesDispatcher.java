@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.websocket.Session;
 
@@ -34,13 +36,18 @@ public class UpdatesDispatcher{
     public void dispatch(AccountBalanceEntity balance) {
         HashSet<Session> sessions = sessionsMap.get(balance.getAccountId());
         
-        for (Session session : sessions) {
-            sender.send(balance, session, MessageType.BALANCE_DATA_UPDATE);
-        }        
+        if (sessions != null) {
+            for (Session session : sessions) {
+                sender.send(balance, session, MessageType.BALANCE_DATA_UPDATE);
+            }
+        }
     }
+
+    public synchronized void addSession(String accountId, Session session) {        
+        log.trace("Going to register new accountId-session pair, accountId: {}, session id: {}"
+                + ", current entries:\n{}",
+                accountId, session.getId(), sessionsMapToString());
         
-    public synchronized void addSession(String accountId, Session session) {
-    
         if (sessionsMap.get(accountId) == null) {
             addNewEntry(accountId, session);
             return;
@@ -66,5 +73,21 @@ public class UpdatesDispatcher{
                 return;
             }
         }
-    }    
+    }
+    
+    String sessionsMapToString() {
+        final StringBuilder sb = new StringBuilder();        
+        Set<Entry<String, HashSet<Session>>> entries = sessionsMap.entrySet();
+        sb.append("Number of entries: " + entries.size() + "\n");
+        for (Entry<String, HashSet<Session>> entry : entries) {
+            sb.append("\nAccount id: " + entry.getKey() + "\n");
+            HashSet<Session> sessions = entry.getValue();
+            for (Session session : sessions) {
+                sb.append("    " + session.getId() + "\n");
+            }
+        }
+        sb.append("\n");
+        
+        return sb.toString();
+    }
 }
