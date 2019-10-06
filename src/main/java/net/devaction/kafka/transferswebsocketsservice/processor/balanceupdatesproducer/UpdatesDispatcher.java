@@ -43,10 +43,17 @@ public class UpdatesDispatcher{
         }
     }
 
-    public synchronized void addSession(String accountId, Session session) {        
-        log.trace("Going to register new accountId-session pair, accountId: {}, session id: {}"
-                + ", current entries:\n{}",
-                accountId, session.getId(), sessionsMapToString());
+    public synchronized void addSession(String accountId, Session session) {
+        
+        if (log.isTraceEnabled()) {
+            log.trace("Going to register new accountId-session pair, accountId: {}, session id: {}"
+                    + ", current entries:\n{}",
+                    accountId, session.getId(), sessionsMapToString());
+        }
+        
+        removeExistingMapping(session);
+        
+        // TODO we should check here that the accountId exists in Kafka (i.e., it is valid).
         
         if (sessionsMap.get(accountId) == null) {
             addNewEntry(accountId, session);
@@ -56,23 +63,23 @@ public class UpdatesDispatcher{
         sessionsMap.get(accountId).add(session);
     }
     
+    void removeExistingMapping(Session session) {
+        Set<Entry<String, HashSet<Session>>> entries = sessionsMap.entrySet();
+        for (Entry<String, HashSet<Session>> entry : entries) {
+            if (entry.getValue().remove(session)) {                
+                log.trace("Previous mapping of session {} removed", session.getId());
+                if (entry.getValue().isEmpty()) {
+                    sessionsMap.remove(entry.getKey());
+                }
+                return;
+            }
+        }
+    }
+    
     void addNewEntry(String accountId, Session session) {
         HashSet<Session> newSet= new HashSet<>();
         newSet.add(session);
         sessionsMap.put(accountId, newSet);
-    }
-    
-    public synchronized void removeSession(Session session) {
-        Collection<HashSet<Session>> sets = sessionsMap.values();
-        
-        for (HashSet<Session> set : sets) {
-            
-            // A websockets session is subscribed to one account id
-            // at most
-            if (set.remove(session)){
-                return;
-            }
-        }
     }
     
     String sessionsMapToString() {
