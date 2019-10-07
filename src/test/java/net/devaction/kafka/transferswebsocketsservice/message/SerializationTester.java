@@ -31,7 +31,7 @@ public class SerializationTester {
         try {
             json = mapper.writeValueAsString(messageWrapper);
         } catch (JsonProcessingException ex) {
-            log.error(" {}", ex, ex);
+            log.error("{}", ex, ex);
         }
         log.info("JSON result: {}", json);
     }
@@ -43,7 +43,7 @@ public class SerializationTester {
         try {
             json = mapper.writeValueAsString(messageWrapper);
         } catch (JsonProcessingException ex) {
-            log.error(" {}", ex, ex);
+            log.error("{}", ex, ex);
         }
         log.info("JSON result: {}", json);
     }

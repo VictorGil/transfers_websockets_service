@@ -34,7 +34,7 @@ public class JsonDeserializerTester {
         try {
             json = mapper.writeValueAsString(balance);
         } catch (JsonProcessingException ex) {
-            log.error(" {}", ex, ex);
+            log.error("{}", ex, ex);
             return;
         }
         log.debug("AccountBalanceEntity object:\n {}\n JSON representation:\n {}",

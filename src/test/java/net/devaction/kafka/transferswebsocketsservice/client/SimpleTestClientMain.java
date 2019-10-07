@@ -35,7 +35,7 @@ public class SimpleTestClientMain {
             log.debug("Going to sleep.");
             messageLatch.await(100, TimeUnit.SECONDS);
         } catch (Exception ex) {
-            log.error(" {}", ex, ex);
+            log.error("{}", ex, ex);
         }
     }
 }

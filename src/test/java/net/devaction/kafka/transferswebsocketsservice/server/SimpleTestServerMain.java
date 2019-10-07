@@ -30,7 +30,7 @@ public class SimpleTestServerMain {
             System.out.print("Please press a key to stop the server.");
             reader.readLine();
         } catch (Exception ex) {
-            log.error(" {}", ex, ex);
+            log.error("{}", ex, ex);
         } finally {
             log.info("Going to stop the WebSockets server");
             server.stop();

@@ -27,7 +27,7 @@ public class JsonDeserializer {
         try {
             jsonBytes = readFromClasspath(filename);
         } catch (Exception ex) {
-            log.error("Error when trying to read \" {}\" file from "
+            log.error("Error when trying to read \"{}\" file from "
                     + "the classpath.", filename, ex);
             throw ex;
         }
@@ -36,7 +36,7 @@ public class JsonDeserializer {
         try {
             objT = objectMapper.readValue(jsonBytes, clazz);
         } catch(IOException ex) {
-            log.error("Error when trying to parse \" {}\" file content from "
+            log.error("Error when trying to parse \"{}\" file content from "
                     + "the classpath.", filename, ex);
             throw ex;
         }

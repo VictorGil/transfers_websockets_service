@@ -72,12 +72,12 @@ public class AccountBalanceConsumer {
 
         stop = false;
 
-        log.info("\" {}\" topic consumer started", TOPIC);
+        log.info("\"{}\" topic consumer started", TOPIC);
         while (!stop) {
             poll();
         }
 
-        log.info("Going to close the \" {}\" topic Kafka consumer.", TOPIC);
+        log.info("Going to close the \"{}\" topic Kafka consumer.", TOPIC);
         consumer.close();
     }
 
@@ -88,7 +88,7 @@ public class AccountBalanceConsumer {
                 consumer.poll(Duration.ofMillis(100));
 
         if (!records.isEmpty())
-            log.debug("Number of \" {}\" records polled: {}",
+            log.debug("Number of \"{}\" records polled: {}",
                     AccountBalance.class.getSimpleName(), records.count());
 
         for (ConsumerRecord<String, AccountBalance> record: records) {

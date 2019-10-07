@@ -61,19 +61,19 @@ public class ServerTestEndPoint {
     private void sendTextMessage1(final Session session, final int i) {
         String text1 = String.format("Message #%d to server session %s", i, session.getId());
 
-        final String text2 = " {"
+        final String text2 = "{"
                 + "\"type\":\"BALANCE_DATA\","
                 + "\"payload\":"
-                    + "\" {\\\"accountId\\\":\\\"29822b097953\\\","
+                    + "\"{\\\"accountId\\\":\\\"29822b097953\\\","
                     + "\\\"clientId\":\\\"a3086f3f404d\\\","
                     + "\\\"transferId\\\":\\\"INITIAL\\\","
                     + "\\\"balance\\\":0,"
                     + "\\\"version\\\":0}\"}";
 
-        final String text3 = " {"
+        final String text3 = "{"
                // + "\"type\":\"BALANCE_DATA\","
                 + "\"payload\":"
-                    + "\" {\\\"accountId\\\":\\\"29822b097953\\\","
+                    + "\"{\\\"accountId\\\":\\\"29822b097953\\\","
                     + "\\\"clientId\\\":\\\"a3086f3f404d\\\","
                     + "\\\"transferId\\\":\\\"INITIAL\\\","
                     + "\\\"balance\\\":0,"
@@ -85,10 +85,10 @@ public class ServerTestEndPoint {
     // This method is used to test and debug the Angular frontend code
     private void sendTextMessage2(final Session session) {
 
-        final String text1 = " {"
+        final String text1 = "{"
                 + "\"type\":\"TRANSFER_DATA\","
                 + "\"payload\":"
-                    + "\" {\\\"id\\\":\\\"29822b097001\\\","
+                    + "\"{\\\"id\\\":\\\"29822b097001\\\","
                     + "\\\"accountId\\\":\\\"a3086f3f4002\\\","
                     + "\\\"amount\\\":659.34,"
                     + "\\\"transferTS\\\":1566056434953"
