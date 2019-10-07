@@ -16,9 +16,10 @@ public class AsyncSendHandler implements SendHandler {
 
     @Override
     public void onResult(SendResult result) {
-        if (result.isOK())
+        if (result.isOK()) {
             log.trace("Message successfully asychronously sent: {}", result);
-        else
+        } else {
             log.error("Error when trying to asychronously send the message: {}", result);
+        }
     }
 }

@@ -13,6 +13,7 @@ import net.devaction.kafka.avro.AccountBalance;
  *
  * since August 2019
  */
+
 public class JsonDeserializerTester {
     private static final Logger log = LoggerFactory.getLogger(JsonDeserializerTester.class);
 

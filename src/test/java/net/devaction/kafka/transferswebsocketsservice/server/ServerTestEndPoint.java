@@ -71,7 +71,7 @@ public class ServerTestEndPoint {
                     + "\\\"version\\\":0}\"}";
 
         final String text3 = "{"
-               // + "\"type\":\"BALANCE_DATA\","
+                // + "\"type\":\"BALANCE_DATA\","
                 + "\"payload\":"
                     + "\"{\\\"accountId\\\":\\\"29822b097953\\\","
                     + "\\\"clientId\\\":\\\"a3086f3f404d\\\","

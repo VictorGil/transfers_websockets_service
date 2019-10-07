@@ -77,7 +77,7 @@ public class UpdatesDispatcher {
     }
 
     void addNewEntry(String accountId, Session session) {
-        HashSet<Session> newSet= new HashSet<>();
+        HashSet<Session> newSet = new HashSet<>();
         newSet.add(session);
         sessionsMap.put(accountId, newSet);
     }

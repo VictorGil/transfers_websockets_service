@@ -13,6 +13,7 @@ public interface LocalStoresManager {
     public void start(String bootstrapServers, String schemaRegistryUrl);
 
     public AccountBalanceEntity getBalance(String accountId);
+
     public TransferEntity getTransfer(String transferId);
 
     public void stop();

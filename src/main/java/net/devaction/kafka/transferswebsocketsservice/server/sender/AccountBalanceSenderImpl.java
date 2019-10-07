@@ -32,8 +32,8 @@ public class AccountBalanceSenderImpl implements AccountBalanceSender {
     public void send(AccountBalanceEntity accountBalance, Session session,
             MessageType messageType) {
 
-        if (messageType != MessageType.BALANCE_DATA_RESPONSE &&
-                messageType != MessageType.BALANCE_DATA_UPDATE) {
+        if (messageType != MessageType.BALANCE_DATA_RESPONSE
+                && messageType != MessageType.BALANCE_DATA_UPDATE) {
 
             log.error("Incorrect message type: {}", messageType);
         }

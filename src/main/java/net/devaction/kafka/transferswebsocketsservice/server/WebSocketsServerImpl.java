@@ -23,8 +23,7 @@ public class WebSocketsServerImpl implements WebSocketsServer {
                 + "port: {}, context path: {}",
                 host, port, contextPath);
 
-                server = new Server(host, port, contextPath, null,
-                ServerEndPoint.class);
+        server = new Server(host, port, contextPath, null, ServerEndPoint.class);
 
         try {
             server.start();

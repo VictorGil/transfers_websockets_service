@@ -23,8 +23,8 @@ import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperPr
  * since August 2019
  */
 @ServerEndpoint(value = "/001",
-decoders = MessageWrapperDecoder.class,
-encoders = MessageWrapperEncoder.class)
+        decoders = MessageWrapperDecoder.class,
+        encoders = MessageWrapperEncoder.class)
 public class ServerEndPoint {
     private static final Logger log = LoggerFactory.getLogger(ServerEndPoint.class);
 
@@ -37,8 +37,8 @@ public class ServerEndPoint {
     public void onMessage(MessageWrapper messageWrapper, Session session) {
         log.debug("Session {}. Message received: {}", session.getId(), messageWrapper);
 
-        MessageWrapperProcessorSingletonProvider.
-                getProcessor().process(messageWrapper, session);
+        MessageWrapperProcessorSingletonProvider
+                .getProcessor().process(messageWrapper, session);
     }
 
     @OnError
