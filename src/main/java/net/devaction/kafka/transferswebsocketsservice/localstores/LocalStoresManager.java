@@ -9,12 +9,12 @@ import net.devaction.entity.TransferEntity;
  * since August 2019
  */
 public interface LocalStoresManager{
-    
+
     public void start(String bootstrapServers, String schemaRegistryUrl);
-    
+
     public AccountBalanceEntity getBalance(String accountId);
     public TransferEntity getTransfer(String transferId);
-    
+
     public void stop();
 }
 

@@ -6,19 +6,19 @@ package net.devaction.kafka.transferswebsocketsservice.message.incoming;
  * since August 2019
  */
 public class AccountBalanceRequest{
-    
+
     private String accountId;
 
     // Jackson needs this constructor
     public AccountBalanceRequest(){
     }
-    
+
     public AccountBalanceRequest(String accountId){
         this.accountId = accountId;
     }
 
     @Override
-    public int hashCode(){       
+    public int hashCode(){
         return 31 + ((accountId == null) ? 0 : accountId.hashCode());
     }
 
@@ -26,20 +26,20 @@ public class AccountBalanceRequest{
     public boolean equals(Object obj){
         if (this == obj)
             return true;
-        
+
         if (obj == null)
             return false;
-        
+
         if (getClass() != obj.getClass())
             return false;
-        
+
         AccountBalanceRequest other = (AccountBalanceRequest) obj;
         if (accountId == null){
             if (other.accountId != null)
                 return false;
         } else if (!accountId.equals(other.accountId))
             return false;
-        
+
         return true;
     }
 
@@ -54,5 +54,5 @@ public class AccountBalanceRequest{
 
     public void setAccountId(String accountId){
         this.accountId = accountId;
-    }    
+    }
 }

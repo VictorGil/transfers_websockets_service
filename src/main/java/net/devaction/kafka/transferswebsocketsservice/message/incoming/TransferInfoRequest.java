@@ -5,13 +5,13 @@ package net.devaction.kafka.transferswebsocketsservice.message.incoming;
  *
  * since August 2019
  */
-public class TransferInfoRequest {   
+public class TransferInfoRequest {
     private String transferId;
 
     // Jackson needs this constructor
     public TransferInfoRequest(){
     }
-    
+
     public TransferInfoRequest(String transferId){
         this.transferId = transferId;
     }
@@ -28,9 +28,9 @@ public class TransferInfoRequest {
     public String toString(){
         return "TransferInfoRequest [transferId=" + transferId + "]";
     }
-    
+
     @Override
-    public int hashCode(){       
+    public int hashCode(){
         return 31 + ((transferId == null) ? 0 : transferId.hashCode());
     }
 
@@ -38,15 +38,15 @@ public class TransferInfoRequest {
     public boolean equals(Object obj){
         if (this == obj)
             return true;
-        
+
         if (obj == null)
             return false;
-        
+
         if (getClass() != obj.getClass())
             return false;
-        
+
         TransferInfoRequest other = (TransferInfoRequest) obj;
-        
+
         if (transferId == null){
             if (other.transferId != null)
                 return false;
@@ -54,5 +54,5 @@ public class TransferInfoRequest {
             return false;
 
         return true;
-    }    
+    }
 }

@@ -14,13 +14,13 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleTestServerMain{
     private static final Logger log = LoggerFactory.getLogger(SimpleTestServerMain.class);
-    
+
     public static void main(String[] args) {
-        new SimpleTestServerMain().runServer();    
+        new SimpleTestServerMain().runServer();
     }
-    
+
     public void runServer() {
-        Server server = new Server("localhost", 38201, "/endpoint", null, 
+        Server server = new Server("localhost", 38201, "/endpoint", null,
                 ServerTestEndPoint.class);
 
         try {

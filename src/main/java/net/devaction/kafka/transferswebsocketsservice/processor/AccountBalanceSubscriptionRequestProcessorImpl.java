@@ -13,19 +13,19 @@ import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatespr
  *
  * since October 2019
  */
-public class AccountBalanceSubscriptionRequestProcessorImpl 
+public class AccountBalanceSubscriptionRequestProcessorImpl
         implements AccountBalanceSubscriptionRequestProcessor{
 
     private static final Logger log = LoggerFactory.getLogger(AccountBalanceSubscriptionRequestProcessorImpl.class);
 
     private final UpdatesDispatcher updatesDispatcher;
-    
+
     public AccountBalanceSubscriptionRequestProcessorImpl(UpdatesDispatcher updatesDispatcher){
         this.updatesDispatcher = updatesDispatcher;
     }
-    
+
     @Override
     public void process(AccountBalanceSubscriptionRequest request, Session session){
-        updatesDispatcher.addSession(request.getAccountId(), session);        
-    }   
+        updatesDispatcher.addSession(request.getAccountId(), session);
+    }
 }

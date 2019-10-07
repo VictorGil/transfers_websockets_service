@@ -7,8 +7,8 @@ package net.devaction.kafka.transferswebsocketsservice.server;
  */
 public interface WebSocketsServer{
 
-    public void start(String host, int port, String contextPath) 
+    public void start(String host, int port, String contextPath)
             throws Exception;
-    
+
     public void stop();
 }

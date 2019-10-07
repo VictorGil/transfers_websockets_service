@@ -41,20 +41,20 @@ public class WebSocketsServiceMain implements SignalHandler{
     private static final Logger log = LoggerFactory.getLogger(WebSocketsServiceMain.class);
 
     private static final String WINCH_SIGNAL = "WINCH";
-    
+
     private LocalStoresManager storesManager;
-    
+
     private WebSocketsServer server;
-    
+
     private AccountBalanceConsumer balanceConsumer;
-    
+
     public static void main(String[] args){
         new WebSocketsServiceMain().run();
     }
-    
+
     private void run() {
         registerThisAsOsSignalHandler();
-        
+
         ConfigValues configValues;
         log.info("Going to read the configuration values");
         try{
@@ -63,58 +63,58 @@ public class WebSocketsServiceMain implements SignalHandler{
             log.error("Unable to read the configuration values, exiting");
             return;
         }
-        
+
         storesManager = new LocalStoresManagerImpl();
-        
+
         log.info("Going to start the Kafka local stores.");
-        storesManager.start(configValues.getKafkaBootstrapServers(), 
+        storesManager.start(configValues.getKafkaBootstrapServers(),
                 configValues.getKafkaSchemaRegistryUrl());
-        
-        MessageSender messageSender = new MessageSenderImpl();        
+
+        MessageSender messageSender = new MessageSenderImpl();
         AccountBalanceSender abSender = new AccountBalanceSenderImpl(messageSender);
-        
-        AccountBalanceRequestProcessor abReqProcessor = 
+
+        AccountBalanceRequestProcessor abReqProcessor =
                 new AccountBalanceRequestProcessorImpl(storesManager, abSender);
-        
-        TransferSender transferSender = new TransferSenderImpl(messageSender); 
-                
-        TransferInfoRequestProcessor tiReqProcessor = 
+
+        TransferSender transferSender = new TransferSenderImpl(messageSender);
+
+        TransferInfoRequestProcessor tiReqProcessor =
                 new TransferInfoRequestProcessorImpl(storesManager, transferSender);
-        
+
         UpdatesDispatcher updatesDispatcher = new UpdatesDispatcher(abSender);
         AccountBalanceSubscriptionRequestProcessor abSubsReqProcessor =
                 new AccountBalanceSubscriptionRequestProcessorImpl(updatesDispatcher);
-        
+
         MessageWrapperProcessor messageProcessor = new MessageWrapperProcessorImpl(
                 abReqProcessor, abSubsReqProcessor, tiReqProcessor);
-        
+
         MessageWrapperProcessorSingletonProvider.setProcessor(messageProcessor);
-        
+
         server = new WebSocketsServerImpl();
         log.info("Going to start the WebSockets server.");
         try{
-            server.start(configValues.getServerHost(), 
-                    configValues.getServerPort(), 
+            server.start(configValues.getServerHost(),
+                    configValues.getServerPort(),
                     configValues.getContextPath());
         } catch (Exception ex){
             log.error("Unable to start the WebSockets server, "
-                    + "configuration values: {}", configValues, ex);            
-            stop();        
+                    + "configuration values: {}", configValues, ex);
+            stop();
         }
-        
+
         AccountBalanceUpdateProcessor abUpdateProcessor = new AccountBalanceUpdateProcessorImpl(updatesDispatcher);
         log.info("Going to start the account balance Kafka consumer.");
         balanceConsumer = new AccountBalanceConsumer(configValues.getKafkaBootstrapServers(),
                 configValues.getKafkaSchemaRegistryUrl(), abUpdateProcessor);
         balanceConsumer.start();
     }
-    
+
     @Override
     public void handle(Signal signal){
         log.info("We have received the signal to tell us to stop: {}", signal.getName());
         stop();
     }
-    
+
     private void registerThisAsOsSignalHandler() {
         log.debug("Going to register this object to handle the {} signal", WINCH_SIGNAL);
         try{
@@ -124,20 +124,20 @@ public class WebSocketsServiceMain implements SignalHandler{
             // platform or with the JVM as it is currently configured
             log.error("FATAL: The signal is not supported: {}, exiting", WINCH_SIGNAL, ex);
             System.exit(1);
-        }        
+        }
     }
-    
+
     private void stop() {
         if (balanceConsumer != null) {
             balanceConsumer.stop();
         }
-        
+
         if (server != null) {
             server.stop();
         }
-        
+
         if (storesManager != null) {
             storesManager.stop();
-        }        
+        }
     }
 }

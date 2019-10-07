@@ -34,13 +34,13 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferI
 public class RequestTestSender{
     private static final Logger log = LoggerFactory.getLogger(
             RequestTestSender.class);
-    
+
     private ObjectMapper mapper = new ObjectMapper();
-    
+
     public static void main(String[] args) {
         new RequestTestSender().run();
     }
-    
+
     private void run() {
         Session session = null;
         try {
@@ -50,20 +50,20 @@ public class RequestTestSender{
                     .build();
 
             final ClientManager client = ClientManager.createClient();
-            session = client.connectToServer(new ClientEndPoint(), cec, 
-                    new URI("ws://localhost:38201/endpoint/001"));   
-            
+            session = client.connectToServer(new ClientEndPoint(), cec,
+                    new URI("ws://localhost:38201/endpoint/001"));
+
             // MessageWrapper messageWrapper = createBalanceRequestMessageWrapper();
             MessageWrapper messageWrapper = createBalanceSubscriptionRequestMessageWrapper();
             // MessageWrapper messageWrapper = createTransferRequestMessageWrapper();
-            
+
             log.debug("Going to send a message: {}", messageWrapper);
-                        
-            session.getBasicRemote().sendObject(messageWrapper);           
+
+            session.getBasicRemote().sendObject(messageWrapper);
         } catch (Exception ex) {
             log.error("{}", ex, ex);
         }
-        
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Please press a key to stop the test WebSockets client.");
         try{
@@ -79,76 +79,76 @@ public class RequestTestSender{
         }
         log.info("Exiting");
     }
-    
+
     private MessageWrapper createBalanceRequestMessageWrapper() throws IOException{
-        AccountBalanceRequest request = createAccountBalanceRequest();        
-        
-        String json;           
+        AccountBalanceRequest request = createAccountBalanceRequest();
+
+        String json;
         try{
-            
+
             json = mapper.writeValueAsString(request);
-            log.debug("{} JSON string:\n{}", 
+            log.debug("{} JSON string:\n{}",
                     AccountBalanceRequest.class.getSimpleName(), json);
-            
+
         } catch (JsonProcessingException ex){
             log.error("{}", ex, ex);
             throw ex;
         }
-     
-        return new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), json);        
+
+        return new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), json);
     }
-   
+
     private MessageWrapper createBalanceSubscriptionRequestMessageWrapper() throws IOException{
-        AccountBalanceRequest request = createAccountBalanceRequest();        
-        
-        String json;           
+        AccountBalanceRequest request = createAccountBalanceRequest();
+
+        String json;
         try{
-            
+
             json = mapper.writeValueAsString(request);
-            log.debug("{} JSON string:\n{}", 
+            log.debug("{} JSON string:\n{}",
                     AccountBalanceSubscriptionRequest.class.getSimpleName(), json);
-            
+
         } catch (JsonProcessingException ex){
             log.error("{}", ex, ex);
             throw ex;
         }
-     
-        return new MessageWrapper(MessageType.BALANCE_DATA_SUBSCRIPTION.name(), json);        
+
+        return new MessageWrapper(MessageType.BALANCE_DATA_SUBSCRIPTION.name(), json);
     }
-    
+
     private MessageWrapper createTransferRequestMessageWrapper() throws JsonProcessingException {
         TransferInfoRequest request = createTransferInfoRequest();
-        
+
         String json;
-        
+
         try{
             json = mapper.writeValueAsString(request);
-            log.debug("{} JSON string:\n{}", 
+            log.debug("{} JSON string:\n{}",
                     TransferInfoRequest.class.getSimpleName(), json);
-            
+
         } catch (JsonProcessingException ex){
             log.error("{}", ex, ex);
             throw ex;
         }
         return  new MessageWrapper(MessageType.TRANSFER_DATA_REQUEST.name(), json);
     }
-    
+
     private AccountBalanceRequest createAccountBalanceRequest() {
 
         // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa001");
         AccountBalanceRequest request = new AccountBalanceRequest("28a090daa002");
         // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa003");
         return request;
-    } 
-    
+    }
+
     private TransferInfoRequest createTransferInfoRequest() {
         return new TransferInfoRequest("5eb0f2dfd9c3"); // transfer id
         //return new TransferInfoRequest("28a090daa001"); // account id --> won't work, as expected
     }
-    
+
     private AccountBalanceSubscriptionRequest createAccountBalanceSubscriptionRequest() {
 
         AccountBalanceSubscriptionRequest request = new AccountBalanceSubscriptionRequest("28a090daa002");
         return request;
-    } 
+    }
 }

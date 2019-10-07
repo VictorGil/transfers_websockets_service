@@ -15,15 +15,15 @@ public class SerializationTester{
     private static final Logger log = LoggerFactory.getLogger(SerializationTester.class);
 
     private ObjectMapper mapper = new ObjectMapper();
-    
+
     public static void main(String[] args){
         new SerializationTester().run();
     }
-    
+
     private void run() {
         run1();
     }
-    
+
     private void run1() {
         MessageWrapper messageWrapper = new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), "whatever");
         log.info("Going to serialize: {}", messageWrapper);
@@ -31,11 +31,11 @@ public class SerializationTester{
         try{
             json = mapper.writeValueAsString(messageWrapper);
         } catch (JsonProcessingException ex){
-            log.error("{}", ex, ex);            
+            log.error("{}", ex, ex);
         }
         log.info("JSON result: {}", json);
     }
-    
+
     private void run2() {
         MessageWrapper messageWrapper = new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), "whatever");
         log.info("Going to serialize: {}", messageWrapper);
@@ -43,7 +43,7 @@ public class SerializationTester{
         try{
             json = mapper.writeValueAsString(messageWrapper);
         } catch (JsonProcessingException ex){
-            log.error("{}", ex, ex);            
+            log.error("{}", ex, ex);
         }
         log.info("JSON result: {}", json);
     }

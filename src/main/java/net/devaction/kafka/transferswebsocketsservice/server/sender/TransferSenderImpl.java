@@ -23,7 +23,7 @@ public class TransferSenderImpl implements TransferSender{
     private final ObjectMapper mapper = new ObjectMapper();
 
     private final MessageSender messageSender;
-    
+
     public TransferSenderImpl(MessageSender messageSender){
         this.messageSender = messageSender;
     }
@@ -31,11 +31,11 @@ public class TransferSenderImpl implements TransferSender{
     @Override
     public void send(TransferEntity transfer, Session session){
         String json;
-        
+
         try{
             json = mapper.writeValueAsString(transfer);
         } catch (JsonProcessingException ex){
-            log.error("Unable to serialize {} to JSON: {}", 
+            log.error("Unable to serialize {} to JSON: {}",
                     TransferEntity.class.getSimpleName(),
                     transfer, ex);
             return;
@@ -43,7 +43,7 @@ public class TransferSenderImpl implements TransferSender{
 
         MessageWrapper message = new MessageWrapper(MessageType.TRANSFER_DATA_RESPONSE.name(),
                 json);
-        
+
         messageSender.send(message, session);
     }
 }

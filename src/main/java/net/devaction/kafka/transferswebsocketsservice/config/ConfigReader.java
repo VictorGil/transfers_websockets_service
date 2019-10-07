@@ -15,14 +15,14 @@ public class ConfigReader{
 
     // This file must be present in the classpath
     private static final String CONFIG_FILE = "config.json";
-    
+
     private final JsonDeserializer deserializer = new JsonDeserializer();
-    
+
     public ConfigValues read() throws Exception {
         ConfigValues config = deserializer.deserializeFromFile(
                 CONFIG_FILE, ConfigValues.class);
 
         log.info("Application configuration: {}", config);
         return config;
-    }    
+    }
 }

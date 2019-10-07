@@ -17,11 +17,11 @@ public class AccountBalanceUpdateProcessorImpl implements AccountBalanceUpdatePr
     private static final Logger log = LoggerFactory.getLogger(AccountBalanceUpdateProcessorImpl.class);
 
     private final UpdatesDispatcher updatesDispatcher;
-    
+
     public AccountBalanceUpdateProcessorImpl(UpdatesDispatcher updatesDispatcher){
         this.updatesDispatcher = updatesDispatcher;
     }
-    
+
     @Override
     public void process(AccountBalance accountBalance){
         AccountBalanceEntity abEntity = AccountBalanceConverter.convertToPojo(accountBalance);

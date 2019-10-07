@@ -16,16 +16,16 @@ public class WebSocketsServerImpl implements WebSocketsServer{
     private static final Logger log = LoggerFactory.getLogger(WebSocketsServerImpl.class);
 
     private Server server;
-    
+
     @Override
     public void start(String host, int port, String contextPath) throws Exception{
         log.info("Going to start the Websockets server, host: {},"
                 + "port: {}, context path: {}",
-                host, port, contextPath);        
-       
-                server = new Server(host, port, contextPath, null, 
+                host, port, contextPath);
+
+                server = new Server(host, port, contextPath, null,
                 ServerEndPoint.class);
-                
+
         try{
             server.start();
         } catch (DeploymentException ex){
@@ -41,6 +41,6 @@ public class WebSocketsServerImpl implements WebSocketsServer{
         if (server != null) {
             server.stop();
             log.debug("The WebSockets server has been stopped");
-        }        
+        }
     }
 }

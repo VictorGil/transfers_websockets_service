@@ -8,10 +8,10 @@ package net.devaction.kafka.transferswebsocketsservice.message;
 public enum MessageType{
     BALANCE_DATA_REQUEST,
     BALANCE_DATA_RESPONSE,
-    
+
     BALANCE_DATA_SUBSCRIPTION,
-    BALANCE_DATA_UPDATE, 
-    
+    BALANCE_DATA_UPDATE,
+
     TRANSFER_DATA_REQUEST,
-    TRANSFER_DATA_RESPONSE   
+    TRANSFER_DATA_RESPONSE
 }

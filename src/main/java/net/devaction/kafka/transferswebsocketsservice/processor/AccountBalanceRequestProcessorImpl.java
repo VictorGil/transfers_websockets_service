@@ -16,11 +16,11 @@ import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalan
  *
  * since August 2019
  */
-public class AccountBalanceRequestProcessorImpl implements 
+public class AccountBalanceRequestProcessorImpl implements
         AccountBalanceRequestProcessor{
-    
+
     private static final Logger log = LoggerFactory.getLogger(AccountBalanceRequestProcessorImpl.class);
-    
+
     private final LocalStoresManager storesManager;
     private final AccountBalanceSender sender;
 
@@ -31,9 +31,9 @@ public class AccountBalanceRequestProcessorImpl implements
 
     @Override
     public void process(AccountBalanceRequest request, Session session){
-        log.trace("Session id: {}. Going to process the following request: {}", 
+        log.trace("Session id: {}. Going to process the following request: {}",
                 session.getId(), request);
-        
+
         AccountBalanceEntity balance = storesManager.getBalance(request.getAccountId());
         sender.send(balance, session, MessageType.BALANCE_DATA_RESPONSE);
     }

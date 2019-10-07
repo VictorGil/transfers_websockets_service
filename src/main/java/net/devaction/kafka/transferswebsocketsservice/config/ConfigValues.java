@@ -8,19 +8,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * since August 2019
  */
 public class ConfigValues{
-    
+
     @JsonProperty("server_host")
     private String serverHost;
-    
+
     @JsonProperty("server_port")
     private int serverPort;
-    
+
     @JsonProperty("context_path")
     private String contextPath;
 
     @JsonProperty("kafka_bootstrap_servers")
     private String kafkaBootstrapServers;
-    
+
     @JsonProperty("kafka_schema_registry_URL")
     private String kafkaSchemaRegistryUrl;
 
@@ -29,7 +29,7 @@ public class ConfigValues{
         return "ConfigValues [serverHost=" + serverHost + ", serverPort=" + serverPort + ", contextPath=" + contextPath
                 + ", kafkaBootstrapServers=" + kafkaBootstrapServers + ", kafkaSchemaRegistryUrl=" + kafkaSchemaRegistryUrl + "]";
     }
-    
+
     public String getServerHost(){
         return serverHost;
     }
@@ -68,5 +68,5 @@ public class ConfigValues{
 
     public void setKafkaSchemaRegistryUrl(String kafkaSchemaRegistryUrl){
         this.kafkaSchemaRegistryUrl = kafkaSchemaRegistryUrl;
-    } 
+    }
 }

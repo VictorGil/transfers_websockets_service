@@ -16,19 +16,19 @@ public class TransferIdKeyValueMapper implements KeyValueMapper<String, Transfer
 
     @Override
     public String apply(String accountIdKey, Transfer transfer){
-        
+
         if (accountIdKey == null) {
             log.error("Assertion error, the accountId is null for the Transfer message, "
                     + "this should never happen, Transfer (value): {}", transfer);
             return null;
         }
-        
-        if (transfer == null) { 
+
+        if (transfer == null) {
             log.error("Assertion error, the value of the Transfer message is null, "
                     + "this should never happen, accountId (key): {}", accountIdKey);
             return null;
         }
-        
+
         return transfer.getId();
     }
 }

@@ -15,26 +15,26 @@ import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSend
  *
  * since August 2019
  */
-public class TransferInfoRequestProcessorImpl 
+public class TransferInfoRequestProcessorImpl
         implements TransferInfoRequestProcessor{
-    
+
     private static final Logger log = LoggerFactory.getLogger(TransferInfoRequestProcessorImpl.class);
 
     private final LocalStoresManager storesManager;
     private final TransferSender sender;
-    
-    public TransferInfoRequestProcessorImpl(LocalStoresManager storesManager, 
+
+    public TransferInfoRequestProcessorImpl(LocalStoresManager storesManager,
             TransferSender sender){
-        
+
         this.storesManager = storesManager;
         this.sender = sender;
     }
 
     @Override
     public void process(TransferInfoRequest request, Session session){
-        log.trace("Session id: {}. Going to process the following request: {}", 
-                session.getId(), request); 
-        
+        log.trace("Session id: {}. Going to process the following request: {}",
+                session.getId(), request);
+
         TransferEntity transfer = storesManager.getTransfer(request.getTransferId());
         sender.send(transfer, session);
     }

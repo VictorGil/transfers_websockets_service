@@ -20,13 +20,13 @@ public class ClientMessageHandler implements Whole<MessageWrapper>{
     private static final Logger log = LoggerFactory.getLogger(ClientMessageHandler.class);
 
     private final Session session;
-    
+
     public ClientMessageHandler(Session session){
         this.session = session;
     }
 
     @Override
     public void onMessage(MessageWrapper message){
-        log.debug("Session: {}. Message has been received: {}", session.getId(), message);        
+        log.debug("Session: {}. Message has been received: {}", session.getId(), message);
     }
 }

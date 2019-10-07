@@ -7,19 +7,19 @@ import org.slf4j.LoggerFactory;
  * @author Víctor Gil
  *
  * since October 2019
- * 
- * The client who sent this message wants to be notified of 
+ *
+ * The client who sent this message wants to be notified of
  * accountBalance messages related to the specified account ID
  * coming from Kafka.
  */
 public class AccountBalanceSubscriptionRequest{
     private static final Logger log = LoggerFactory.getLogger(AccountBalanceSubscriptionRequest.class);
-    
+
     private String accountId;
-    
+
     // Jackson needs this constructor
     public AccountBalanceSubscriptionRequest(){ }
-    
+
     public AccountBalanceSubscriptionRequest(String accountId){
         this.accountId = accountId;
     }
@@ -46,7 +46,7 @@ public class AccountBalanceSubscriptionRequest{
                 return false;
         } else if (!accountId.equals(other.accountId))
             return false;
-        
+
         return true;
     }
 
@@ -61,5 +61,5 @@ public class AccountBalanceSubscriptionRequest{
 
     public void setAccountId(String accountId){
         this.accountId = accountId;
-    }    
+    }
 }

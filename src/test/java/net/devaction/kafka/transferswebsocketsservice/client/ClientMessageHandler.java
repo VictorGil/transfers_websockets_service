@@ -18,9 +18,9 @@ public class ClientMessageHandler implements Whole<String>{
     private static final Logger log = LoggerFactory.getLogger(ClientMessageHandler.class);
 
     private final CountDownLatch messageLatch;
-    
+
     private final Session session;
-    
+
     public ClientMessageHandler(Session session, CountDownLatch messageLatch){
         this.session = session;
         this.messageLatch = messageLatch;

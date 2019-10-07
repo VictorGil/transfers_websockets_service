@@ -14,20 +14,20 @@ import org.slf4j.LoggerFactory;
  */
 public class ServerImplTesterMain {
     private static final Logger log = LoggerFactory.getLogger(ServerImplTesterMain.class);
-    
+
     public static void main(String[] args) {
         new ServerImplTesterMain().run();
     }
-    
+
     private void run() {
         WebSocketsServer server = new WebSocketsServerImpl();
-        
+
         BufferedReader reader = null;
         try{
             server.start("localhost", 38201, "/endpoint");
             reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Please press a key to stop the server.");
-            reader.readLine();            
+            reader.readLine();
         } catch (Exception ex) {
             log.error("{}", ex, ex);
         } finally {
@@ -38,10 +38,10 @@ public class ServerImplTesterMain {
                     log.error("{}", ex, ex);
                 }
             }
-            
+
             log.info("Going to stop the WebSockets server");
             server.stop();
             log.info("WebSockets server stopped, exiting");
-        }       
+        }
     }
 }

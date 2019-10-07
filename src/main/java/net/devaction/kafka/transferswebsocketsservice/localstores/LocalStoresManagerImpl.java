@@ -44,37 +44,37 @@ import net.devaction.kafka.transferswebsocketsservice.transferretriever.Transfer
  */
 public class LocalStoresManagerImpl implements LocalStoresManager{
     private static final Logger log = LoggerFactory.getLogger(LocalStoresManagerImpl.class);
-    
+
     private ReadOnlyKeyValueStore<String, AccountBalance> balancesStore;
     private ReadOnlyKeyValueStore<String, Transfer> transfersStore;
-    
+
     private KafkaStreams streams;
-    
-    private static final String ACCOUNT_BALANCES_TOPIC = "account-balances"; 
-    private static final String TRANSFERS_TOPIC = "transfers"; 
-    
+
+    private static final String ACCOUNT_BALANCES_TOPIC = "account-balances";
+    private static final String TRANSFERS_TOPIC = "transfers";
+
     private static final String ACCOUNT_BALANCES_STORE = "account-balances-store";
     private static final String TRANSFERS_STORE = "transfers-store";
-    
+
     @Override
     public void start(String bootstrapServers, String schemaRegistryUrl) {
-        StreamsBuilder builder = new StreamsBuilder(); 
-        
+        StreamsBuilder builder = new StreamsBuilder();
+
         KTable<String,AccountBalance> accountBalancesKTable = setUpBalancesStore(
                 schemaRegistryUrl, builder);
-        
+
         KTable<String, Transfer> transfersKTable = setUpTransfersStore(
                 schemaRegistryUrl, builder);
-        
+
         final Properties streamsConfigProperties = new Properties();
         streamsConfigProperties.put(StreamsConfig.APPLICATION_ID_CONFIG, "websockets-server");
         streamsConfigProperties.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         streamsConfigProperties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        
+
         streams = new KafkaStreams(builder.build(), streamsConfigProperties);
-        
+
         streams.setUncaughtExceptionHandler(new ExceptionHandler());
-        streams.start();       
+        streams.start();
 
         while (streams.state() != State.RUNNING) {
             try{
@@ -84,97 +84,97 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
                 Thread.currentThread().interrupt();
             }
         }
-        
-        balancesStore = streams.store(accountBalancesKTable.queryableStoreName(), 
+
+        balancesStore = streams.store(accountBalancesKTable.queryableStoreName(),
                 QueryableStoreTypes.<String,AccountBalance>keyValueStore());
-        
-        transfersStore = streams.store(transfersKTable.queryableStoreName(), 
+
+        transfersStore = streams.store(transfersKTable.queryableStoreName(),
                 QueryableStoreTypes.<String,Transfer>keyValueStore());
     }
-    
-    private KTable<String,AccountBalance> setUpBalancesStore(String schemaRegistryUrl, 
+
+    private KTable<String,AccountBalance> setUpBalancesStore(String schemaRegistryUrl,
             StreamsBuilder builder){
-        
-        KeyValueBytesStoreSupplier accountBalanceStoreSupplier = 
+
+        KeyValueBytesStoreSupplier accountBalanceStoreSupplier =
                 Stores.inMemoryKeyValueStore(ACCOUNT_BALANCES_STORE);
-        
+
         final Serde<String> stringSerde = Serdes.String();
         final Serde<AccountBalance> accountBalanceSerde = new SpecificAvroSerde<>();
-        
+
         final boolean isKeySerde = false;
         accountBalanceSerde.configure(
                 Collections.singletonMap(
-                        AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, 
+                        AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
                         schemaRegistryUrl),
                 isKeySerde);
-        
+
         return builder.table(
                 ACCOUNT_BALANCES_TOPIC,
                 Materialized.<String,AccountBalance>as(accountBalanceStoreSupplier)
                         .withKeySerde(stringSerde)
                         .withValueSerde(accountBalanceSerde)
-                        .withCachingDisabled());        
+                        .withCachingDisabled());
     }
-    
-    private KTable<String,Transfer> setUpTransfersStore(String schemaRegistryUrl, 
+
+    private KTable<String,Transfer> setUpTransfersStore(String schemaRegistryUrl,
             StreamsBuilder builder){
-        
-        KeyValueBytesStoreSupplier transferStoreSupplier = 
+
+        KeyValueBytesStoreSupplier transferStoreSupplier =
                 Stores.inMemoryKeyValueStore(TRANSFERS_STORE);
-        
+
         final Serde<String> stringSerde = Serdes.String();
         final Serde<Transfer> transferSerde = new SpecificAvroSerde<>();
-        
+
         final boolean isKeySerde = false;
         transferSerde.configure(
                 Collections.singletonMap(
-                        AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, 
+                        AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,
                         schemaRegistryUrl),
                 isKeySerde);
-        
-        KStream<String, Transfer> accountIdKeyTransfersStream = builder.stream(TRANSFERS_TOPIC, 
+
+        KStream<String, Transfer> accountIdKeyTransfersStream = builder.stream(TRANSFERS_TOPIC,
                 Consumed.with(stringSerde, transferSerde));
-        
+
         // We are "re-keying" the data from the "transfers" topic
         KGroupedStream<String, Transfer> groupStream = accountIdKeyTransfersStream.groupBy(
                 new TransferIdKeyValueMapper(), Grouped.with(stringSerde, transferSerde));
-        
+
         return groupStream.reduce(
-                new DummyReducer(), 
+                new DummyReducer(),
                 Materialized.<String,Transfer>as(transferStoreSupplier)
                         .withKeySerde(stringSerde)
                         .withValueSerde(transferSerde)
-                        .withCachingDisabled());        
+                        .withCachingDisabled());
     }
 
     @Override
     public AccountBalanceEntity getBalance(String accountId){
         AccountBalance accountBalance = balancesStore.get(accountId);
-        
+
         if (accountBalance == null) {
             log.error("The account with id {} has not been set up", accountId);
             return AccountBalanceEntity.createNAobject(accountId);
         }
-        
+
         return AccountBalanceConverter.convertToPojo(accountBalance);
     }
 
     @Override
     public TransferEntity getTransfer(String transferId){
-        
+
         Transfer transfer = transfersStore.get(transferId);
-        
+
         if (transfer == null) {
             log.error("Transfer with id {} does not exist.", transferId);
             return null;
         }
-        
+
         return TransferConverter.convertToPojo(transfer);
     }
 
     @Override
     public void stop(){
         log.info("We have been told to stop, closing the \"Streams\"");
-        streams.close();        
+        streams.close();
     }
 }

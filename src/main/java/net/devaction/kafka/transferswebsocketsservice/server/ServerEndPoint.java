@@ -24,23 +24,23 @@ import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperPr
  */
 @ServerEndpoint(value = "/001",
 decoders = MessageWrapperDecoder.class,
-encoders = MessageWrapperEncoder.class) 
+encoders = MessageWrapperEncoder.class)
 public class ServerEndPoint{
     private static final Logger log = LoggerFactory.getLogger(ServerEndPoint.class);
 
     @OnOpen
-    public void onOpen(final Session session, final EndpointConfig config){        
-        log.debug("Session {} has been opened.", session.getId());      
+    public void onOpen(final Session session, final EndpointConfig config){
+        log.debug("Session {} has been opened.", session.getId());
     }
-    
+
     @OnMessage
     public void onMessage(MessageWrapper messageWrapper, Session session) {
         log.debug("Session {}. Message received: {}", session.getId(), messageWrapper);
-        
+
         MessageWrapperProcessorSingletonProvider.
                 getProcessor().process(messageWrapper, session);
     }
-    
+
     @OnError
     public void onError(Session session, Throwable throwable) {
         log.error("Session {} threw an error: {}", session.getId(), throwable, throwable);

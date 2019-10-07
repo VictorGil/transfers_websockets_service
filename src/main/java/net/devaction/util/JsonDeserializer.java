@@ -19,11 +19,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JsonDeserializer{
     private static final Logger log = LoggerFactory.getLogger(JsonDeserializer.class);
-    
+
     private final ObjectMapper objectMapper = new ObjectMapper();
-    
+
     public <T> T deserializeFromFile(String filename, Class<T> clazz) throws Exception{
-        byte[] jsonBytes = null;        
+        byte[] jsonBytes = null;
         try {
             jsonBytes = readFromClasspath(filename);
         } catch (Exception ex) {
@@ -31,8 +31,8 @@ public class JsonDeserializer{
                     + "the classpath.", filename, ex);
             throw ex;
         }
-        
-        T objT = null;        
+
+        T objT = null;
         try {
             objT = objectMapper.readValue(jsonBytes, clazz);
         } catch(IOException ex) {
@@ -40,22 +40,22 @@ public class JsonDeserializer{
                     + "the classpath.", filename, ex);
             throw ex;
         }
-        
+
         return objT;
     }
-    
+
     byte[] readFromClasspath(String filename) throws Exception{
-        
+
         final URL url = this.getClass().getResource("/" + filename);
         if (url == null) {
             final String errorMessage = "Could not find file: " + filename;
             log.error(errorMessage);
             throw new IOException(errorMessage);
         }
-        
-        final URI uri = url.toURI();        
+
+        final URI uri = url.toURI();
         Path path = Paths.get(uri);
-        
+
         return Files.readAllBytes(path);
     }
 }

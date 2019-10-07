@@ -20,7 +20,7 @@ public class ClientTestEndPoint extends Endpoint{
     private static final Logger log = LoggerFactory.getLogger(ClientTestEndPoint.class);
 
     private final CountDownLatch messageLatch;
-    
+
     public ClientTestEndPoint(CountDownLatch messageLatch){
         this.messageLatch = messageLatch;
     }
@@ -28,19 +28,19 @@ public class ClientTestEndPoint extends Endpoint{
     @Override
     public void onOpen(Session session, EndpointConfig config){
         log.debug("Session {} has been opened.", session.getId());
-        
-        session.addMessageHandler(String.class, 
+
+        session.addMessageHandler(String.class,
                 new ClientMessageHandler(session, messageLatch));
-        
+
         log.debug("Going to send a message.");
         try{
             session.getBasicRemote().sendText("hello from " + this.getClass().getSimpleName());
         } catch (IOException ex){
-            log.error("Session: {}. Unable to send message: {}", 
+            log.error("Session: {}. Unable to send message: {}",
                     session.getId(), ex, ex);
         }
     }
-    
+
     @Override
     public void onError(Session session, Throwable throwable) {
         log.error("Session {} threw an error: {}", session.getId(), throwable, throwable);
