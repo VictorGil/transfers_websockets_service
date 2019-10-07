@@ -72,8 +72,9 @@ public class RequestTestSender {
             log.error("{}", ex, ex);
         }
         try {
-            if (reader != null)
+            if (reader != null) {
                 reader.close();
+            }
         } catch (IOException ex) {
             log.error("{}", ex, ex);
         }

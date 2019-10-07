@@ -33,28 +33,35 @@ public class MessageWrapper {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
+        }
 
-        if (obj == null)
+        if (obj == null) {
             return false;
+        }
 
-        if (getClass() != obj.getClass())
+        if (getClass() != obj.getClass()) {
             return false;
+        }
 
         MessageWrapper other = (MessageWrapper) obj;
 
         if (payload == null) {
-            if (other.payload != null)
+            if (other.payload != null) {
                 return false;
-        } else if (!payload.equals(other.payload))
+            }
+        } else if (!payload.equals(other.payload)) {
             return false;
+        }
 
         if (type == null) {
-            if (other.type != null)
+            if (other.type != null) {
                 return false;
-        } else if (!type.equals(other.type))
+            }
+        } else if (!type.equals(other.type)) {
             return false;
+        }
 
         return true;
     }

@@ -87,9 +87,10 @@ public class AccountBalanceConsumer {
         ConsumerRecords<String, AccountBalance> records =
                 consumer.poll(Duration.ofMillis(100));
 
-        if (!records.isEmpty())
+        if (!records.isEmpty()) {
             log.debug("Number of \"{}\" records polled: {}",
                     AccountBalance.class.getSimpleName(), records.count());
+        }
 
         for (ConsumerRecord<String, AccountBalance> record: records) {
             processor.process(record.value());
@@ -97,8 +98,9 @@ public class AccountBalanceConsumer {
     }
 
     private void seekFromBeginningIfRequired() {
-        if (seekFromBeginning)
+        if (seekFromBeginning) {
             seekFromBeginning();
+        }
     }
 
     private void seekFromBeginning() {

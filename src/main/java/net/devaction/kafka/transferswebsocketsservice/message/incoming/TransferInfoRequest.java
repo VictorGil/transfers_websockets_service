@@ -36,22 +36,27 @@ public class TransferInfoRequest {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
+        }
 
-        if (obj == null)
+        if (obj == null) {
             return false;
+        }
 
-        if (getClass() != obj.getClass())
+        if (getClass() != obj.getClass()) {
             return false;
+        }
 
         TransferInfoRequest other = (TransferInfoRequest) obj;
 
         if (transferId == null) {
-            if (other.transferId != null)
+            if (other.transferId != null) {
                 return false;
-        } else if (!transferId.equals(other.transferId))
+            }
+        } else if (!transferId.equals(other.transferId)) {
             return false;
+        }
 
         return true;
     }
