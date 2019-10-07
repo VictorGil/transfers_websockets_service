@@ -8,7 +8,7 @@ import net.devaction.entity.TransferEntity;
  *
  * since August 2019
  */
-public interface LocalStoresManager{
+public interface LocalStoresManager {
 
     public void start(String bootstrapServers, String schemaRegistryUrl);
 

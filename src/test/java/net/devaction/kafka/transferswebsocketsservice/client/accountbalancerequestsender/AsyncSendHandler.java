@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * since August 2019
  */
-public class AsyncSendHandler implements SendHandler{
+public class AsyncSendHandler implements SendHandler {
     private static final Logger log = LoggerFactory.getLogger(AsyncSendHandler.class);
 
     @Override

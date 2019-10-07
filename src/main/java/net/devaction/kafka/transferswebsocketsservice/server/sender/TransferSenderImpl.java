@@ -17,7 +17,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
  *
  * since August 2019
  */
-public class TransferSenderImpl implements TransferSender{
+public class TransferSenderImpl implements TransferSender {
     private static final Logger log = LoggerFactory.getLogger(TransferSenderImpl.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
@@ -32,7 +32,7 @@ public class TransferSenderImpl implements TransferSender{
     public void send(TransferEntity transfer, Session session) {
         String json;
 
-        try{
+        try {
             json = mapper.writeValueAsString(transfer);
         } catch (JsonProcessingException ex) {
             log.error("Unable to serialize {} to JSON: {}",

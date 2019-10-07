@@ -21,7 +21,7 @@ import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalan
  *
  * since September 2019
  */
-public class UpdatesDispatcher{
+public class UpdatesDispatcher {
 
     private static final Logger log = LoggerFactory.getLogger(UpdatesDispatcher.class);
 
@@ -47,7 +47,7 @@ public class UpdatesDispatcher{
 
         if (log.isTraceEnabled()) {
             log.trace("Going to register new accountId-session pair, accountId: {}, session id: {}"
-                    + ", current entries:\n{}",
+                    + ", current entries:\n {}",
                     accountId, session.getId(), sessionsMapToString());
         }
 

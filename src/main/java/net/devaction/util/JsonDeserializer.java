@@ -17,17 +17,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * since August 2019
  */
-public class JsonDeserializer{
+public class JsonDeserializer {
     private static final Logger log = LoggerFactory.getLogger(JsonDeserializer.class);
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public <T> T deserializeFromFile(String filename, Class<T> clazz) throws Exception{
+    public <T> T deserializeFromFile(String filename, Class<T> clazz) throws Exception {
         byte[] jsonBytes = null;
         try {
             jsonBytes = readFromClasspath(filename);
         } catch (Exception ex) {
-            log.error("Error when trying to read \"{}\" file from "
+            log.error("Error when trying to read \" {}\" file from "
                     + "the classpath.", filename, ex);
             throw ex;
         }
@@ -36,7 +36,7 @@ public class JsonDeserializer{
         try {
             objT = objectMapper.readValue(jsonBytes, clazz);
         } catch(IOException ex) {
-            log.error("Error when trying to parse \"{}\" file content from "
+            log.error("Error when trying to parse \" {}\" file content from "
                     + "the classpath.", filename, ex);
             throw ex;
         }
@@ -44,7 +44,7 @@ public class JsonDeserializer{
         return objT;
     }
 
-    byte[] readFromClasspath(String filename) throws Exception{
+    byte[] readFromClasspath(String filename) throws Exception {
 
         final URL url = this.getClass().getResource("/" + filename);
         if (url == null) {

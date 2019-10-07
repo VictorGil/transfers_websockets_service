@@ -5,7 +5,7 @@ package net.devaction.kafka.transferswebsocketsservice.message;
  *
  * since August 2019
  */
-public class MessageWrapper{
+public class MessageWrapper {
 
     private String type;
     private String payload;

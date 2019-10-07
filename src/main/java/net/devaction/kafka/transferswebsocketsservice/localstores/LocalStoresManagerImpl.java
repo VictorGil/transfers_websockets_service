@@ -42,7 +42,7 @@ import net.devaction.kafka.transferswebsocketsservice.transferretriever.Transfer
  *
  * since August 2019
  */
-public class LocalStoresManagerImpl implements LocalStoresManager{
+public class LocalStoresManagerImpl implements LocalStoresManager {
     private static final Logger log = LoggerFactory.getLogger(LocalStoresManagerImpl.class);
 
     private ReadOnlyKeyValueStore<String, AccountBalance> balancesStore;
@@ -77,7 +77,7 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
         streams.start();
 
         while (streams.state() != State.RUNNING) {
-            try{
+            try {
                 TimeUnit.MILLISECONDS.sleep(100);
             } catch (InterruptedException ex) {
                 log.error("Interrupted while waiting for the \"Streams\" to start.", ex);

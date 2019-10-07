@@ -8,7 +8,7 @@ package net.devaction.kafka.transferswebsocketsservice.processor;
 // We need this class because we do not control
 // the construction of the serverEndPoint class
 // so we cannot easily inject the MessageWrapperProcessor
-public class MessageWrapperProcessorSingletonProvider{
+public class MessageWrapperProcessorSingletonProvider {
     private MessageWrapperProcessorSingletonProvider() {}
 
     private static MessageWrapperProcessor processor;

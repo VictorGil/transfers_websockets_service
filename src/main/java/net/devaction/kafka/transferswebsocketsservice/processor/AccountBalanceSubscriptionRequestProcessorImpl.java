@@ -14,7 +14,7 @@ import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatespr
  * since October 2019
  */
 public class AccountBalanceSubscriptionRequestProcessorImpl
-        implements AccountBalanceSubscriptionRequestProcessor{
+        implements AccountBalanceSubscriptionRequestProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(AccountBalanceSubscriptionRequestProcessorImpl.class);
 

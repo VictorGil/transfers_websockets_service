@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * since August 2019
  */
-public class MessageWrapperEncoder implements Encoder.Text<MessageWrapper>{
+public class MessageWrapperEncoder implements Encoder.Text<MessageWrapper> {
     private static final Logger log = LoggerFactory.getLogger(MessageWrapperEncoder.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
@@ -26,10 +26,10 @@ public class MessageWrapperEncoder implements Encoder.Text<MessageWrapper>{
     }
 
     @Override
-    public String encode(MessageWrapper messageWrapper) throws EncodeException{
+    public String encode(MessageWrapper messageWrapper) throws EncodeException {
         log.trace("MessageWrapper to be encoded: {}", messageWrapper);
         String json = null;
-        try{
+        try {
             json = mapper.writeValueAsString(messageWrapper);
         } catch (JsonProcessingException ex) {
             log.error("Unable to serialize {} object: {}",

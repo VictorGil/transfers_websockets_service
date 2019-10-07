@@ -25,7 +25,7 @@ import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperPr
 @ServerEndpoint(value = "/001",
 decoders = MessageWrapperDecoder.class,
 encoders = MessageWrapperEncoder.class)
-public class ServerEndPoint{
+public class ServerEndPoint {
     private static final Logger log = LoggerFactory.getLogger(ServerEndPoint.class);
 
     @OnOpen

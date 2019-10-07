@@ -9,6 +9,6 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBa
  *
  * since October 2019
  */
-public interface AccountBalanceSubscriptionRequestProcessor{
+public interface AccountBalanceSubscriptionRequestProcessor {
     void process(AccountBalanceSubscriptionRequest request, Session session);
 }

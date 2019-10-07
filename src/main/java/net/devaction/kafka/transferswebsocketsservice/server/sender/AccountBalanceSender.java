@@ -10,7 +10,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageType;
  *
  * since August 2019
  */
-public interface AccountBalanceSender{
+public interface AccountBalanceSender {
 
     public void send(AccountBalanceEntity accountBalance, Session session, MessageType messageType);
 }

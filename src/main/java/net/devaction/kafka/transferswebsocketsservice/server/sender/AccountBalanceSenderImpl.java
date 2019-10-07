@@ -17,7 +17,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
  *
  * since August 2019
  */
-public class AccountBalanceSenderImpl implements AccountBalanceSender{
+public class AccountBalanceSenderImpl implements AccountBalanceSender {
     private static final Logger log = LoggerFactory.getLogger(AccountBalanceSenderImpl.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
@@ -39,7 +39,7 @@ public class AccountBalanceSenderImpl implements AccountBalanceSender{
         }
 
         String json;
-        try{
+        try {
             json = mapper.writeValueAsString(accountBalance);
         } catch (JsonProcessingException ex) {
             log.error("Unable to serialize {} to JSON: {}",

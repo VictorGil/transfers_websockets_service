@@ -9,7 +9,7 @@ import net.devaction.entity.TransferEntity;
  *
  * since August 2019
  */
-public interface TransferSender{
+public interface TransferSender {
 
     public void send(TransferEntity transfer, Session session);
 }

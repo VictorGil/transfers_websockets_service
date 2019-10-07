@@ -10,7 +10,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
  *
  * since August 2019
  */
-public class MessageSenderImpl implements MessageSender{
+public class MessageSenderImpl implements MessageSender {
 
     private final SendHandler handler = new AsyncSendHandler();
 

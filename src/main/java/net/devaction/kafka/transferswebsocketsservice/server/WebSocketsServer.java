@@ -5,7 +5,7 @@ package net.devaction.kafka.transferswebsocketsservice.server;
  *
  * since August 2019
  */
-public interface WebSocketsServer{
+public interface WebSocketsServer {
 
     public void start(String host, int port, String contextPath)
             throws Exception;

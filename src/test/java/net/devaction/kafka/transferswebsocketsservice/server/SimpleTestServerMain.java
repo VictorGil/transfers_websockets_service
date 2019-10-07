@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  *
  * since August 2019
  */
-public class SimpleTestServerMain{
+public class SimpleTestServerMain {
     private static final Logger log = LoggerFactory.getLogger(SimpleTestServerMain.class);
 
     public static void main(String[] args) {
@@ -30,7 +30,7 @@ public class SimpleTestServerMain{
             System.out.print("Please press a key to stop the server.");
             reader.readLine();
         } catch (Exception ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
         } finally {
             log.info("Going to stop the WebSockets server");
             server.stop();

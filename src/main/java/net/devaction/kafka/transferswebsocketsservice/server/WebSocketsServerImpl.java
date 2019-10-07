@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
  *
  * since August 2019
  */
-public class WebSocketsServerImpl implements WebSocketsServer{
+public class WebSocketsServerImpl implements WebSocketsServer {
     private static final Logger log = LoggerFactory.getLogger(WebSocketsServerImpl.class);
 
     private Server server;
 
     @Override
-    public void start(String host, int port, String contextPath) throws Exception{
+    public void start(String host, int port, String contextPath) throws Exception {
         log.info("Going to start the Websockets server, host: {},"
                 + "port: {}, context path: {}",
                 host, port, contextPath);
@@ -26,7 +26,7 @@ public class WebSocketsServerImpl implements WebSocketsServer{
                 server = new Server(host, port, contextPath, null,
                 ServerEndPoint.class);
 
-        try{
+        try {
             server.start();
         } catch (DeploymentException ex) {
             log.error("Unable to start the Tyrus server: {}", ex, ex);

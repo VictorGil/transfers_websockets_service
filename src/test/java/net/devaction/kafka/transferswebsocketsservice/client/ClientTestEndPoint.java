@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * since August 2019
  */
-public class ClientTestEndPoint extends Endpoint{
+public class ClientTestEndPoint extends Endpoint {
     private static final Logger log = LoggerFactory.getLogger(ClientTestEndPoint.class);
 
     private final CountDownLatch messageLatch;
@@ -33,7 +33,7 @@ public class ClientTestEndPoint extends Endpoint{
                 new ClientMessageHandler(session, messageLatch));
 
         log.debug("Going to send a message.");
-        try{
+        try {
             session.getBasicRemote().sendText("hello from " + this.getClass().getSimpleName());
         } catch (IOException ex) {
             log.error("Session: {}. Unable to send message: {}",

@@ -23,19 +23,19 @@ public class ServerImplTesterMain {
         WebSocketsServer server = new WebSocketsServerImpl();
 
         BufferedReader reader = null;
-        try{
+        try {
             server.start("localhost", 38201, "/endpoint");
             reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.print("Please press a key to stop the server.");
             reader.readLine();
         } catch (Exception ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
         } finally {
             if (reader != null) {
-                try{
+                try {
                     reader.close();
                 } catch (IOException ex) {
-                    log.error("{}", ex, ex);
+                    log.error(" {}", ex, ex);
                 }
             }
 

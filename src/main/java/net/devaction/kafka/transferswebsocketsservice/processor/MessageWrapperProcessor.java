@@ -9,7 +9,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
  *
  * since August 2019
  */
-public interface MessageWrapperProcessor{
+public interface MessageWrapperProcessor {
 
     public void process(MessageWrapper messageWrapper, Session session);
 }

@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * since August 2019
  */
-public class DeserializationTester{
+public class DeserializationTester {
     private static final Logger log = LoggerFactory.getLogger(
             DeserializationTester.class);
 
@@ -23,14 +23,14 @@ public class DeserializationTester{
     }
 
     private void run() {
-        String json = "{\"type\":\"BALANCE_REQUEST\",\"payload\":\"whatever\"}";
+        String json = " {\"type\":\"BALANCE_REQUEST\",\"payload\":\"whatever\"}";
         log.info("JSON string to be deserialized: {}", json);
         MessageWrapper messageWrapper = null;
 
-        try{
+        try {
             messageWrapper = mapper.readValue(json, MessageWrapper.class);
         } catch (IOException ex) {
-            log.error("{}", ex, ex);;
+            log.error(" {}", ex, ex);;
         }
 
         log.info("Deserialized object: {}", messageWrapper);

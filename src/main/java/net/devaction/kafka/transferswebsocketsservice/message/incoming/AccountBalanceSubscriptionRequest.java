@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * accountBalance messages related to the specified account ID
  * coming from Kafka.
  */
-public class AccountBalanceSubscriptionRequest{
+public class AccountBalanceSubscriptionRequest {
     private static final Logger log = LoggerFactory.getLogger(AccountBalanceSubscriptionRequest.class);
 
     private String accountId;

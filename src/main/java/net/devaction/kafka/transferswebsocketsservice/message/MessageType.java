@@ -5,7 +5,7 @@ package net.devaction.kafka.transferswebsocketsservice.message;
  *
  * since August 2019
  */
-public enum MessageType{
+public enum MessageType {
     BALANCE_DATA_REQUEST,
     BALANCE_DATA_RESPONSE,
 

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * since August 2019
  */
-public class SerializationTester{
+public class SerializationTester {
     private static final Logger log = LoggerFactory.getLogger(SerializationTester.class);
 
     private ObjectMapper mapper = new ObjectMapper();
@@ -28,10 +28,10 @@ public class SerializationTester{
         MessageWrapper messageWrapper = new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), "whatever");
         log.info("Going to serialize: {}", messageWrapper);
         String json = null;
-        try{
+        try {
             json = mapper.writeValueAsString(messageWrapper);
         } catch (JsonProcessingException ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
         }
         log.info("JSON result: {}", json);
     }
@@ -40,10 +40,10 @@ public class SerializationTester{
         MessageWrapper messageWrapper = new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), "whatever");
         log.info("Going to serialize: {}", messageWrapper);
         String json = null;
-        try{
+        try {
             json = mapper.writeValueAsString(messageWrapper);
         } catch (JsonProcessingException ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
         }
         log.info("JSON result: {}", json);
     }

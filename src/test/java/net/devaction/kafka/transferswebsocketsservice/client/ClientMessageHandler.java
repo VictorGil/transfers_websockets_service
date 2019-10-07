@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * since August 2019
  */
-public class ClientMessageHandler implements Whole<String>{
+public class ClientMessageHandler implements Whole<String> {
     private static final Logger log = LoggerFactory.getLogger(ClientMessageHandler.class);
 
     private final CountDownLatch messageLatch;

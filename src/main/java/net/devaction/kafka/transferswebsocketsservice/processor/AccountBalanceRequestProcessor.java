@@ -9,7 +9,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBa
  *
  * since August 2019
  */
-public interface AccountBalanceRequestProcessor{
+public interface AccountBalanceRequestProcessor {
 
     void process(AccountBalanceRequest request, Session session);
 }

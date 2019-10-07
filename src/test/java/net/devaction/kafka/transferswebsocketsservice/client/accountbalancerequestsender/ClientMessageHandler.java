@@ -16,7 +16,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
  *
  * since August 2019
  */
-public class ClientMessageHandler implements Whole<MessageWrapper>{
+public class ClientMessageHandler implements Whole<MessageWrapper> {
     private static final Logger log = LoggerFactory.getLogger(ClientMessageHandler.class);
 
     private final Session session;

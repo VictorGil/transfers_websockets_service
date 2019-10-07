@@ -9,7 +9,7 @@ import net.devaction.kafka.avro.Transfer;
  *
  * since August 2019
  */
-public class DummyReducer implements Reducer<Transfer>{
+public class DummyReducer implements Reducer<Transfer> {
 
     @Override
     public Transfer apply(Transfer value1, Transfer value2) {

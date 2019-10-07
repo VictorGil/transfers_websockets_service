@@ -37,7 +37,7 @@ import net.devaction.kafka.transferswebsocketsservice.config.ConfigReader;
  *
  * since August 2019
  */
-public class WebSocketsServiceMain implements SignalHandler{
+public class WebSocketsServiceMain implements SignalHandler {
     private static final Logger log = LoggerFactory.getLogger(WebSocketsServiceMain.class);
 
     private static final String WINCH_SIGNAL = "WINCH";
@@ -57,7 +57,7 @@ public class WebSocketsServiceMain implements SignalHandler{
 
         ConfigValues configValues;
         log.info("Going to read the configuration values");
-        try{
+        try {
             configValues = new ConfigReader().read();
         } catch (Exception ex) {
             log.error("Unable to read the configuration values, exiting");
@@ -92,7 +92,7 @@ public class WebSocketsServiceMain implements SignalHandler{
 
         server = new WebSocketsServerImpl();
         log.info("Going to start the WebSockets server.");
-        try{
+        try {
             server.start(configValues.getServerHost(),
                     configValues.getServerPort(),
                     configValues.getContextPath());
@@ -117,7 +117,7 @@ public class WebSocketsServiceMain implements SignalHandler{
 
     private void registerThisAsOsSignalHandler() {
         log.debug("Going to register this object to handle the {} signal", WINCH_SIGNAL);
-        try{
+        try {
             Signal.handle(new Signal(WINCH_SIGNAL), this);
         } catch(Exception ex) {
             // Most likely this is a signal that's not supported on this

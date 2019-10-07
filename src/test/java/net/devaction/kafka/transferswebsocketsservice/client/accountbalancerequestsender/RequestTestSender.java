@@ -31,7 +31,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferI
  *
  * since August 2019
  */
-public class RequestTestSender{
+public class RequestTestSender {
     private static final Logger log = LoggerFactory.getLogger(
             RequestTestSender.class);
 
@@ -61,55 +61,55 @@ public class RequestTestSender{
 
             session.getBasicRemote().sendObject(messageWrapper);
         } catch (Exception ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
         }
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("Please press a key to stop the test WebSockets client.");
-        try{
+        try {
             reader.readLine();
         } catch (IOException ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
         }
-        try{
+        try {
             if (reader != null)
                 reader.close();
         } catch (IOException ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
         }
         log.info("Exiting");
     }
 
-    private MessageWrapper createBalanceRequestMessageWrapper() throws IOException{
+    private MessageWrapper createBalanceRequestMessageWrapper() throws IOException {
         AccountBalanceRequest request = createAccountBalanceRequest();
 
         String json;
-        try{
+        try {
 
             json = mapper.writeValueAsString(request);
-            log.debug("{} JSON string:\n{}",
+            log.debug(" {} JSON string:\n {}",
                     AccountBalanceRequest.class.getSimpleName(), json);
 
         } catch (JsonProcessingException ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
             throw ex;
         }
 
         return new MessageWrapper(MessageType.BALANCE_DATA_REQUEST.name(), json);
     }
 
-    private MessageWrapper createBalanceSubscriptionRequestMessageWrapper() throws IOException{
+    private MessageWrapper createBalanceSubscriptionRequestMessageWrapper() throws IOException {
         AccountBalanceRequest request = createAccountBalanceRequest();
 
         String json;
-        try{
+        try {
 
             json = mapper.writeValueAsString(request);
-            log.debug("{} JSON string:\n{}",
+            log.debug(" {} JSON string:\n {}",
                     AccountBalanceSubscriptionRequest.class.getSimpleName(), json);
 
         } catch (JsonProcessingException ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
             throw ex;
         }
 
@@ -121,13 +121,13 @@ public class RequestTestSender{
 
         String json;
 
-        try{
+        try {
             json = mapper.writeValueAsString(request);
-            log.debug("{} JSON string:\n{}",
+            log.debug(" {} JSON string:\n {}",
                     TransferInfoRequest.class.getSimpleName(), json);
 
         } catch (JsonProcessingException ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
             throw ex;
         }
         return  new MessageWrapper(MessageType.TRANSFER_DATA_REQUEST.name(), json);

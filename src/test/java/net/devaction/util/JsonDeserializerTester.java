@@ -13,7 +13,7 @@ import net.devaction.kafka.avro.AccountBalance;
  *
  * since August 2019
  */
-public class JsonDeserializerTester{
+public class JsonDeserializerTester {
     private static final Logger log = LoggerFactory.getLogger(JsonDeserializerTester.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
@@ -31,13 +31,13 @@ public class JsonDeserializerTester{
         AccountBalanceEntity balance = new AccountBalanceEntity("test-id", "test-client-id");
         String json = null;
 
-        try{
+        try {
             json = mapper.writeValueAsString(balance);
         } catch (JsonProcessingException ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
             return;
         }
-        log.debug("AccountBalanceEntity object:\n{}\n JSON representation:\n{}",
+        log.debug("AccountBalanceEntity object:\n {}\n JSON representation:\n {}",
                 balance, json);
     }
 
@@ -47,14 +47,14 @@ public class JsonDeserializerTester{
         JsonDeserializer deserializer = new JsonDeserializer();
 
         AccountBalanceEntity accountBalanceEntity = null;
-        try{
+        try {
             accountBalanceEntity = deserializer.deserializeFromFile(filename,
                     AccountBalanceEntity.class);
         } catch (Exception e) {
             return;
         }
 
-        log.debug("Deserialized object:\n{}\nSource JSON file: {}",
+        log.debug("Deserialized object:\n {}\nSource JSON file: {}",
                 accountBalanceEntity, filename);
     }
 }

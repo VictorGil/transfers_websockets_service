@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * since August 2019
  */
-public class ConfigValues{
+public class ConfigValues {
 
     @JsonProperty("server_host")
     private String serverHost;

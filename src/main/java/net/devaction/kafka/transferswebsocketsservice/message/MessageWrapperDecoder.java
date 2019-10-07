@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * since August 2019
  */
-public class MessageWrapperDecoder implements Decoder.Text<MessageWrapper>{
+public class MessageWrapperDecoder implements Decoder.Text<MessageWrapper> {
     private static final Logger log = LoggerFactory.getLogger(MessageWrapperDecoder.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
@@ -32,10 +32,10 @@ public class MessageWrapperDecoder implements Decoder.Text<MessageWrapper>{
     }
 
     @Override
-    public MessageWrapper decode(String jsonString) throws DecodeException{
+    public MessageWrapper decode(String jsonString) throws DecodeException {
         log.trace("JSON to be decoded: {}", jsonString);
         MessageWrapper messageWrapper = null;
-        try{
+        try {
             messageWrapper = mapper.readValue(jsonString, MessageWrapper.class);
         } catch (IOException ex) {
             log.error("Unable to deserialize JSON {} object: {}",

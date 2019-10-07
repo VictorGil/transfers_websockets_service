@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * since August 2019
  */
-public class SimpleTestClientMain{
+public class SimpleTestClientMain {
     private static final Logger log = LoggerFactory.getLogger(SimpleTestClientMain.class);
 
     public static void main(String args[]) {
@@ -35,7 +35,7 @@ public class SimpleTestClientMain{
             log.debug("Going to sleep.");
             messageLatch.await(100, TimeUnit.SECONDS);
         } catch (Exception ex) {
-            log.error("{}", ex, ex);
+            log.error(" {}", ex, ex);
         }
     }
 }

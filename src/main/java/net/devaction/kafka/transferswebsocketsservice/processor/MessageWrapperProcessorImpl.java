@@ -20,7 +20,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferI
  *
  * since August 2019
  */
-public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
+public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
     private static final Logger log = LoggerFactory.getLogger(MessageWrapperProcessorImpl.class);
 
     private final AccountBalanceRequestProcessor accountBalanceRequestProcessor;
@@ -48,7 +48,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
                 .equalsIgnoreCase(MessageType.BALANCE_DATA_REQUEST.name())) {
             AccountBalanceRequest accountBalanceRequest;
 
-            try{
+            try {
                 accountBalanceRequest = mapper.readValue(messageWrapper.getPayload(),
                         AccountBalanceRequest.class);
             } catch (IOException ex) {
@@ -65,7 +65,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
                 .equalsIgnoreCase(MessageType.BALANCE_DATA_SUBSCRIPTION.name())) {
             AccountBalanceSubscriptionRequest accountBalanceSubscriptionRequest;
 
-            try{
+            try {
                 accountBalanceSubscriptionRequest = mapper.readValue(messageWrapper.getPayload(),
                         AccountBalanceSubscriptionRequest.class);
             } catch (IOException ex) {
@@ -81,7 +81,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
         TransferInfoRequest transferInfoRequest;
         if (messageWrapper.getType()
                 .equalsIgnoreCase(MessageType.TRANSFER_DATA_REQUEST.name())) {
-            try{
+            try {
                 transferInfoRequest = mapper.readValue(messageWrapper.getPayload(),
                         TransferInfoRequest.class);
             } catch (IOException ex) {
