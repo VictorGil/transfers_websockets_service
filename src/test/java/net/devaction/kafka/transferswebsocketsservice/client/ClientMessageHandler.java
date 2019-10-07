@@ -21,13 +21,13 @@ public class ClientMessageHandler implements Whole<String>{
 
     private final Session session;
 
-    public ClientMessageHandler(Session session, CountDownLatch messageLatch){
+    public ClientMessageHandler(Session session, CountDownLatch messageLatch) {
         this.session = session;
         this.messageLatch = messageLatch;
     }
 
     @Override
-    public void onMessage(String message){
+    public void onMessage(String message) {
         log.debug("Session: {}. Message has been received: {}", session.getId(), message);
         messageLatch.countDown();
     }

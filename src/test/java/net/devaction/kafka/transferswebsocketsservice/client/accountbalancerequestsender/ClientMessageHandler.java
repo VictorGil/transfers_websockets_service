@@ -21,12 +21,12 @@ public class ClientMessageHandler implements Whole<MessageWrapper>{
 
     private final Session session;
 
-    public ClientMessageHandler(Session session){
+    public ClientMessageHandler(Session session) {
         this.session = session;
     }
 
     @Override
-    public void onMessage(MessageWrapper message){
+    public void onMessage(MessageWrapper message) {
         log.debug("Session: {}. Message has been received: {}", session.getId(), message);
     }
 }

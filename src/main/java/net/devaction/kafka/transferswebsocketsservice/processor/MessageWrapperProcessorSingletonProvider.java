@@ -13,11 +13,11 @@ public class MessageWrapperProcessorSingletonProvider{
 
     private static MessageWrapperProcessor processor;
 
-    public static MessageWrapperProcessor getProcessor(){
+    public static MessageWrapperProcessor getProcessor() {
         return processor;
     }
 
-    public static void setProcessor(MessageWrapperProcessor processor){
+    public static void setProcessor(MessageWrapperProcessor processor) {
         MessageWrapperProcessorSingletonProvider.processor = processor;
     }
 }

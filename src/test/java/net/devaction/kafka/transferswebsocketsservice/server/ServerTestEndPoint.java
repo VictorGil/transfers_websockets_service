@@ -33,7 +33,7 @@ public class ServerTestEndPoint{
     private final ObjectMapper mapper = new ObjectMapper();
 
     @OnOpen
-    public void onOpen(final Session session, final EndpointConfig config){
+    public void onOpen(final Session session, final EndpointConfig config) {
         log.debug("Session {} has been opened.", session.getId());
     }
 
@@ -101,7 +101,7 @@ public class ServerTestEndPoint{
         String message;
         try{
             message = createBalanceMessage();
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             return;
         }
         session.getAsyncRemote().sendText(message);
@@ -112,7 +112,7 @@ public class ServerTestEndPoint{
         String balanceJson;
         try{
             balanceJson = mapper.writeValueAsString(balance);
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("Unable to serialize {} to JSON: {}",
                     AccountBalanceEntity.class.getSimpleName(),
                     balance, ex);
@@ -125,7 +125,7 @@ public class ServerTestEndPoint{
         String messageJson;
         try{
             messageJson = mapper.writeValueAsString(message);
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("Unable to serialize {} to JSON: {}",
                     MessageWrapper.class.getSimpleName(),
                     message, ex);
@@ -141,7 +141,7 @@ public class ServerTestEndPoint{
     }
 
     @OnClose
-    public void onClose(Session session, CloseReason closeReason){
+    public void onClose(Session session, CloseReason closeReason) {
         log.debug("Session {} has been closed.", session.getId());
     }
 }

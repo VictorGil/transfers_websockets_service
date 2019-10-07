@@ -9,33 +9,33 @@ public class TransferInfoRequest {
     private String transferId;
 
     // Jackson needs this constructor
-    public TransferInfoRequest(){
+    public TransferInfoRequest() {
     }
 
-    public TransferInfoRequest(String transferId){
+    public TransferInfoRequest(String transferId) {
         this.transferId = transferId;
     }
 
-    public String getTransferId(){
+    public String getTransferId() {
         return transferId;
     }
 
-    public void setTransferId(String transferId){
+    public void setTransferId(String transferId) {
         this.transferId = transferId;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "TransferInfoRequest [transferId=" + transferId + "]";
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return 31 + ((transferId == null) ? 0 : transferId.hashCode());
     }
 
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
 
@@ -47,7 +47,7 @@ public class TransferInfoRequest {
 
         TransferInfoRequest other = (TransferInfoRequest) obj;
 
-        if (transferId == null){
+        if (transferId == null) {
             if (other.transferId != null)
                 return false;
         } else if (!transferId.equals(other.transferId))

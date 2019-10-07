@@ -24,13 +24,13 @@ public class AccountBalanceRequestProcessorImpl implements
     private final LocalStoresManager storesManager;
     private final AccountBalanceSender sender;
 
-    public AccountBalanceRequestProcessorImpl(LocalStoresManager storesManager, AccountBalanceSender sender){
+    public AccountBalanceRequestProcessorImpl(LocalStoresManager storesManager, AccountBalanceSender sender) {
         this.storesManager = storesManager;
         this.sender = sender;
     }
 
     @Override
-    public void process(AccountBalanceRequest request, Session session){
+    public void process(AccountBalanceRequest request, Session session) {
         log.trace("Session id: {}. Going to process the following request: {}",
                 session.getId(), request);
 

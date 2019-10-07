@@ -24,14 +24,14 @@ public class TransferInfoRequestProcessorImpl
     private final TransferSender sender;
 
     public TransferInfoRequestProcessorImpl(LocalStoresManager storesManager,
-            TransferSender sender){
+            TransferSender sender) {
 
         this.storesManager = storesManager;
         this.sender = sender;
     }
 
     @Override
-    public void process(TransferInfoRequest request, Session session){
+    public void process(TransferInfoRequest request, Session session) {
         log.trace("Session id: {}. Going to process the following request: {}",
                 session.getId(), request);
 

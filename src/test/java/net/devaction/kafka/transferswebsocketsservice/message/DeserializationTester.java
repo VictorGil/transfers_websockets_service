@@ -29,7 +29,7 @@ public class DeserializationTester{
 
         try{
             messageWrapper = mapper.readValue(json, MessageWrapper.class);
-        } catch (IOException ex){
+        } catch (IOException ex) {
             log.error("{}", ex, ex);;
         }
 

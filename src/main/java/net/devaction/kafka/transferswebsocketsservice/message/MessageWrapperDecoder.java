@@ -22,12 +22,12 @@ public class MessageWrapperDecoder implements Decoder.Text<MessageWrapper>{
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public void init(EndpointConfig config){
+    public void init(EndpointConfig config) {
         // Nothing to do
     }
 
     @Override
-    public void destroy(){
+    public void destroy() {
         // Nothing to do
     }
 
@@ -37,7 +37,7 @@ public class MessageWrapperDecoder implements Decoder.Text<MessageWrapper>{
         MessageWrapper messageWrapper = null;
         try{
             messageWrapper = mapper.readValue(jsonString, MessageWrapper.class);
-        } catch (IOException ex){
+        } catch (IOException ex) {
             log.error("Unable to deserialize JSON {} object: {}",
                     MessageWrapper.class.getSimpleName(), jsonString, ex);
         }
@@ -46,7 +46,7 @@ public class MessageWrapperDecoder implements Decoder.Text<MessageWrapper>{
     }
 
     @Override
-    public boolean willDecode(String jsonString){
+    public boolean willDecode(String jsonString) {
         return true;
     }
 }

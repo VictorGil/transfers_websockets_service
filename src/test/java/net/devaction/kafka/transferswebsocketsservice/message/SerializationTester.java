@@ -16,7 +16,7 @@ public class SerializationTester{
 
     private ObjectMapper mapper = new ObjectMapper();
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         new SerializationTester().run();
     }
 
@@ -30,7 +30,7 @@ public class SerializationTester{
         String json = null;
         try{
             json = mapper.writeValueAsString(messageWrapper);
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("{}", ex, ex);
         }
         log.info("JSON result: {}", json);
@@ -42,7 +42,7 @@ public class SerializationTester{
         String json = null;
         try{
             json = mapper.writeValueAsString(messageWrapper);
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("{}", ex, ex);
         }
         log.info("JSON result: {}", json);

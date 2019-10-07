@@ -48,7 +48,7 @@ public class WebSocketsServiceMain implements SignalHandler{
 
     private AccountBalanceConsumer balanceConsumer;
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         new WebSocketsServiceMain().run();
     }
 
@@ -59,7 +59,7 @@ public class WebSocketsServiceMain implements SignalHandler{
         log.info("Going to read the configuration values");
         try{
             configValues = new ConfigReader().read();
-        } catch (Exception ex){
+        } catch (Exception ex) {
             log.error("Unable to read the configuration values, exiting");
             return;
         }
@@ -96,7 +96,7 @@ public class WebSocketsServiceMain implements SignalHandler{
             server.start(configValues.getServerHost(),
                     configValues.getServerPort(),
                     configValues.getContextPath());
-        } catch (Exception ex){
+        } catch (Exception ex) {
             log.error("Unable to start the WebSockets server, "
                     + "configuration values: {}", configValues, ex);
             stop();
@@ -110,7 +110,7 @@ public class WebSocketsServiceMain implements SignalHandler{
     }
 
     @Override
-    public void handle(Signal signal){
+    public void handle(Signal signal) {
         log.info("We have received the signal to tell us to stop: {}", signal.getName());
         stop();
     }
@@ -119,7 +119,7 @@ public class WebSocketsServiceMain implements SignalHandler{
         log.debug("Going to register this object to handle the {} signal", WINCH_SIGNAL);
         try{
             Signal.handle(new Signal(WINCH_SIGNAL), this);
-        } catch(Exception ex){
+        } catch(Exception ex) {
             // Most likely this is a signal that's not supported on this
             // platform or with the JVM as it is currently configured
             log.error("FATAL: The signal is not supported: {}, exiting", WINCH_SIGNAL, ex);

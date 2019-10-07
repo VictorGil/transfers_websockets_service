@@ -68,13 +68,13 @@ public class RequestTestSender{
         System.out.print("Please press a key to stop the test WebSockets client.");
         try{
             reader.readLine();
-        } catch (IOException ex){
+        } catch (IOException ex) {
             log.error("{}", ex, ex);
         }
         try{
             if (reader != null)
                 reader.close();
-        } catch (IOException ex){
+        } catch (IOException ex) {
             log.error("{}", ex, ex);
         }
         log.info("Exiting");
@@ -90,7 +90,7 @@ public class RequestTestSender{
             log.debug("{} JSON string:\n{}",
                     AccountBalanceRequest.class.getSimpleName(), json);
 
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("{}", ex, ex);
             throw ex;
         }
@@ -108,7 +108,7 @@ public class RequestTestSender{
             log.debug("{} JSON string:\n{}",
                     AccountBalanceSubscriptionRequest.class.getSimpleName(), json);
 
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("{}", ex, ex);
             throw ex;
         }
@@ -126,7 +126,7 @@ public class RequestTestSender{
             log.debug("{} JSON string:\n{}",
                     TransferInfoRequest.class.getSimpleName(), json);
 
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("{}", ex, ex);
             throw ex;
         }

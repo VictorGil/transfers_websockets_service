@@ -73,7 +73,7 @@ public class AccountBalanceConsumer{
         stop = false;
 
         log.info("\"{}\" topic consumer started", TOPIC);
-        while (!stop){
+        while (!stop) {
             poll();
         }
 
@@ -102,7 +102,7 @@ public class AccountBalanceConsumer{
     }
 
     private void seekFromBeginning() {
-        while (consumer.assignment().isEmpty()){
+        while (consumer.assignment().isEmpty()) {
             log.trace("Going to perform a dummy poll");
             consumer.poll(Duration.ofMillis(100));
         }

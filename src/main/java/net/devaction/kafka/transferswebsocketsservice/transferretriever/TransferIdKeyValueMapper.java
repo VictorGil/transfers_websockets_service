@@ -15,7 +15,7 @@ public class TransferIdKeyValueMapper implements KeyValueMapper<String, Transfer
     private static final Logger log = LoggerFactory.getLogger(TransferIdKeyValueMapper.class);
 
     @Override
-    public String apply(String accountIdKey, Transfer transfer){
+    public String apply(String accountIdKey, Transfer transfer) {
 
         if (accountIdKey == null) {
             log.error("Assertion error, the accountId is null for the Transfer message, "

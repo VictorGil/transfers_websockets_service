@@ -42,7 +42,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
     }
 
     @Override
-    public void process(MessageWrapper messageWrapper, Session session){
+    public void process(MessageWrapper messageWrapper, Session session) {
 
         if (messageWrapper.getType()
                 .equalsIgnoreCase(MessageType.BALANCE_DATA_REQUEST.name())) {
@@ -51,7 +51,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
             try{
                 accountBalanceRequest = mapper.readValue(messageWrapper.getPayload(),
                         AccountBalanceRequest.class);
-            } catch (IOException ex){
+            } catch (IOException ex) {
                 log.error("Unable to deserialize {} message payload: {}",
                         MessageType.BALANCE_DATA_REQUEST.name(),
                         messageWrapper, ex);
@@ -68,7 +68,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
             try{
                 accountBalanceSubscriptionRequest = mapper.readValue(messageWrapper.getPayload(),
                         AccountBalanceSubscriptionRequest.class);
-            } catch (IOException ex){
+            } catch (IOException ex) {
                 log.error("Unable to deserialize {} message payload: {}",
                         MessageType.BALANCE_DATA_SUBSCRIPTION.name(),
                         messageWrapper, ex);
@@ -84,7 +84,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor{
             try{
                 transferInfoRequest = mapper.readValue(messageWrapper.getPayload(),
                         TransferInfoRequest.class);
-            } catch (IOException ex){
+            } catch (IOException ex) {
                 log.error("Unable to deserialize {} message payload: {}",
                         MessageType.TRANSFER_DATA_REQUEST.name(),
                         messageWrapper);

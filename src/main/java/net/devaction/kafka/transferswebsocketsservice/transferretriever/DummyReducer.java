@@ -12,7 +12,7 @@ import net.devaction.kafka.avro.Transfer;
 public class DummyReducer implements Reducer<Transfer>{
 
     @Override
-    public Transfer apply(Transfer value1, Transfer value2){
+    public Transfer apply(Transfer value1, Transfer value2) {
         return value2;
     }
 }

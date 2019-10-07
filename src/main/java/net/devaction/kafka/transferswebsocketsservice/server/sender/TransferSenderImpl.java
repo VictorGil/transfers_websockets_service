@@ -24,17 +24,17 @@ public class TransferSenderImpl implements TransferSender{
 
     private final MessageSender messageSender;
 
-    public TransferSenderImpl(MessageSender messageSender){
+    public TransferSenderImpl(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
 
     @Override
-    public void send(TransferEntity transfer, Session session){
+    public void send(TransferEntity transfer, Session session) {
         String json;
 
         try{
             json = mapper.writeValueAsString(transfer);
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("Unable to serialize {} to JSON: {}",
                     TransferEntity.class.getSimpleName(),
                     transfer, ex);

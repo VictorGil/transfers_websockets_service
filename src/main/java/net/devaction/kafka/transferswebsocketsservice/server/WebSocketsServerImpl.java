@@ -28,7 +28,7 @@ public class WebSocketsServerImpl implements WebSocketsServer{
 
         try{
             server.start();
-        } catch (DeploymentException ex){
+        } catch (DeploymentException ex) {
             log.error("Unable to start the Tyrus server: {}", ex, ex);
             throw ex;
         }
@@ -36,7 +36,7 @@ public class WebSocketsServerImpl implements WebSocketsServer{
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         log.info("Going to stop the WebSockets server");
         if (server != null) {
             server.stop();

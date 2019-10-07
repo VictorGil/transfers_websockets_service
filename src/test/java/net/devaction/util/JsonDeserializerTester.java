@@ -33,7 +33,7 @@ public class JsonDeserializerTester{
 
         try{
             json = mapper.writeValueAsString(balance);
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("{}", ex, ex);
             return;
         }
@@ -50,7 +50,7 @@ public class JsonDeserializerTester{
         try{
             accountBalanceEntity = deserializer.deserializeFromFile(filename,
                     AccountBalanceEntity.class);
-        } catch (Exception e){
+        } catch (Exception e) {
             return;
         }
 

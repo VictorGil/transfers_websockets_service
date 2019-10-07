@@ -79,7 +79,7 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
         while (streams.state() != State.RUNNING) {
             try{
                 TimeUnit.MILLISECONDS.sleep(100);
-            } catch (InterruptedException ex){
+            } catch (InterruptedException ex) {
                 log.error("Interrupted while waiting for the \"Streams\" to start.", ex);
                 Thread.currentThread().interrupt();
             }
@@ -93,7 +93,7 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
     }
 
     private KTable<String,AccountBalance> setUpBalancesStore(String schemaRegistryUrl,
-            StreamsBuilder builder){
+            StreamsBuilder builder) {
 
         KeyValueBytesStoreSupplier accountBalanceStoreSupplier =
                 Stores.inMemoryKeyValueStore(ACCOUNT_BALANCES_STORE);
@@ -117,7 +117,7 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
     }
 
     private KTable<String,Transfer> setUpTransfersStore(String schemaRegistryUrl,
-            StreamsBuilder builder){
+            StreamsBuilder builder) {
 
         KeyValueBytesStoreSupplier transferStoreSupplier =
                 Stores.inMemoryKeyValueStore(TRANSFERS_STORE);
@@ -148,7 +148,7 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
     }
 
     @Override
-    public AccountBalanceEntity getBalance(String accountId){
+    public AccountBalanceEntity getBalance(String accountId) {
         AccountBalance accountBalance = balancesStore.get(accountId);
 
         if (accountBalance == null) {
@@ -160,7 +160,7 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
     }
 
     @Override
-    public TransferEntity getTransfer(String transferId){
+    public TransferEntity getTransfer(String transferId) {
 
         Transfer transfer = transfersStore.get(transferId);
 
@@ -173,7 +173,7 @@ public class LocalStoresManagerImpl implements LocalStoresManager{
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         log.info("We have been told to stop, closing the \"Streams\"");
         streams.close();
     }

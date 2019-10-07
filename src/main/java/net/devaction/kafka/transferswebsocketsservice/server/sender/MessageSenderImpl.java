@@ -15,7 +15,7 @@ public class MessageSenderImpl implements MessageSender{
     private final SendHandler handler = new AsyncSendHandler();
 
     @Override
-    public void send(MessageWrapper message, Session session){
+    public void send(MessageWrapper message, Session session) {
         session.getAsyncRemote().sendObject(message, handler);
     }
 }

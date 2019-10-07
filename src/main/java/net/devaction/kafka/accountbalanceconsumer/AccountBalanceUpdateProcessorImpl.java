@@ -18,12 +18,12 @@ public class AccountBalanceUpdateProcessorImpl implements AccountBalanceUpdatePr
 
     private final UpdatesDispatcher updatesDispatcher;
 
-    public AccountBalanceUpdateProcessorImpl(UpdatesDispatcher updatesDispatcher){
+    public AccountBalanceUpdateProcessorImpl(UpdatesDispatcher updatesDispatcher) {
         this.updatesDispatcher = updatesDispatcher;
     }
 
     @Override
-    public void process(AccountBalance accountBalance){
+    public void process(AccountBalance accountBalance) {
         AccountBalanceEntity abEntity = AccountBalanceConverter.convertToPojo(accountBalance);
         updatesDispatcher.dispatch(abEntity);
     }

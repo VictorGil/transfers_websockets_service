@@ -34,7 +34,7 @@ public class ServerImplTesterMain {
             if (reader != null) {
                 try{
                     reader.close();
-                } catch (IOException ex){
+                } catch (IOException ex) {
                     log.error("{}", ex, ex);
                 }
             }

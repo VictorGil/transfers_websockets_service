@@ -15,7 +15,7 @@ public class AsyncSendHandler implements SendHandler{
     private static final Logger log = LoggerFactory.getLogger(AsyncSendHandler.class);
 
     @Override
-    public void onResult(SendResult result){
+    public void onResult(SendResult result) {
         log.info("Result of sending the message: {}", result);
     }
 }

@@ -25,48 +25,48 @@ public class ConfigValues{
     private String kafkaSchemaRegistryUrl;
 
     @Override
-    public String toString(){
+    public String toString() {
         return "ConfigValues [serverHost=" + serverHost + ", serverPort=" + serverPort + ", contextPath=" + contextPath
                 + ", kafkaBootstrapServers=" + kafkaBootstrapServers + ", kafkaSchemaRegistryUrl=" + kafkaSchemaRegistryUrl + "]";
     }
 
-    public String getServerHost(){
+    public String getServerHost() {
         return serverHost;
     }
 
-    public void setServerHost(String serverHost){
+    public void setServerHost(String serverHost) {
         this.serverHost = serverHost;
     }
 
-    public int getServerPort(){
+    public int getServerPort() {
         return serverPort;
     }
 
-    public void setServerPort(int serverPort){
+    public void setServerPort(int serverPort) {
         this.serverPort = serverPort;
     }
 
-    public String getContextPath(){
+    public String getContextPath() {
         return contextPath;
     }
 
-    public void setContextPath(String contextPath){
+    public void setContextPath(String contextPath) {
         this.contextPath = contextPath;
     }
 
-    public String getKafkaBootstrapServers(){
+    public String getKafkaBootstrapServers() {
         return kafkaBootstrapServers;
     }
 
-    public void setKafkaBootstrapServers(String kafkaBootstrapServers){
+    public void setKafkaBootstrapServers(String kafkaBootstrapServers) {
         this.kafkaBootstrapServers = kafkaBootstrapServers;
     }
 
-    public String getKafkaSchemaRegistryUrl(){
+    public String getKafkaSchemaRegistryUrl() {
         return kafkaSchemaRegistryUrl;
     }
 
-    public void setKafkaSchemaRegistryUrl(String kafkaSchemaRegistryUrl){
+    public void setKafkaSchemaRegistryUrl(String kafkaSchemaRegistryUrl) {
         this.kafkaSchemaRegistryUrl = kafkaSchemaRegistryUrl;
     }
 }

@@ -18,14 +18,14 @@ public class AccountBalanceSubscriptionRequest{
     private String accountId;
 
     // Jackson needs this constructor
-    public AccountBalanceSubscriptionRequest(){ }
+    public AccountBalanceSubscriptionRequest() { }
 
-    public AccountBalanceSubscriptionRequest(String accountId){
+    public AccountBalanceSubscriptionRequest(String accountId) {
         this.accountId = accountId;
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((accountId == null) ? 0 : accountId.hashCode());
@@ -33,7 +33,7 @@ public class AccountBalanceSubscriptionRequest{
     }
 
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -41,7 +41,7 @@ public class AccountBalanceSubscriptionRequest{
         if (getClass() != obj.getClass())
             return false;
         AccountBalanceSubscriptionRequest other = (AccountBalanceSubscriptionRequest) obj;
-        if (accountId == null){
+        if (accountId == null) {
             if (other.accountId != null)
                 return false;
         } else if (!accountId.equals(other.accountId))
@@ -51,15 +51,15 @@ public class AccountBalanceSubscriptionRequest{
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "AccountBalanceSubscriptionRequest [accountId=" + accountId + "]";
     }
 
-    public String getAccountId(){
+    public String getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(String accountId){
+    public void setAccountId(String accountId) {
         this.accountId = accountId;
     }
 }

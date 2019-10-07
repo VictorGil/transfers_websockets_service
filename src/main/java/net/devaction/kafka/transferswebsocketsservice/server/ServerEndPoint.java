@@ -29,7 +29,7 @@ public class ServerEndPoint{
     private static final Logger log = LoggerFactory.getLogger(ServerEndPoint.class);
 
     @OnOpen
-    public void onOpen(final Session session, final EndpointConfig config){
+    public void onOpen(final Session session, final EndpointConfig config) {
         log.debug("Session {} has been opened.", session.getId());
     }
 
@@ -47,7 +47,7 @@ public class ServerEndPoint{
     }
 
     @OnClose
-    public void onClose(Session session, CloseReason closeReason){
+    public void onClose(Session session, CloseReason closeReason) {
         log.debug("Session {} has been closed. Reason: {}", session.getId(), closeReason);
     }
 }

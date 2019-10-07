@@ -15,11 +15,11 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
  *
  * since August 2019
  */
-public class ClientEndPoint extends Endpoint{
+public class ClientEndPoint extends Endpoint {
     private static final Logger log = LoggerFactory.getLogger(ClientEndPoint.class);
 
     @Override
-    public void onOpen(Session session, EndpointConfig config){
+    public void onOpen(Session session, EndpointConfig config) {
         log.debug("Session {} has been opened.", session.getId());
 
         session.addMessageHandler(MessageWrapper.class, new ClientMessageHandler(session));
@@ -31,7 +31,7 @@ public class ClientEndPoint extends Endpoint{
     }
 
     @Override
-    public void onClose(Session session, CloseReason closeReason){
+    public void onClose(Session session, CloseReason closeReason) {
         log.debug("Session {} has been closed.", session.getId());
     }
 }

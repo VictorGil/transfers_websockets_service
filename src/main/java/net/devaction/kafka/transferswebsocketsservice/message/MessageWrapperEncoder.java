@@ -21,7 +21,7 @@ public class MessageWrapperEncoder implements Encoder.Text<MessageWrapper>{
     private final ObjectMapper mapper = new ObjectMapper();
 
     @Override
-    public void init(EndpointConfig config){
+    public void init(EndpointConfig config) {
         // Nothing to do
     }
 
@@ -31,7 +31,7 @@ public class MessageWrapperEncoder implements Encoder.Text<MessageWrapper>{
         String json = null;
         try{
             json = mapper.writeValueAsString(messageWrapper);
-        } catch (JsonProcessingException ex){
+        } catch (JsonProcessingException ex) {
             log.error("Unable to serialize {} object: {}",
                     MessageWrapper.class.getSimpleName(),
                     messageWrapper, ex);
@@ -42,7 +42,7 @@ public class MessageWrapperEncoder implements Encoder.Text<MessageWrapper>{
     }
 
     @Override
-    public void destroy(){
+    public void destroy() {
     // Nothing to do.
     }
 }

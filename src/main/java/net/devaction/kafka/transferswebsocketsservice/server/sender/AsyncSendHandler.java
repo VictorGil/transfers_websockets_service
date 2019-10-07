@@ -15,7 +15,7 @@ public class AsyncSendHandler implements SendHandler{
     private static final Logger log = LoggerFactory.getLogger(AsyncSendHandler.class);
 
     @Override
-    public void onResult(SendResult result){
+    public void onResult(SendResult result) {
         if (result.isOK())
             log.trace("Message successfully asychronously sent: {}", result);
         else

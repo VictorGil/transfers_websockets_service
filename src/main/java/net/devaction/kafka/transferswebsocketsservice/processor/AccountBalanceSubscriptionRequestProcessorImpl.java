@@ -20,12 +20,12 @@ public class AccountBalanceSubscriptionRequestProcessorImpl
 
     private final UpdatesDispatcher updatesDispatcher;
 
-    public AccountBalanceSubscriptionRequestProcessorImpl(UpdatesDispatcher updatesDispatcher){
+    public AccountBalanceSubscriptionRequestProcessorImpl(UpdatesDispatcher updatesDispatcher) {
         this.updatesDispatcher = updatesDispatcher;
     }
 
     @Override
-    public void process(AccountBalanceSubscriptionRequest request, Session session){
+    public void process(AccountBalanceSubscriptionRequest request, Session session) {
         updatesDispatcher.addSession(request.getAccountId(), session);
     }
 }

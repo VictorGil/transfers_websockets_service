@@ -21,12 +21,12 @@ public class ClientTestEndPoint extends Endpoint{
 
     private final CountDownLatch messageLatch;
 
-    public ClientTestEndPoint(CountDownLatch messageLatch){
+    public ClientTestEndPoint(CountDownLatch messageLatch) {
         this.messageLatch = messageLatch;
     }
 
     @Override
-    public void onOpen(Session session, EndpointConfig config){
+    public void onOpen(Session session, EndpointConfig config) {
         log.debug("Session {} has been opened.", session.getId());
 
         session.addMessageHandler(String.class,
@@ -35,7 +35,7 @@ public class ClientTestEndPoint extends Endpoint{
         log.debug("Going to send a message.");
         try{
             session.getBasicRemote().sendText("hello from " + this.getClass().getSimpleName());
-        } catch (IOException ex){
+        } catch (IOException ex) {
             log.error("Session: {}. Unable to send message: {}",
                     session.getId(), ex, ex);
         }
@@ -47,7 +47,7 @@ public class ClientTestEndPoint extends Endpoint{
     }
 
     @Override
-    public void onClose(Session session, CloseReason closeReason){
+    public void onClose(Session session, CloseReason closeReason) {
         log.debug("Session {} has been closed.", session.getId());
     }
 }

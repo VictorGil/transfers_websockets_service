@@ -12,7 +12,7 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler{
     private static final Logger log = LoggerFactory.getLogger(ExceptionHandler.class);
 
     @Override
-    public void uncaughtException(Thread thread, Throwable ex){
+    public void uncaughtException(Thread thread, Throwable ex) {
         log.error("Uncaught exception thrown by {} thread: {}", thread, ex, ex);
     }
 }
