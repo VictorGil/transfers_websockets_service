@@ -21,10 +21,10 @@ public class ClientEndPoint extends Endpoint{
     @Override
     public void onOpen(Session session, EndpointConfig config){
         log.debug("Session {} has been opened.", session.getId());
-        
-        session.addMessageHandler(MessageWrapper.class, new ClientMessageHandler(session));        
+
+        session.addMessageHandler(MessageWrapper.class, new ClientMessageHandler(session));
     }
-   
+
     @Override
     public void onError(Session session, Throwable throwable) {
         log.error("Session {} threw an error: {}", session.getId(), throwable, throwable);
