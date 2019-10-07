@@ -119,7 +119,7 @@ public class WebSocketsServiceMain implements SignalHandler {
         log.debug("Going to register this object to handle the {} signal", WINCH_SIGNAL);
         try {
             Signal.handle(new Signal(WINCH_SIGNAL), this);
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             // Most likely this is a signal that's not supported on this
             // platform or with the JVM as it is currently configured
             log.error("FATAL: The signal is not supported: {}, exiting", WINCH_SIGNAL, ex);
