@@ -7,13 +7,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.devaction.entity.AccountBalanceEntity;
-import net.devaction.kafka.avro.AccountBalance;
+
 /**
  * @author Víctor Gil
  *
  * since August 2019
  */
-
 public class JsonDeserializerTester {
     private static final Logger log = LoggerFactory.getLogger(JsonDeserializerTester.class);
 
@@ -55,7 +54,7 @@ public class JsonDeserializerTester {
             return;
         }
 
-        log.debug("Deserialized object:\n {}\nSource JSON file: {}",
+        log.debug("Deserialized object:\n{}\nSource JSON file: {}",
                 accountBalanceEntity, filename);
     }
 }
