@@ -19,7 +19,7 @@ import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperPr
 import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperProcessorSingletonProvider;
 import net.devaction.kafka.transferswebsocketsservice.processor.TransferInfoRequestProcessor;
-import net.devaction.kafka.transferswebsocketsservice.processor.TransferInfoRequestProcessorImpl;
+import net.devaction.kafka.transferswebsocketsservice.processor.TransferDataRequestProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatesproducer.UpdatesDispatcher;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSenderImpl;
@@ -79,7 +79,7 @@ public class WebSocketsServiceMain implements SignalHandler {
         TransferSender transferSender = new TransferSenderImpl(messageSender);
 
         TransferInfoRequestProcessor tiReqProcessor =
-                new TransferInfoRequestProcessorImpl(storesManager, transferSender);
+                new TransferDataRequestProcessorImpl(storesManager, transferSender);
 
         UpdatesDispatcher updatesDispatcher = new UpdatesDispatcher(abSender);
         AccountBalanceSubscriptionRequestProcessor abSubsReqProcessor =

@@ -26,7 +26,7 @@ public class TransferDataRequest {
 
     @Override
     public String toString() {
-        return "TransferInfoRequest [transferId=" + transferId + "]";
+        return this.getClass().getSimpleName() + " [transferId=" + transferId + "]";
     }
 
     @Override
