@@ -14,6 +14,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceRequest;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceSubscriptionRequest;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataRequest;
+import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataSubscriptionRequest;
 
 /**
  * @author Víctor Gil
@@ -26,26 +27,26 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
     private final AccountBalanceRequestProcessor accountBalanceRequestProcessor;
     private final TransferDataRequestProcessor transferDataRequestProcessor;
     private final AccountBalanceSubscriptionRequestProcessor accountBalanceSubscriptionRequestProcessor;
+    private final TransferDataSubscriptionRequestProcessor transferDataSubscriptionRequestProcessor;
 
-    private final ObjectMapper mapper;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public MessageWrapperProcessorImpl(
             AccountBalanceRequestProcessor accountBalanceRequestProcessor,
             AccountBalanceSubscriptionRequestProcessor accountBalanceSubscriptionRequestProcessor,
-            TransferDataRequestProcessor transferDataRequestProcessor) {
+            TransferDataRequestProcessor transferDataRequestProcessor,
+            TransferDataSubscriptionRequestProcessor transferDataSubscriptionRequestProcessor) {
 
         this.accountBalanceRequestProcessor = accountBalanceRequestProcessor;
         this.transferDataRequestProcessor = transferDataRequestProcessor;
         this.accountBalanceSubscriptionRequestProcessor = accountBalanceSubscriptionRequestProcessor;
-
-        mapper = new ObjectMapper();
+        this.transferDataSubscriptionRequestProcessor = transferDataSubscriptionRequestProcessor;
     }
 
     @Override
     public void process(MessageWrapper messageWrapper, Session session) {
 
-        if (messageWrapper.getType()
-                .equalsIgnoreCase(MessageType.BALANCE_DATA_REQUEST.name())) {
+        if (messageWrapper.getType().equalsIgnoreCase(MessageType.BALANCE_DATA_REQUEST.name())) {
             AccountBalanceRequest accountBalanceRequest;
 
             try {
@@ -61,8 +62,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
             accountBalanceRequestProcessor.process(accountBalanceRequest, session);
         }
 
-        if (messageWrapper.getType()
-                .equalsIgnoreCase(MessageType.BALANCE_DATA_SUBSCRIPTION.name())) {
+        if (messageWrapper.getType().equalsIgnoreCase(MessageType.BALANCE_DATA_SUBSCRIPTION.name())) {
             AccountBalanceSubscriptionRequest accountBalanceSubscriptionRequest;
 
             try {
@@ -79,8 +79,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
         }
 
         TransferDataRequest transferDataRequest;
-        if (messageWrapper.getType()
-                .equalsIgnoreCase(MessageType.TRANSFER_DATA_REQUEST.name())) {
+        if (messageWrapper.getType().equalsIgnoreCase(MessageType.TRANSFER_DATA_REQUEST.name())) {
             try {
                 transferDataRequest = mapper.readValue(messageWrapper.getPayload(),
                         TransferDataRequest.class);
@@ -93,5 +92,22 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
 
             transferDataRequestProcessor.process(transferDataRequest, session);
         }
+        
+        TransferDataSubscriptionRequest transferSubscriptionRequest;
+        if (messageWrapper.getType().equalsIgnoreCase(MessageType.TRANSFER_DATA_SUBSCRIPTION.name())) {
+            try {
+                transferSubscriptionRequest = mapper.readValue(messageWrapper.getPayload(),
+                        TransferDataSubscriptionRequest.class);
+            } catch (IOException ex) {
+                log.error("Unable to deserialize {} message payload: {}",
+                        MessageType.TRANSFER_DATA_SUBSCRIPTION.name(),
+                        messageWrapper);
+                return;
+            }
+            
+            
+        }
+            
+            
     }
 }

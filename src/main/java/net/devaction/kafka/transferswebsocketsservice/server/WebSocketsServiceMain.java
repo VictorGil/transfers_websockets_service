@@ -85,8 +85,9 @@ public class WebSocketsServiceMain implements SignalHandler {
         AccountBalanceSubscriptionRequestProcessor abSubsReqProcessor =
                 new AccountBalanceSubscriptionRequestProcessorImpl(updatesDispatcher);
 
+        // TODO
         MessageWrapperProcessor messageProcessor = new MessageWrapperProcessorImpl(
-                abReqProcessor, abSubsReqProcessor, tiReqProcessor);
+                abReqProcessor, abSubsReqProcessor, tiReqProcessor, null);
 
         MessageWrapperProcessorSingletonProvider.setProcessor(messageProcessor);
 
