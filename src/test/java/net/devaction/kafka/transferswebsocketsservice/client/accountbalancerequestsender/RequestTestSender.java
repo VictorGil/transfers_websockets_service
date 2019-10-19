@@ -117,7 +117,7 @@ public class RequestTestSender {
         return new MessageWrapper(MessageType.BALANCE_DATA_SUBSCRIPTION.name(), json);
     }
 
-    private MessageWrapper createTransferRequestMessageWrapper() throws JsonProcessingException {
+    private MessageWrapper createTransferDataRequestMessageWrapper() throws JsonProcessingException {
         TransferDataRequest request = createTransferDataRequest();
 
         String json;
