@@ -16,7 +16,7 @@ import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSend
  * since August 2019
  */
 public class TransferDataRequestProcessorImpl
-        implements TransferInfoRequestProcessor {
+        implements TransferDataRequestProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(TransferDataRequestProcessorImpl.class);
 

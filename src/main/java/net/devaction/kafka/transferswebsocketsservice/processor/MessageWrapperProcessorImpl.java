@@ -24,7 +24,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
     private static final Logger log = LoggerFactory.getLogger(MessageWrapperProcessorImpl.class);
 
     private final AccountBalanceRequestProcessor accountBalanceRequestProcessor;
-    private final TransferInfoRequestProcessor transferInfoRequestProcessor;
+    private final TransferDataRequestProcessor transferInfoRequestProcessor;
     private final AccountBalanceSubscriptionRequestProcessor accountBalanceSubscriptionRequestProcessor;
 
     private final ObjectMapper mapper;
@@ -32,7 +32,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
     public MessageWrapperProcessorImpl(
             AccountBalanceRequestProcessor accountBalanceRequestProcessor,
             AccountBalanceSubscriptionRequestProcessor accountBalanceSubscriptionRequestProcessor,
-            TransferInfoRequestProcessor transferInfoRequestProcessor) {
+            TransferDataRequestProcessor transferInfoRequestProcessor) {
 
         this.accountBalanceRequestProcessor = accountBalanceRequestProcessor;
         this.transferInfoRequestProcessor = transferInfoRequestProcessor;

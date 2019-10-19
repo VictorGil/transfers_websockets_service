@@ -9,7 +9,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferD
  *
  * since August 2019
  */
-public interface TransferInfoRequestProcessor {
+public interface TransferDataRequestProcessor {
 
     public void process(TransferDataRequest request, Session session);
 }
