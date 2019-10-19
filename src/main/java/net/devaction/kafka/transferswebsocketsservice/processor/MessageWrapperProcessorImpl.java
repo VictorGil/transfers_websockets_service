@@ -24,7 +24,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
     private static final Logger log = LoggerFactory.getLogger(MessageWrapperProcessorImpl.class);
 
     private final AccountBalanceRequestProcessor accountBalanceRequestProcessor;
-    private final TransferDataRequestProcessor transferInfoRequestProcessor;
+    private final TransferDataRequestProcessor transferDataRequestProcessor;
     private final AccountBalanceSubscriptionRequestProcessor accountBalanceSubscriptionRequestProcessor;
 
     private final ObjectMapper mapper;
@@ -32,10 +32,10 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
     public MessageWrapperProcessorImpl(
             AccountBalanceRequestProcessor accountBalanceRequestProcessor,
             AccountBalanceSubscriptionRequestProcessor accountBalanceSubscriptionRequestProcessor,
-            TransferDataRequestProcessor transferInfoRequestProcessor) {
+            TransferDataRequestProcessor transferDataRequestProcessor) {
 
         this.accountBalanceRequestProcessor = accountBalanceRequestProcessor;
-        this.transferInfoRequestProcessor = transferInfoRequestProcessor;
+        this.transferDataRequestProcessor = transferDataRequestProcessor;
         this.accountBalanceSubscriptionRequestProcessor = accountBalanceSubscriptionRequestProcessor;
 
         mapper = new ObjectMapper();
@@ -78,11 +78,11 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
             accountBalanceSubscriptionRequestProcessor.process(accountBalanceSubscriptionRequest, session);
         }
 
-        TransferDataRequest transferInfoRequest;
+        TransferDataRequest transferDataRequest;
         if (messageWrapper.getType()
                 .equalsIgnoreCase(MessageType.TRANSFER_DATA_REQUEST.name())) {
             try {
-                transferInfoRequest = mapper.readValue(messageWrapper.getPayload(),
+                transferDataRequest = mapper.readValue(messageWrapper.getPayload(),
                         TransferDataRequest.class);
             } catch (IOException ex) {
                 log.error("Unable to deserialize {} message payload: {}",
@@ -91,7 +91,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
                 return;
             }
 
-            transferInfoRequestProcessor.process(transferInfoRequest, session);
+            transferDataRequestProcessor.process(transferDataRequest, session);
         }
     }
 }

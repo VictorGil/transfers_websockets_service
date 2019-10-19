@@ -118,7 +118,7 @@ public class RequestTestSender {
     }
 
     private MessageWrapper createTransferRequestMessageWrapper() throws JsonProcessingException {
-        TransferDataRequest request = createTransferInfoRequest();
+        TransferDataRequest request = createTransferDataRequest();
 
         String json;
 
@@ -142,9 +142,9 @@ public class RequestTestSender {
         return request;
     }
 
-    private TransferDataRequest createTransferInfoRequest() {
+    private TransferDataRequest createTransferDataRequest() {
         return new TransferDataRequest("5eb0f2dfd9c3"); // transfer id
-        //return new TransferInfoRequest("28a090daa001"); // account id --> won't work, as expected
+        //return new TransferDataRequest("28a090daa001"); // account id --> won't work, as expected
     }
 
     private AccountBalanceSubscriptionRequest createAccountBalanceSubscriptionRequest() {
