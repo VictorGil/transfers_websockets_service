@@ -5,14 +5,14 @@ package net.devaction.kafka.transferswebsocketsservice.message.incoming;
  *
  * since August 2019
  */
-public class TransferInfoRequest {
+public class TransferDataRequest {
     private String transferId;
 
     // Jackson needs this constructor
-    public TransferInfoRequest() {
+    public TransferDataRequest() {
     }
 
-    public TransferInfoRequest(String transferId) {
+    public TransferDataRequest(String transferId) {
         this.transferId = transferId;
     }
 
@@ -48,7 +48,7 @@ public class TransferInfoRequest {
             return false;
         }
 
-        TransferInfoRequest other = (TransferInfoRequest) obj;
+        TransferDataRequest other = (TransferDataRequest) obj;
 
         if (transferId == null) {
             if (other.transferId != null) {

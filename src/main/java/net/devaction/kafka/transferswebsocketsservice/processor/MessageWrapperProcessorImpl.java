@@ -13,7 +13,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageType;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceRequest;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceSubscriptionRequest;
-import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferInfoRequest;
+import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataRequest;
 
 /**
  * @author Víctor Gil
@@ -78,12 +78,12 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
             accountBalanceSubscriptionRequestProcessor.process(accountBalanceSubscriptionRequest, session);
         }
 
-        TransferInfoRequest transferInfoRequest;
+        TransferDataRequest transferInfoRequest;
         if (messageWrapper.getType()
                 .equalsIgnoreCase(MessageType.TRANSFER_DATA_REQUEST.name())) {
             try {
                 transferInfoRequest = mapper.readValue(messageWrapper.getPayload(),
-                        TransferInfoRequest.class);
+                        TransferDataRequest.class);
             } catch (IOException ex) {
                 log.error("Unable to deserialize {} message payload: {}",
                         MessageType.TRANSFER_DATA_REQUEST.name(),

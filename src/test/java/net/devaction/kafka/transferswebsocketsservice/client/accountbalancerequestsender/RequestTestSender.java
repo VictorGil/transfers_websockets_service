@@ -24,7 +24,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapperDeco
 import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapperEncoder;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceRequest;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceSubscriptionRequest;
-import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferInfoRequest;
+import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataRequest;
 
 /**
  * @author Víctor Gil
@@ -118,14 +118,14 @@ public class RequestTestSender {
     }
 
     private MessageWrapper createTransferRequestMessageWrapper() throws JsonProcessingException {
-        TransferInfoRequest request = createTransferInfoRequest();
+        TransferDataRequest request = createTransferInfoRequest();
 
         String json;
 
         try {
             json = mapper.writeValueAsString(request);
             log.debug("{} JSON string:\n {}",
-                    TransferInfoRequest.class.getSimpleName(), json);
+                    TransferDataRequest.class.getSimpleName(), json);
 
         } catch (JsonProcessingException ex) {
             log.error("{}", ex, ex);
@@ -142,8 +142,8 @@ public class RequestTestSender {
         return request;
     }
 
-    private TransferInfoRequest createTransferInfoRequest() {
-        return new TransferInfoRequest("5eb0f2dfd9c3"); // transfer id
+    private TransferDataRequest createTransferInfoRequest() {
+        return new TransferDataRequest("5eb0f2dfd9c3"); // transfer id
         //return new TransferInfoRequest("28a090daa001"); // account id --> won't work, as expected
     }
 

@@ -2,7 +2,7 @@ package net.devaction.kafka.transferswebsocketsservice.processor;
 
 import javax.websocket.Session;
 
-import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferInfoRequest;
+import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataRequest;
 
 /**
  * @author Víctor Gil
@@ -11,5 +11,5 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferI
  */
 public interface TransferInfoRequestProcessor {
 
-    public void process(TransferInfoRequest request, Session session);
+    public void process(TransferDataRequest request, Session session);
 }

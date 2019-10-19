@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import net.devaction.entity.TransferEntity;
 import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManager;
-import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferInfoRequest;
+import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataRequest;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSender;
 
 /**
@@ -31,7 +31,7 @@ public class TransferInfoRequestProcessorImpl
     }
 
     @Override
-    public void process(TransferInfoRequest request, Session session) {
+    public void process(TransferDataRequest request, Session session) {
         log.trace("Session id: {}. Going to process the following request: {}",
                 session.getId(), request);
 
