@@ -1,8 +1,5 @@
 package net.devaction.kafka.accountbalanceconsumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.devaction.entity.AccountBalanceEntity;
 import net.devaction.kafka.avro.AccountBalance;
 import net.devaction.kafka.avro.util.AccountBalanceConverter;
@@ -14,7 +11,6 @@ import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatespr
  * since October 2019
  */
 public class AccountBalanceUpdateProcessorImpl implements AccountBalanceUpdateProcessor {
-    private static final Logger log = LoggerFactory.getLogger(AccountBalanceUpdateProcessorImpl.class);
 
     private final UpdatesDispatcher updatesDispatcher;
 

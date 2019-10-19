@@ -1,6 +1,5 @@
 package net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatesproducer;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

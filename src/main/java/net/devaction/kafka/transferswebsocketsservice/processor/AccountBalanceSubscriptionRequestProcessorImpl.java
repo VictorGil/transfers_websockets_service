@@ -2,9 +2,6 @@ package net.devaction.kafka.transferswebsocketsservice.processor;
 
 import javax.websocket.Session;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceSubscriptionRequest;
 import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatesproducer.UpdatesDispatcher;
 
@@ -15,8 +12,6 @@ import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatespr
  */
 public class AccountBalanceSubscriptionRequestProcessorImpl
         implements AccountBalanceSubscriptionRequestProcessor {
-
-    private static final Logger log = LoggerFactory.getLogger(AccountBalanceSubscriptionRequestProcessorImpl.class);
 
     private final UpdatesDispatcher updatesDispatcher;
 
