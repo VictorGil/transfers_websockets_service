@@ -54,7 +54,7 @@ public class BalanceUpdatesDispatcherImpl implements BalanceUpdatesDispatcher {
 
         // TODO we should check here that the accountId exists in Kafka (i.e., it is valid).
 
-        if (sessionsMap.get(accountId) == null) {
+        if (!sessionsMap.containsKey(accountId)) {
             addNewEntry(accountId, session);
             return;
         }
