@@ -14,9 +14,9 @@
         </Root>
 
         <Logger name="net.devaction" level="trace" additivity="true"/>
-        
-        <Logger name="net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer" 
+
+        <Logger name="net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer"
                 level="debug" additivity="true"/>
-        
+
     </Loggers>
 </Configuration>

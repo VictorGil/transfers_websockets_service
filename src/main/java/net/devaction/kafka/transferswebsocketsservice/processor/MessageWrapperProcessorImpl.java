@@ -92,7 +92,7 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
 
             transferDataRequestProcessor.process(transferDataRequest, session);
         }
-        
+
         TransferDataSubscriptionRequest transferSubscriptionRequest;
         if (messageWrapper.getType().equalsIgnoreCase(MessageType.TRANSFER_DATA_SUBSCRIPTION.name())) {
             try {
@@ -104,10 +104,6 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
                         messageWrapper);
                 return;
             }
-            
-            
         }
-            
-            
     }
 }

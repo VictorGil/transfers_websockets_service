@@ -32,6 +32,7 @@ import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumerImpl;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessor;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessorImpl;
+import net.devaction.kafka.transferconsumer.TransferProcessor;
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigReader;
 
 /**
@@ -40,6 +41,7 @@ import net.devaction.kafka.transferswebsocketsservice.config.ConfigReader;
  * since August 2019
  */
 public class WebSocketsServiceMain implements SignalHandler {
+
     private static final Logger log = LoggerFactory.getLogger(WebSocketsServiceMain.class);
 
     private static final String WINCH_SIGNAL = "WINCH";
@@ -80,7 +82,7 @@ public class WebSocketsServiceMain implements SignalHandler {
 
         TransferSender transferSender = new TransferSenderImpl(messageSender);
 
-        TransferDataRequestProcessor tiReqProcessor =
+        TransferDataRequestProcessor tdReqProcessor =
                 new TransferDataRequestProcessorImpl(storesManager, transferSender);
 
         BalanceUpdatesDispatcher updatesDispatcher = new BalanceUpdatesDispatcherImpl(abSender);
@@ -89,7 +91,7 @@ public class WebSocketsServiceMain implements SignalHandler {
 
         // TODO
         MessageWrapperProcessor messageProcessor = new MessageWrapperProcessorImpl(
-                abReqProcessor, abSubsReqProcessor, tiReqProcessor, null);
+                abReqProcessor, abSubsReqProcessor, tdReqProcessor, null);
 
         MessageWrapperProcessorSingletonProvider.setProcessor(messageProcessor);
 
@@ -110,6 +112,9 @@ public class WebSocketsServiceMain implements SignalHandler {
         balanceConsumer = new AccountBalanceConsumerImpl(configValues.getKafkaBootstrapServers(),
                 configValues.getKafkaSchemaRegistryUrl(), abUpdateProcessor);
         balanceConsumer.start();
+
+        // TODO
+        // TransferProcessor transferProcessor = new TransferProcessorImpl();
     }
 
     @Override
