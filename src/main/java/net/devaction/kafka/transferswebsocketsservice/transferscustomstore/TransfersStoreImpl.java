@@ -15,12 +15,13 @@ import net.devaction.entity.TransferEntity;
  *
  * since October 2019
  */
-public class TransfersStoreImpl {
+public class TransfersStoreImpl implements TransfersStore {
 
     private static final Logger log = LoggerFactory.getLogger(TransfersStoreImpl.class);
 
     private Map<String, HashSet<TransferEntity>> accountTransfersMap = new HashMap<String, HashSet<TransferEntity>>();
 
+    @Override
     public void add(TransferEntity transfer) {
         if (accountTransfersMap.containsKey(transfer.getAccountId())) {
             accountTransfersMap.get(transfer.getAccountId()).add(transfer);
@@ -31,6 +32,7 @@ public class TransfersStoreImpl {
         }
     }
 
+    @Override
     public Set<TransferEntity> getTransfers(String accountId) {
         if (accountTransfersMap.containsKey(accountId)) {
             return accountTransfersMap.get(accountId);

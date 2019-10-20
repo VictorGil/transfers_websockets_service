@@ -20,17 +20,28 @@ import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperPr
 import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperProcessorSingletonProvider;
 import net.devaction.kafka.transferswebsocketsservice.processor.TransferDataRequestProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.TransferDataRequestProcessorImpl;
+import net.devaction.kafka.transferswebsocketsservice.processor.TransferDataSubscriptionRequestProcessor;
+import net.devaction.kafka.transferswebsocketsservice.processor.TransferDataSubscriptionRequestProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.BalanceUpdatesDispatcher;
 import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.BalanceUpdatesDispatcherImpl;
+import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.TransferDataDispatcher;
+import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.TransferDataDispatcherImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSenderImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSenderImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferDataResponseSender;
+import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferDataUpdateSender;
+import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStore;
+import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStoreImpl;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumerImpl;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessor;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessorImpl;
+import net.devaction.kafka.transferconsumer.TransferConsumer;
+import net.devaction.kafka.transferconsumer.TransferConsumerImpl;
+import net.devaction.kafka.transferconsumer.TransferUpdateProcessor;
+import net.devaction.kafka.transferconsumer.TransferUpdateProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigReader;
 
 /**
@@ -49,6 +60,8 @@ public class WebSocketsServiceMain implements SignalHandler {
     private WebSocketsServer server;
 
     private AccountBalanceConsumer balanceConsumer;
+
+    private TransferConsumer transferConsumer;
 
     public static void main(String[] args) {
         new WebSocketsServiceMain().run();
@@ -80,16 +93,23 @@ public class WebSocketsServiceMain implements SignalHandler {
 
         TransferDataResponseSender transferDataResponseSender = new TransferDataResponseSender(messageSender);
 
+        TransferDataUpdateSender transferDataUpdateSender = new TransferDataUpdateSender(messageSender);
+
         TransferDataRequestProcessor tdReqProcessor =
                 new TransferDataRequestProcessorImpl(storesManager, transferDataResponseSender);
 
-        BalanceUpdatesDispatcher updatesDispatcher = new BalanceUpdatesDispatcherImpl(abSender);
+        BalanceUpdatesDispatcher balanceUpdatesDispatcher = new BalanceUpdatesDispatcherImpl(abSender);
         AccountBalanceSubscriptionRequestProcessor abSubsReqProcessor =
-                new AccountBalanceSubscriptionRequestProcessorImpl(updatesDispatcher);
+                new AccountBalanceSubscriptionRequestProcessorImpl(balanceUpdatesDispatcher);
 
-        // TODO
+        TransferDataDispatcher transferDispatcher = new TransferDataDispatcherImpl(transferDataUpdateSender);
+        TransfersStore transfersStore = new TransfersStoreImpl();
+        TransferDataSubscriptionRequestProcessor transferSubscriptionReqProcessor =
+                new TransferDataSubscriptionRequestProcessorImpl(transferDispatcher, transfersStore,
+                        transferDataUpdateSender);
+
         MessageWrapperProcessor messageProcessor = new MessageWrapperProcessorImpl(
-                abReqProcessor, abSubsReqProcessor, tdReqProcessor, null);
+                abReqProcessor, abSubsReqProcessor, tdReqProcessor, transferSubscriptionReqProcessor);
 
         MessageWrapperProcessorSingletonProvider.setProcessor(messageProcessor);
 
@@ -105,14 +125,18 @@ public class WebSocketsServiceMain implements SignalHandler {
             stop();
         }
 
-        AccountBalanceUpdateProcessor abUpdateProcessor = new AccountBalanceUpdateProcessorImpl(updatesDispatcher);
-        log.info("Going to start the account balance Kafka consumer.");
+        AccountBalanceUpdateProcessor abUpdateProcessor = new AccountBalanceUpdateProcessorImpl(balanceUpdatesDispatcher);
+        log.info("Going to start the \"accounts balance\" Kafka consumer.");
         balanceConsumer = new AccountBalanceConsumerImpl(configValues.getKafkaBootstrapServers(),
                 configValues.getKafkaSchemaRegistryUrl(), abUpdateProcessor);
         balanceConsumer.start();
 
-        // TODO
-        // TransferProcessor transferProcessor = new TransferProcessorImpl();
+        // TODO Maybe we can use the same Kafka consumer to receive messages from the two topics
+        TransferUpdateProcessor transferUpdateProcessor = new TransferUpdateProcessorImpl(transferDispatcher, transfersStore);
+        log.info("Going to start the \"transfers\" Kafka consumer.");
+        transferConsumer = new TransferConsumerImpl(configValues.getKafkaBootstrapServers(),
+                configValues.getKafkaSchemaRegistryUrl(), transferUpdateProcessor);
+        transferConsumer.start();
     }
 
     @Override
@@ -138,6 +162,9 @@ public class WebSocketsServiceMain implements SignalHandler {
             balanceConsumer.stop();
         }
 
+        if (transferConsumer != null) {
+            transferConsumer.stop();
+        }
         if (server != null) {
             server.stop();
         }

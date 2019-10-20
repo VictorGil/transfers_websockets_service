@@ -104,6 +104,8 @@ public class MessageWrapperProcessorImpl implements MessageWrapperProcessor {
                         messageWrapper);
                 return;
             }
+
+            transferDataSubscriptionRequestProcessor.process(transferSubscriptionRequest, session);
         }
     }
 }

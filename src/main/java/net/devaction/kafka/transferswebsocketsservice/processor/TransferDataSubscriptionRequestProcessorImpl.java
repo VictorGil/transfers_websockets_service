@@ -1,11 +1,14 @@
 package net.devaction.kafka.transferswebsocketsservice.processor;
 
+import java.util.Set;
+
 import javax.websocket.Session;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import net.devaction.entity.TransferEntity;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataSubscriptionRequest;
+import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.TransferDataDispatcher;
+import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferDataUpdateSender;
+import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStore;
 
 /**
  * @author Víctor Gil
@@ -15,10 +18,25 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferD
 public class TransferDataSubscriptionRequestProcessorImpl implements
         TransferDataSubscriptionRequestProcessor {
 
-    private static final Logger log = LoggerFactory.getLogger(TransferDataSubscriptionRequestProcessorImpl.class);
+    private final TransferDataDispatcher transferDispatcher;
+    private final TransfersStore transfersStore;
+    private final TransferDataUpdateSender sender;
+
+    public TransferDataSubscriptionRequestProcessorImpl(TransferDataDispatcher transferDispatcher,
+            TransfersStore transfersStore, TransferDataUpdateSender sender) {
+
+        this.transferDispatcher = transferDispatcher;
+        this.transfersStore = transfersStore;
+        this.sender = sender;
+    }
 
     @Override
     public void process(TransferDataSubscriptionRequest request, Session session) {
-        // TODO
+        Set<TransferEntity> pastTransfers = transfersStore.getTransfers(request.getAccountId());
+        for (TransferEntity transfer : pastTransfers) {
+            sender.send(transfer, session);
+        }
+
+        transferDispatcher.addSession(request.getAccountId(), session);
     }
 }

@@ -32,16 +32,6 @@ public class BalanceUpdatesDispatcherImpl implements BalanceUpdatesDispatcher {
         this.sender = sender;
     }
 
-    public void dispatch(AccountBalanceEntity balance) {
-        HashSet<Session> sessions = sessionsMap.get(balance.getAccountId());
-
-        if (sessions != null) {
-            for (Session session : sessions) {
-                sender.send(balance, session, MessageType.BALANCE_DATA_UPDATE);
-            }
-        }
-    }
-
     public synchronized void addSession(String accountId, Session session) {
 
         if (log.isTraceEnabled()) {
@@ -60,6 +50,16 @@ public class BalanceUpdatesDispatcherImpl implements BalanceUpdatesDispatcher {
         }
 
         sessionsMap.get(accountId).add(session);
+    }
+
+    public void dispatch(AccountBalanceEntity balance) {
+        HashSet<Session> sessions = sessionsMap.get(balance.getAccountId());
+
+        if (sessions != null) {
+            for (Session session : sessions) {
+                sender.send(balance, session, MessageType.BALANCE_DATA_UPDATE);
+            }
+        }
     }
 
     void removeExistingMapping(Session session) {
