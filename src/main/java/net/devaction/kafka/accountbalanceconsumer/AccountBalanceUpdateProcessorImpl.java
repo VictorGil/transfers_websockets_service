@@ -3,7 +3,7 @@ package net.devaction.kafka.accountbalanceconsumer;
 import net.devaction.entity.AccountBalanceEntity;
 import net.devaction.kafka.avro.AccountBalance;
 import net.devaction.kafka.avro.util.AccountBalanceConverter;
-import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatesproducer.UpdatesDispatcher;
+import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatesproducer.BalanceUpdatesDispatcher;
 
 /**
  * @author Víctor Gil
@@ -12,9 +12,9 @@ import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatespr
  */
 public class AccountBalanceUpdateProcessorImpl implements AccountBalanceUpdateProcessor {
 
-    private final UpdatesDispatcher updatesDispatcher;
+    private final BalanceUpdatesDispatcher updatesDispatcher;
 
-    public AccountBalanceUpdateProcessorImpl(UpdatesDispatcher updatesDispatcher) {
+    public AccountBalanceUpdateProcessorImpl(BalanceUpdatesDispatcher updatesDispatcher) {
         this.updatesDispatcher = updatesDispatcher;
     }
 

@@ -20,15 +20,15 @@ import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalan
  *
  * since September 2019
  */
-public class UpdatesDispatcher {
+public class BalanceUpdatesDispatcher {
 
-    private static final Logger log = LoggerFactory.getLogger(UpdatesDispatcher.class);
+    private static final Logger log = LoggerFactory.getLogger(BalanceUpdatesDispatcher.class);
 
     private final Map<String, HashSet<Session>> sessionsMap = new HashMap<String, HashSet<Session>>();
 
     private final AccountBalanceSender sender;
 
-    public UpdatesDispatcher(AccountBalanceSender sender) {
+    public BalanceUpdatesDispatcher(AccountBalanceSender sender) {
         this.sender = sender;
     }
 
