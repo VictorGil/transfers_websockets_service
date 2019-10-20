@@ -29,6 +29,7 @@ import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSende
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSenderImpl;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer;
+import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumerImpl;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessor;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigReader;
@@ -106,7 +107,7 @@ public class WebSocketsServiceMain implements SignalHandler {
 
         AccountBalanceUpdateProcessor abUpdateProcessor = new AccountBalanceUpdateProcessorImpl(updatesDispatcher);
         log.info("Going to start the account balance Kafka consumer.");
-        balanceConsumer = new AccountBalanceConsumer(configValues.getKafkaBootstrapServers(),
+        balanceConsumer = new AccountBalanceConsumerImpl(configValues.getKafkaBootstrapServers(),
                 configValues.getKafkaSchemaRegistryUrl(), abUpdateProcessor);
         balanceConsumer.start();
     }
