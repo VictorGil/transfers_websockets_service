@@ -26,13 +26,11 @@ import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalan
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSenderImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSenderImpl;
-import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSender;
-import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSenderImpl;
+import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferDataResponseSender;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumerImpl;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessor;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessorImpl;
-import net.devaction.kafka.transferconsumer.TransferProcessor;
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigReader;
 
 /**
@@ -80,10 +78,10 @@ public class WebSocketsServiceMain implements SignalHandler {
         AccountBalanceRequestProcessor abReqProcessor =
                 new AccountBalanceRequestProcessorImpl(storesManager, abSender);
 
-        TransferSender transferSender = new TransferSenderImpl(messageSender);
+        TransferDataResponseSender transferDataResponseSender = new TransferDataResponseSender(messageSender);
 
         TransferDataRequestProcessor tdReqProcessor =
-                new TransferDataRequestProcessorImpl(storesManager, transferSender);
+                new TransferDataRequestProcessorImpl(storesManager, transferDataResponseSender);
 
         BalanceUpdatesDispatcher updatesDispatcher = new BalanceUpdatesDispatcherImpl(abSender);
         AccountBalanceSubscriptionRequestProcessor abSubsReqProcessor =

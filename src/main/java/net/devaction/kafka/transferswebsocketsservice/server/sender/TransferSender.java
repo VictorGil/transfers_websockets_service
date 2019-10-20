@@ -13,5 +13,3 @@ public interface TransferSender {
 
     public void send(TransferEntity transfer, Session session);
 }
-
-

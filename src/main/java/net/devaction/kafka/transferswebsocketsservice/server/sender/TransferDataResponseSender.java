@@ -17,14 +17,14 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
  *
  * since August 2019
  */
-public class TransferSenderImpl implements TransferSender {
-    private static final Logger log = LoggerFactory.getLogger(TransferSenderImpl.class);
+public class TransferDataResponseSender implements TransferSender {
+    private static final Logger log = LoggerFactory.getLogger(TransferDataResponseSender.class);
 
     private final ObjectMapper mapper = new ObjectMapper();
 
     private final MessageSender messageSender;
 
-    public TransferSenderImpl(MessageSender messageSender) {
+    public TransferDataResponseSender(MessageSender messageSender) {
         this.messageSender = messageSender;
     }
 

@@ -8,23 +8,22 @@ import org.slf4j.LoggerFactory;
 import net.devaction.entity.TransferEntity;
 import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManager;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataRequest;
-import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferSender;
+import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferDataResponseSender;
 
 /**
  * @author Víctor Gil
  *
  * since August 2019
  */
-public class TransferDataRequestProcessorImpl
-        implements TransferDataRequestProcessor {
+public class TransferDataRequestProcessorImpl implements TransferDataRequestProcessor {
 
     private static final Logger log = LoggerFactory.getLogger(TransferDataRequestProcessorImpl.class);
 
     private final LocalStoresManager storesManager;
-    private final TransferSender sender;
+    private final TransferDataResponseSender sender;
 
     public TransferDataRequestProcessorImpl(LocalStoresManager storesManager,
-            TransferSender sender) {
+            TransferDataResponseSender sender) {
 
         this.storesManager = storesManager;
         this.sender = sender;
