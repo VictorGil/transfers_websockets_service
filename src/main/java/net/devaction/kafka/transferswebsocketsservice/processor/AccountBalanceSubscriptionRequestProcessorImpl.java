@@ -3,7 +3,7 @@ package net.devaction.kafka.transferswebsocketsservice.processor;
 import javax.websocket.Session;
 
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceSubscriptionRequest;
-import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatesproducer.BalanceUpdatesDispatcher;
+import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.BalanceUpdatesDispatcher;
 
 /**
  * @author Víctor Gil

@@ -20,8 +20,8 @@ import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperPr
 import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperProcessorSingletonProvider;
 import net.devaction.kafka.transferswebsocketsservice.processor.TransferDataRequestProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.TransferDataRequestProcessorImpl;
-import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatesproducer.BalanceUpdatesDispatcher;
-import net.devaction.kafka.transferswebsocketsservice.processor.balanceupdatesproducer.BalanceUpdatesDispatcherImpl;
+import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.BalanceUpdatesDispatcher;
+import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.BalanceUpdatesDispatcherImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSenderImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSender;
