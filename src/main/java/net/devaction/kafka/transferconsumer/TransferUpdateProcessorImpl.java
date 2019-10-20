@@ -10,11 +10,11 @@ import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.Trans
  *
  * since October 2019
  */
-public class TransferProcessorImpl implements TransferProcessor {
+public class TransferUpdateProcessorImpl implements TransferUpdateProcessor {
 
     private final TransferDataDispatcher transferDispatcher;
 
-    public TransferProcessorImpl(TransferDataDispatcher transferDispatcher) {
+    public TransferUpdateProcessorImpl(TransferDataDispatcher transferDispatcher) {
         this.transferDispatcher = transferDispatcher;
     }
 
