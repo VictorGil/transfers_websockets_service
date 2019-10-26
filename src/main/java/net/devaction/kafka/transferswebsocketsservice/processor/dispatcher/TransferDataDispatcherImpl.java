@@ -32,14 +32,15 @@ public class TransferDataDispatcherImpl implements TransferDataDispatcher {
     }
 
     @Override
-    public void addSession(String accountId, Session session) {
+    public synchronized void addSession(String accountId, Session session) {
         if (log.isTraceEnabled()) {
             log.trace("Going to register new accountId-session pair, accountId: {}, session id: {}"
                     + ", current entries:\n {}",
                     accountId, session.getId(), sessionsMapToString());
         }
 
-        removeExistingMapping(session);
+        // So far a session can only be subscribed to updates on one account id
+        removeSession(session);
 
         // TODO we should check here that the accountId exists in Kafka (i.e., it is valid).
 
@@ -62,11 +63,13 @@ public class TransferDataDispatcherImpl implements TransferDataDispatcher {
         }
     }
 
-    void removeExistingMapping(Session session) {
+    // It removes an existing mapping
+    @Override
+    public synchronized void removeSession(Session session) {
         Set<Entry<String, HashSet<Session>>> entries = sessionsMap.entrySet();
         for (Entry<String, HashSet<Session>> entry : entries) {
             if (entry.getValue().remove(session)) {
-                log.trace("Previous mapping of session {} removed", session.getId());
+                log.trace("Mapping of session {} has been removed", session.getId());
                 if (entry.getValue().isEmpty()) {
                     sessionsMap.remove(entry.getKey());
                 }
@@ -83,17 +86,27 @@ public class TransferDataDispatcherImpl implements TransferDataDispatcher {
 
     String sessionsMapToString() {
         final StringBuilder sb = new StringBuilder();
-        Set<Entry<String, HashSet<Session>>> entries = sessionsMap.entrySet();
-        sb.append("Number of entries: " + entries.size() + "\n");
-        for (Entry<String, HashSet<Session>> entry : entries) {
+        sb.append("Number of entries: " + calculateNumberOfEntries() + "\n");
+
+        for (Entry<String, HashSet<Session>> entry : sessionsMap.entrySet()) {
             sb.append("\nAccount id: " + entry.getKey() + "\n");
             HashSet<Session> sessions = entry.getValue();
             for (Session session : sessions) {
-                sb.append("    " + session.getId() + "\n");
+                sb.append("    sessionId: " + session.getId() + "\n");
             }
         }
         sb.append("\n");
 
         return sb.toString();
+    }
+
+    private long calculateNumberOfEntries() {
+        long count = 0;
+
+        for (HashSet<Session> set : sessionsMap.values()) {
+            count = count + set.size();
+        }
+
+        return count;
     }
 }

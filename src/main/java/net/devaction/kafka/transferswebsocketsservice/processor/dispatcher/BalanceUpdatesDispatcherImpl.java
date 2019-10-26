@@ -39,8 +39,8 @@ public class BalanceUpdatesDispatcherImpl implements BalanceUpdatesDispatcher {
                     + ", current entries:\n {}",
                     accountId, session.getId(), sessionsMapToString());
         }
-
-        removeExistingMapping(session);
+        // So far a session can only be subscribed to updates on one account id
+        removeSession(session);
 
         // TODO we should check here that the accountId exists in Kafka (i.e., it is valid).
 
@@ -62,11 +62,11 @@ public class BalanceUpdatesDispatcherImpl implements BalanceUpdatesDispatcher {
         }
     }
 
-    void removeExistingMapping(Session session) {
+    public synchronized void removeSession(Session session) {
         Set<Entry<String, HashSet<Session>>> entries = sessionsMap.entrySet();
         for (Entry<String, HashSet<Session>> entry : entries) {
             if (entry.getValue().remove(session)) {
-                log.trace("Previous mapping of session {} removed", session.getId());
+                log.trace("Mapping of session {} has been removed", session.getId());
                 if (entry.getValue().isEmpty()) {
                     sessionsMap.remove(entry.getKey());
                 }
@@ -83,17 +83,27 @@ public class BalanceUpdatesDispatcherImpl implements BalanceUpdatesDispatcher {
 
     String sessionsMapToString() {
         final StringBuilder sb = new StringBuilder();
-        Set<Entry<String, HashSet<Session>>> entries = sessionsMap.entrySet();
-        sb.append("Number of entries: " + entries.size() + "\n");
-        for (Entry<String, HashSet<Session>> entry : entries) {
-            sb.append("\nAccount id: " + entry.getKey() + "\n");
+        sb.append("Number of entries: " + calculateNumberOfEntries() + "\n");
+
+        for (Entry<String, HashSet<Session>> entry : sessionsMap.entrySet()) {
+            sb.append("\n    Account id: " + entry.getKey() + "\n");
             HashSet<Session> sessions = entry.getValue();
             for (Session session : sessions) {
-                sb.append("    " + session.getId() + "\n");
+                sb.append("    Session id: " + session.getId() + "\n");
             }
         }
         sb.append("\n");
 
         return sb.toString();
+    }
+
+    private long calculateNumberOfEntries() {
+        long count = 0;
+
+        for (HashSet<Session> set : sessionsMap.values()) {
+            count = count + set.size();
+        }
+
+        return count;
     }
 }

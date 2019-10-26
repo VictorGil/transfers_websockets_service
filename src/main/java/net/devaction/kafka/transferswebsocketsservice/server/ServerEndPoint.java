@@ -16,6 +16,7 @@ import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapperDecoder;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapperEncoder;
 import net.devaction.kafka.transferswebsocketsservice.processor.MessageWrapperProcessorSingletonProvider;
+import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.SessionsRemover;
 
 /**
  * @author Víctor Gil
@@ -50,7 +51,6 @@ public class ServerEndPoint {
     public void onClose(Session session, CloseReason closeReason) {
         log.debug("Session {} has been closed. Reason: {}", session.getId(), closeReason);
 
-        // TODO We should remove the session id from the BalanceUpdatesDispatcherImpl
-        // and also from the TransferDataDispatcherImpl
+        SessionsRemover.getSingleton().remove(session);
     }
 }

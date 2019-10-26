@@ -14,4 +14,6 @@ public interface BalanceUpdatesDispatcher {
     public void addSession(String accountId, Session session);
 
     public void dispatch(AccountBalanceEntity balance);
+
+    public void removeSession(Session session);
 }

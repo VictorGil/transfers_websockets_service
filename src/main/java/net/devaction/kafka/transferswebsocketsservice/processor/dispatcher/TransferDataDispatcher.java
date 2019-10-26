@@ -14,4 +14,6 @@ public interface TransferDataDispatcher {
     public void addSession(String accountId, Session session);
 
     public void dispatch(TransferEntity transfer);
+
+    public void removeSession(Session session);
 }
