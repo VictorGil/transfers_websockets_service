@@ -1,4 +1,4 @@
-package net.devaction.kafka.transferswebsocketsservice.client.accountbalancerequestsender;
+package net.devaction.kafka.transferswebsocketsservice.client.common;
 
 import javax.websocket.MessageHandler.Whole;
 
