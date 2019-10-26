@@ -1,4 +1,4 @@
-package net.devaction.kafka.transferswebsocketsservice.client.accountbalancerequestsender;
+package net.devaction.kafka.transferswebsocketsservice.client.sender;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -65,21 +65,8 @@ public class TestRequestSender {
             log.error("{}", ex, ex);
         }
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Please press a key to stop the test WebSockets client.");
-        try {
-            reader.readLine();
-        } catch (IOException ex) {
-            log.error("{}", ex, ex);
-        }
-        try {
-            if (reader != null) {
-                reader.close();
-            }
-        } catch (IOException ex) {
-            log.error("{}", ex, ex);
-        }
-        log.info("Exiting");
+        // We exit when the user presses a key
+        waitForKeyStroke();
     }
 
     private MessageWrapper createBalanceRequestMessageWrapper() throws IOException {
@@ -152,5 +139,23 @@ public class TestRequestSender {
 
         AccountBalanceSubscriptionRequest request = new AccountBalanceSubscriptionRequest("28a090daa002");
         return request;
+    }
+
+    private void waitForKeyStroke() {
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Please press a key to stop the test WebSockets client.");
+        try {
+            reader.readLine();
+        } catch (IOException ex) {
+            log.error("{}", ex, ex);
+        }
+        try {
+            if (reader != null) {
+                reader.close();
+            }
+        } catch (IOException ex) {
+            log.error("{}", ex, ex);
+        }
+        log.info("Exiting");
     }
 }
