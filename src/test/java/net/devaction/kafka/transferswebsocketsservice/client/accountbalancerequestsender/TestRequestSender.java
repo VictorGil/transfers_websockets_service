@@ -32,14 +32,14 @@ import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferD
  *
  * since August 2019
  */
-public class RequestTestSender {
+public class TestRequestSender {
     private static final Logger log = LoggerFactory.getLogger(
-            RequestTestSender.class);
+            TestRequestSender.class);
 
     private ObjectMapper mapper = new ObjectMapper();
 
     public static void main(String[] args) {
-        new RequestTestSender().run();
+        new TestRequestSender().run();
     }
 
     private void run() {
