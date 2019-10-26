@@ -4,9 +4,9 @@
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
             <!--PatternLayout
-                    pattern="[%level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" /-->
+                    pattern="[%level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{4} - %msg%n" /-->
             <PatternLayout
-                    pattern="[%level] %d{HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+                    pattern="[%level] %d{HH:mm:ss.SSS} [%t] %c{4} - %msg%n" />
         </Console>
     </Appenders>
     <Loggers>
