@@ -2,8 +2,6 @@ package net.devaction.kafka.transferswebsocketsservice.client.accountbalancerequ
 
 import javax.websocket.MessageHandler.Whole;
 
-import java.util.concurrent.CountDownLatch;
-
 import javax.websocket.Session;
 
 import org.slf4j.Logger;
