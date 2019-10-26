@@ -1,4 +1,4 @@
-package net.devaction.kafka.transferswebsocketsservice.client.accountbalancerequestsender;
+package net.devaction.kafka.transferswebsocketsservice.client.common;
 
 import javax.websocket.CloseReason;
 import javax.websocket.Endpoint;
@@ -8,6 +8,7 @@ import javax.websocket.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import net.devaction.kafka.transferswebsocketsservice.client.accountbalancerequestsender.ClientMessageHandler;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
 
 /**
