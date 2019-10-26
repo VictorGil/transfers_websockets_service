@@ -5,7 +5,7 @@ package net.devaction.kafka.transferswebsocketsservice.message.incoming;
  *
  * since August 2019
  */
-public class TransferDataSubscriptionRequest {
+public class TransferDataSubscriptionRequest implements Request {
     private String accountId;
 
     // Jackson needs this constructor

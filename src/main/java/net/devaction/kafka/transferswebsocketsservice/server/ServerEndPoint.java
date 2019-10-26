@@ -49,5 +49,8 @@ public class ServerEndPoint {
     @OnClose
     public void onClose(Session session, CloseReason closeReason) {
         log.debug("Session {} has been closed. Reason: {}", session.getId(), closeReason);
+
+        // TODO We should remove the session id from the BalanceUpdatesDispatcherImpl
+        // and also from the TransferDataDispatcherImpl
     }
 }

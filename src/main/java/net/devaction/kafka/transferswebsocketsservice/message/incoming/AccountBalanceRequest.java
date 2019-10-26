@@ -5,7 +5,7 @@ package net.devaction.kafka.transferswebsocketsservice.message.incoming;
  *
  * since August 2019
  */
-public class AccountBalanceRequest {
+public class AccountBalanceRequest implements Request {
 
     private String accountId;
 

@@ -13,8 +13,6 @@ import net.devaction.kafka.consumer.TopicConsumerImpl;
  * since October 2019
  */
 public class TransferConsumerImpl extends TopicConsumerImpl<Transfer> implements TransferConsumer {
-    private static final Logger log = LoggerFactory.getLogger(TransferConsumerImpl.class);
-
     private static final String TOPIC = "transfers";
 
     public TransferConsumerImpl(String bootstrapServers, String schemaRegistryUrl,

@@ -38,6 +38,8 @@ import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumerImpl;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessor;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceUpdateProcessorImpl;
+import net.devaction.kafka.accountbalanceconsumer.runnable.TopicConsumerRunner;
+import net.devaction.kafka.avro.AccountBalance;
 import net.devaction.kafka.transferconsumer.TransferConsumer;
 import net.devaction.kafka.transferconsumer.TransferConsumerImpl;
 import net.devaction.kafka.transferconsumer.TransferUpdateProcessor;
@@ -129,7 +131,10 @@ public class WebSocketsServiceMain implements SignalHandler {
         log.info("Going to start the \"accounts balance\" Kafka consumer.");
         balanceConsumer = new AccountBalanceConsumerImpl(configValues.getKafkaBootstrapServers(),
                 configValues.getKafkaSchemaRegistryUrl(), abUpdateProcessor);
-        balanceConsumer.start();
+        // We start this runner in a new thread, otherwise it would block the execution
+        // of this method
+        TopicConsumerRunner<AccountBalance> balanceConsumerRunner = new TopicConsumerRunner<>(balanceConsumer);
+        balanceConsumerRunner.start();
 
         // TODO Maybe we can use the same Kafka consumer to receive messages from the two topics
         TransferUpdateProcessor transferUpdateProcessor = new TransferUpdateProcessorImpl(transferDispatcher, transfersStore);
@@ -137,6 +142,7 @@ public class WebSocketsServiceMain implements SignalHandler {
         transferConsumer = new TransferConsumerImpl(configValues.getKafkaBootstrapServers(),
                 configValues.getKafkaSchemaRegistryUrl(), transferUpdateProcessor);
         transferConsumer.start();
+        log.info("Exiting after normal execution");
     }
 
     @Override
@@ -165,6 +171,7 @@ public class WebSocketsServiceMain implements SignalHandler {
         if (transferConsumer != null) {
             transferConsumer.stop();
         }
+
         if (server != null) {
             server.stop();
         }

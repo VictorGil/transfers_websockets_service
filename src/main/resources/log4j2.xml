@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+
 <Configuration status="INFO">
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
@@ -14,9 +15,9 @@
         </Root>
 
         <Logger name="net.devaction" level="trace" additivity="true"/>
+        <Logger name="net.devaction.kafka.consumer.TopicConsumerImpl" level="off" additivity="true"/>
 
         <Logger name="net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer"
                 level="debug" additivity="true"/>
-
     </Loggers>
 </Configuration>

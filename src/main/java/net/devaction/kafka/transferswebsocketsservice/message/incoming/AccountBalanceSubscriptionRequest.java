@@ -9,7 +9,7 @@ package net.devaction.kafka.transferswebsocketsservice.message.incoming;
  * accountBalance messages related to the specified account ID
  * coming from Kafka.
  */
-public class AccountBalanceSubscriptionRequest {
+public class AccountBalanceSubscriptionRequest implements Request {
     private String accountId;
 
     // Jackson needs this constructor
