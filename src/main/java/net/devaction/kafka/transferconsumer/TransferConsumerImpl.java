@@ -1,8 +1,5 @@
 package net.devaction.kafka.transferconsumer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.devaction.kafka.avro.Transfer;
 import net.devaction.kafka.consumer.AvroRecordProcessor;
 import net.devaction.kafka.consumer.TopicConsumerImpl;

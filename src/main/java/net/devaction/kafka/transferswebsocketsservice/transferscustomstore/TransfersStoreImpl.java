@@ -5,9 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import net.devaction.entity.TransferEntity;
 
 /**
@@ -16,9 +13,6 @@ import net.devaction.entity.TransferEntity;
  * since October 2019
  */
 public class TransfersStoreImpl implements TransfersStore {
-
-    private static final Logger log = LoggerFactory.getLogger(TransfersStoreImpl.class);
-
     private Map<String, HashSet<TransferEntity>> accountTransfersMap = new HashMap<String, HashSet<TransferEntity>>();
 
     @Override
