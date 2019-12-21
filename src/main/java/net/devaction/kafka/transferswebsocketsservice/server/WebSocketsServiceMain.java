@@ -82,11 +82,11 @@ public class WebSocketsServiceMain implements SignalHandler {
             return;
         }
 
-        storesManager = new LocalStoresManagerImpl();
+        storesManager = new LocalStoresManagerImpl(configValues.getKafkaBootstrapServers(),
+                configValues.getKafkaSchemaRegistryUrl());
 
         log.info("Going to start the Kafka local stores.");
-        storesManager.start(configValues.getKafkaBootstrapServers(),
-                configValues.getKafkaSchemaRegistryUrl());
+        storesManager.start();
 
         MessageSender messageSender = new MessageSenderImpl();
         AccountBalanceSender abSender = new AccountBalanceSenderImpl(messageSender);

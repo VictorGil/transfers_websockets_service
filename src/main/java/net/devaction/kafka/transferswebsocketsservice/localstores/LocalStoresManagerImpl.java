@@ -45,6 +45,9 @@ import net.devaction.kafka.transferswebsocketsservice.transferretriever.Transfer
 public class LocalStoresManagerImpl implements LocalStoresManager {
     private static final Logger log = LoggerFactory.getLogger(LocalStoresManagerImpl.class);
 
+    private final String bootstrapServers;
+    private final String schemaRegistryUrl;
+
     private ReadOnlyKeyValueStore<String, AccountBalance> balancesStore;
     private ReadOnlyKeyValueStore<String, Transfer> transfersStore;
 
@@ -56,8 +59,13 @@ public class LocalStoresManagerImpl implements LocalStoresManager {
     private static final String ACCOUNT_BALANCES_STORE = "account-balances-store";
     private static final String TRANSFERS_STORE = "transfers-store";
 
+    public LocalStoresManagerImpl(String bootstrapServers, String schemaRegistryUrl) {
+        this.bootstrapServers = bootstrapServers;
+        this.schemaRegistryUrl = schemaRegistryUrl;
+    }
+
     @Override
-    public void start(String bootstrapServers, String schemaRegistryUrl) {
+    public void start() {
         StreamsBuilder builder = new StreamsBuilder();
 
         KTable<String,AccountBalance> accountBalancesKTable = setUpBalancesStore(

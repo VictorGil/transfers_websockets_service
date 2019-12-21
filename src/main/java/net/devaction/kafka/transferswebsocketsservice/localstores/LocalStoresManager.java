@@ -10,7 +10,7 @@ import net.devaction.entity.TransferEntity;
  */
 public interface LocalStoresManager {
 
-    public void start(String bootstrapServers, String schemaRegistryUrl);
+    public void start();
 
     public AccountBalanceEntity getBalance(String accountId);
 

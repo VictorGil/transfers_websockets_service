@@ -32,7 +32,9 @@ public class TransferDataSubscriptionRequestProcessorImpl implements
 
     @Override
     public void process(TransferDataSubscriptionRequest request, Session session) {
-        Set<TransferEntity> pastTransfers = transfersStore.getTransfers(request.getAccountId());
+
+        // This can be replaced with a call to Cadence
+        final Set<TransferEntity> pastTransfers = transfersStore.getTransfers(request.getAccountId());
         for (TransferEntity transfer : pastTransfers) {
             sender.send(transfer, session);
         }
