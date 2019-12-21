@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.devaction.entity.AccountBalanceEntity;
-import net.devaction.kafka.transferswebsocketsservice.localstores.BalanceAndTransferFacade;
+import net.devaction.kafka.transferswebsocketsservice.facade.BalanceAndTransferFacade;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageType;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceRequest;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSender;

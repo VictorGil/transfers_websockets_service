@@ -9,8 +9,8 @@ import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigValues;
-import net.devaction.kafka.transferswebsocketsservice.localstores.BalanceAndTransferFacade;
-import net.devaction.kafka.transferswebsocketsservice.localstores.KafkaStreamsLocalStoresManager;
+import net.devaction.kafka.transferswebsocketsservice.facade.BalanceAndTransferFacade;
+import net.devaction.kafka.transferswebsocketsservice.facade.KafkaStreamsLocalStoresManager;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceSubscriptionRequestProcessor;

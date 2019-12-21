@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.devaction.entity.TransferEntity;
-import net.devaction.kafka.transferswebsocketsservice.localstores.BalanceAndTransferFacade;
+import net.devaction.kafka.transferswebsocketsservice.facade.BalanceAndTransferFacade;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataRequest;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferDataResponseSender;
 

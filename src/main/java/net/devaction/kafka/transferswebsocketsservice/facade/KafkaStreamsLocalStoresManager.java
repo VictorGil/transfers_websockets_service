@@ -1,4 +1,4 @@
-package net.devaction.kafka.transferswebsocketsservice.localstores;
+package net.devaction.kafka.transferswebsocketsservice.facade;
 
 import java.util.Collections;
 import java.util.Properties;

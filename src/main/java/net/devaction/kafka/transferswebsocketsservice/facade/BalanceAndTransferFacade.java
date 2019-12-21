@@ -1,4 +1,4 @@
-package net.devaction.kafka.transferswebsocketsservice.localstores;
+package net.devaction.kafka.transferswebsocketsservice.facade;
 
 import net.devaction.entity.AccountBalanceEntity;
 import net.devaction.entity.TransferEntity;
