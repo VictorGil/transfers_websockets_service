@@ -18,5 +18,3 @@ public interface BalanceAndTransferFacade {
 
     public void stop();
 }
-
-

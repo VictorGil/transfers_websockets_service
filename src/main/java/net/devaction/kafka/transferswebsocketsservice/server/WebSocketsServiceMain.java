@@ -10,7 +10,7 @@ import sun.misc.SignalHandler;
 
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigValues;
 import net.devaction.kafka.transferswebsocketsservice.localstores.BalanceAndTransferFacade;
-import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManagerImpl;
+import net.devaction.kafka.transferswebsocketsservice.localstores.KafkaStreamsLocalStoresManager;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessorImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceSubscriptionRequestProcessor;
@@ -82,7 +82,7 @@ public class WebSocketsServiceMain implements SignalHandler {
             return;
         }
 
-        storesManager = new LocalStoresManagerImpl(configValues.getKafkaBootstrapServers(),
+        storesManager = new KafkaStreamsLocalStoresManager(configValues.getKafkaBootstrapServers(),
                 configValues.getKafkaSchemaRegistryUrl());
 
         log.info("Going to start the Kafka local stores.");

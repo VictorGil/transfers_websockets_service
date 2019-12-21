@@ -42,8 +42,8 @@ import net.devaction.kafka.transferswebsocketsservice.transferretriever.Transfer
  *
  * since August 2019
  */
-public class LocalStoresManagerImpl implements BalanceAndTransferFacade {
-    private static final Logger log = LoggerFactory.getLogger(LocalStoresManagerImpl.class);
+public class KafkaStreamsLocalStoresManager implements BalanceAndTransferFacade {
+    private static final Logger log = LoggerFactory.getLogger(KafkaStreamsLocalStoresManager.class);
 
     private final String bootstrapServers;
     private final String schemaRegistryUrl;
@@ -59,7 +59,7 @@ public class LocalStoresManagerImpl implements BalanceAndTransferFacade {
     private static final String ACCOUNT_BALANCES_STORE = "account-balances-store";
     private static final String TRANSFERS_STORE = "transfers-store";
 
-    public LocalStoresManagerImpl(String bootstrapServers, String schemaRegistryUrl) {
+    public KafkaStreamsLocalStoresManager(String bootstrapServers, String schemaRegistryUrl) {
         this.bootstrapServers = bootstrapServers;
         this.schemaRegistryUrl = schemaRegistryUrl;
     }
