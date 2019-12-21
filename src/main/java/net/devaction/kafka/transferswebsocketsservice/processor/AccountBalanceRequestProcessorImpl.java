@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.devaction.entity.AccountBalanceEntity;
-import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManager;
+import net.devaction.kafka.transferswebsocketsservice.localstores.BalanceAndTransferFacade;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageType;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceRequest;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.AccountBalanceSender;
@@ -21,10 +21,10 @@ public class AccountBalanceRequestProcessorImpl implements
 
     private static final Logger log = LoggerFactory.getLogger(AccountBalanceRequestProcessorImpl.class);
 
-    private final LocalStoresManager storesManager;
+    private final BalanceAndTransferFacade storesManager;
     private final AccountBalanceSender sender;
 
-    public AccountBalanceRequestProcessorImpl(LocalStoresManager storesManager, AccountBalanceSender sender) {
+    public AccountBalanceRequestProcessorImpl(BalanceAndTransferFacade storesManager, AccountBalanceSender sender) {
         this.storesManager = storesManager;
         this.sender = sender;
     }

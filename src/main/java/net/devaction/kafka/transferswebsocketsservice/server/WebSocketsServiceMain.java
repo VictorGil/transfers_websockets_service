@@ -9,7 +9,7 @@ import sun.misc.Signal;
 import sun.misc.SignalHandler;
 
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigValues;
-import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManager;
+import net.devaction.kafka.transferswebsocketsservice.localstores.BalanceAndTransferFacade;
 import net.devaction.kafka.transferswebsocketsservice.localstores.LocalStoresManagerImpl;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessorImpl;
@@ -58,7 +58,7 @@ public class WebSocketsServiceMain implements SignalHandler {
 
     private static final String WINCH_SIGNAL = "WINCH";
 
-    private LocalStoresManager storesManager;
+    private BalanceAndTransferFacade storesManager;
 
     private WebSocketsServer server;
 

@@ -42,7 +42,7 @@ import net.devaction.kafka.transferswebsocketsservice.transferretriever.Transfer
  *
  * since August 2019
  */
-public class LocalStoresManagerImpl implements LocalStoresManager {
+public class LocalStoresManagerImpl implements BalanceAndTransferFacade {
     private static final Logger log = LoggerFactory.getLogger(LocalStoresManagerImpl.class);
 
     private final String bootstrapServers;
