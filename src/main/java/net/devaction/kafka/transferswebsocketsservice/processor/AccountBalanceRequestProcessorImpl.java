@@ -34,7 +34,6 @@ public class AccountBalanceRequestProcessorImpl implements
         log.trace("Session id: {}. Going to process the following request: {}",
                 session.getId(), request);
 
-        // This can be replace with a call to Cadence
         final AccountBalanceEntity balance = storesManager.getBalance(request.getAccountId());
         sender.send(balance, session, MessageType.BALANCE_DATA_RESPONSE);
     }

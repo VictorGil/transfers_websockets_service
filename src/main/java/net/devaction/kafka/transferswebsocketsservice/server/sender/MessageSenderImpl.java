@@ -24,7 +24,7 @@ public class MessageSenderImpl implements MessageSender {
 
         try {
             session.getAsyncRemote().sendObject(message, handler);
-        } catch (IllegalStateException ex) {
+        } catch (IllegalStateException | NullPointerException ex) {
             log.error("Could not send message:\n{}\n"
                     + "WebSockets session id: {}", message,
                     session == null ? null : session.getId(), ex);

@@ -12,7 +12,7 @@ import net.devaction.entity.TransferEntity;
  *
  * since October 2019
  */
-public class TransfersStoreImpl implements TransfersStore {
+public class TransfersStoreImpl implements TransfersStoreGetter, TransfersStoreAdder {
     private Map<String, HashSet<TransferEntity>> accountTransfersMap = new HashMap<String, HashSet<TransferEntity>>();
 
     @Override

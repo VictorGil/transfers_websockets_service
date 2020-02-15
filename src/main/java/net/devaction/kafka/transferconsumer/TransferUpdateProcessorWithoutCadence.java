@@ -4,19 +4,19 @@ import net.devaction.entity.TransferEntity;
 import net.devaction.kafka.avro.Transfer;
 import net.devaction.kafka.avro.util.TransferConverter;
 import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.TransferDataDispatcher;
-import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStore;
+import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStoreAdder;
 
 /**
  * @author Víctor Gil
  *
  * since October 2019
  */
-public class TransferUpdateProcessorImpl implements TransferUpdateProcessor {
+public class TransferUpdateProcessorWithoutCadence implements TransferUpdateProcessor {
 
     private final TransferDataDispatcher transferDispatcher;
-    private final TransfersStore transfersStore;
+    private final TransfersStoreAdder transfersStore;
 
-    public TransferUpdateProcessorImpl(TransferDataDispatcher transferDispatcher, TransfersStore transfersStore) {
+    public TransferUpdateProcessorWithoutCadence(TransferDataDispatcher transferDispatcher, TransfersStoreAdder transfersStore) {
         this.transferDispatcher = transferDispatcher;
         this.transfersStore = transfersStore;
     }

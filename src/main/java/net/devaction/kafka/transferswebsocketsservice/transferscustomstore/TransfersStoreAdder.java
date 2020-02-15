@@ -1,17 +1,12 @@
 package net.devaction.kafka.transferswebsocketsservice.transferscustomstore;
 
-import java.util.Set;
-
 import net.devaction.entity.TransferEntity;
 
 /**
  * @author Víctor Gil
  *
- * since October 2019
+ * since January 2020
  */
-public interface TransfersStore {
-
+public interface TransfersStoreAdder {
     public void add(TransferEntity transfer);
-
-    public Set<TransferEntity> getTransfers(String accountId);
 }

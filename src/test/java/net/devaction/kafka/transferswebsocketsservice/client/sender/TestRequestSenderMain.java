@@ -9,7 +9,6 @@ import net.devaction.kafka.transferswebsocketsservice.client.common.MessageWrapp
 import net.devaction.kafka.transferswebsocketsservice.message.MessageType;
 import net.devaction.kafka.transferswebsocketsservice.message.MessageWrapper;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceRequest;
-import net.devaction.kafka.transferswebsocketsservice.message.incoming.AccountBalanceSubscriptionRequest;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataRequest;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataSubscriptionRequest;
 
@@ -33,9 +32,9 @@ public class TestRequestSenderMain {
 
         try {
             // messageWrapper = createBalanceRequestMessageWrapper();
-            // messageWrapper = createBalanceSubscriptionRequestMessageWrapper();
+            messageWrapper = createBalanceSubscriptionRequestMessageWrapper();
             // messageWrapper = createTransferDataRequestMessageWrapper();
-            messageWrapper = createTransferDataSubscriptionRequestMessageWrapper();
+            // messageWrapper = createTransferDataSubscriptionRequestMessageWrapper();
         } catch (IOException ex) {
             log.info("Exiting");
             return;
@@ -71,8 +70,11 @@ public class TestRequestSenderMain {
     private AccountBalanceRequest createAccountBalanceRequest() {
 
         // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa001");
-        AccountBalanceRequest request = new AccountBalanceRequest("28a090daa002");
+        // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa002");
         // AccountBalanceRequest request = new AccountBalanceRequest("28a090daa003");
+        // AccountBalanceRequest request = new AccountBalanceRequest("account-01");
+        AccountBalanceRequest request = new AccountBalanceRequest("account-04");
+
         return request;
     }
 
@@ -83,6 +85,7 @@ public class TestRequestSenderMain {
 
     private TransferDataSubscriptionRequest createTransferDataSubscriptionRequest() {
         // return new TransferDataSubscriptionRequest("28a090daa001"); // account id
-        return new TransferDataSubscriptionRequest("28a090daa002"); // account id
+        // return new TransferDataSubscriptionRequest("28a090daa002"); // account id
+        return new TransferDataSubscriptionRequest("account-04"); // account id
     }
 }

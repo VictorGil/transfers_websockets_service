@@ -9,14 +9,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class ConfigValues {
 
-    @JsonProperty("server_host")
-    private String serverHost;
+    @JsonProperty("websockets_server_host")
+    private String websocketsServerHost;
 
-    @JsonProperty("server_port")
-    private int serverPort;
+    @JsonProperty("websockets_server_port")
+    private int websocketsServerPort;
 
-    @JsonProperty("context_path")
-    private String contextPath;
+    @JsonProperty("websockets_context_path")
+    private String websocketsContextPath;
 
     @JsonProperty("kafka_bootstrap_servers")
     private String kafkaBootstrapServers;
@@ -24,34 +24,38 @@ public class ConfigValues {
     @JsonProperty("kafka_schema_registry_URL")
     private String kafkaSchemaRegistryUrl;
 
+    @JsonProperty("cadence_domain")
+    private String cadenceDomain;
+
     @Override
     public String toString() {
-        return "ConfigValues [serverHost=" + serverHost + ", serverPort=" + serverPort + ", contextPath=" + contextPath
-                + ", kafkaBootstrapServers=" + kafkaBootstrapServers + ", kafkaSchemaRegistryUrl=" + kafkaSchemaRegistryUrl + "]";
+        return "ConfigValues [websocketsServerHost=" + websocketsServerHost + ", websocketsServerPort=" + websocketsServerPort
+                + ", websocketsContextPath=" + websocketsContextPath + ", kafkaBootstrapServers=" + kafkaBootstrapServers
+                + ", kafkaSchemaRegistryUrl=" + kafkaSchemaRegistryUrl + ", cadenceDomain=" + cadenceDomain + "]";
     }
 
-    public String getServerHost() {
-        return serverHost;
+    public String getWebsocketsServerHost() {
+        return websocketsServerHost;
     }
 
-    public void setServerHost(String serverHost) {
-        this.serverHost = serverHost;
+    public void setWebsocketsServerHost(String websocketsServerHost) {
+        this.websocketsServerHost = websocketsServerHost;
     }
 
-    public int getServerPort() {
-        return serverPort;
+    public int getWebsocketsServerPort() {
+        return websocketsServerPort;
     }
 
-    public void setServerPort(int serverPort) {
-        this.serverPort = serverPort;
+    public void setWebsocketsServerPort(int websocketsServerPort) {
+        this.websocketsServerPort = websocketsServerPort;
     }
 
-    public String getContextPath() {
-        return contextPath;
+    public String getWebsocketsContextPath() {
+        return websocketsContextPath;
     }
 
-    public void setContextPath(String contextPath) {
-        this.contextPath = contextPath;
+    public void setWebsocketsContextPath(String websocketsContextPath) {
+        this.websocketsContextPath = websocketsContextPath;
     }
 
     public String getKafkaBootstrapServers() {
@@ -68,5 +72,13 @@ public class ConfigValues {
 
     public void setKafkaSchemaRegistryUrl(String kafkaSchemaRegistryUrl) {
         this.kafkaSchemaRegistryUrl = kafkaSchemaRegistryUrl;
+    }
+
+    public String getCadenceDomain() {
+        return cadenceDomain;
+    }
+
+    public void setCadenceDomain(String cadenceDomain) {
+        this.cadenceDomain = cadenceDomain;
     }
 }

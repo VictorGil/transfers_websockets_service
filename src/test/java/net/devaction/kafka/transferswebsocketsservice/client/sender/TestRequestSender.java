@@ -42,7 +42,7 @@ public class TestRequestSender {
             session = client.connectToServer(new ClientEndPoint(), cec,
                     new URI("ws://localhost:38201/endpoint/001"));
 
-            log.debug("Going to send a message: {}", messageWrapper);
+            log.info("Going to send a message: {}", messageWrapper);
 
             session.getBasicRemote().sendObject(messageWrapper);
         } catch (Exception ex) {
@@ -50,6 +50,7 @@ public class TestRequestSender {
             return;
         }
 
+        log.info("Message sent, now waiting for response(s) until key is pressed");
         // We exit when the user presses a key
         waitForKeyStroke();
     }

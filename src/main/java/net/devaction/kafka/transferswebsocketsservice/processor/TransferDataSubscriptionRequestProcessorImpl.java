@@ -1,14 +1,12 @@
 package net.devaction.kafka.transferswebsocketsservice.processor;
 
-import java.util.Set;
-
 import javax.websocket.Session;
 
 import net.devaction.entity.TransferEntity;
 import net.devaction.kafka.transferswebsocketsservice.message.incoming.TransferDataSubscriptionRequest;
 import net.devaction.kafka.transferswebsocketsservice.processor.dispatcher.TransferDataDispatcher;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferDataUpdateSender;
-import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStore;
+import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStoreGetter;
 
 /**
  * @author Víctor Gil
@@ -19,22 +17,22 @@ public class TransferDataSubscriptionRequestProcessorImpl implements
         TransferDataSubscriptionRequestProcessor {
 
     private final TransferDataDispatcher transferDispatcher;
-    private final TransfersStore transfersStore;
+    private final TransfersStoreGetter transfersStoreGetter;
     private final TransferDataUpdateSender sender;
 
     public TransferDataSubscriptionRequestProcessorImpl(TransferDataDispatcher transferDispatcher,
-            TransfersStore transfersStore, TransferDataUpdateSender sender) {
+            TransfersStoreGetter transfersStore, TransferDataUpdateSender sender) {
 
         this.transferDispatcher = transferDispatcher;
-        this.transfersStore = transfersStore;
+        this.transfersStoreGetter = transfersStore;
         this.sender = sender;
     }
 
     @Override
     public void process(TransferDataSubscriptionRequest request, Session session) {
 
-        // This can be replaced with a call to Cadence
-        final Set<TransferEntity> pastTransfers = transfersStore.getTransfers(request.getAccountId());
+        final Iterable<TransferEntity> pastTransfers = transfersStoreGetter.getTransfers(request.getAccountId());
+
         for (TransferEntity transfer : pastTransfers) {
             sender.send(transfer, session);
         }

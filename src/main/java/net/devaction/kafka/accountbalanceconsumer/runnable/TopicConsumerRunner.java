@@ -1,8 +1,6 @@
 package net.devaction.kafka.accountbalanceconsumer.runnable;
 
 import org.apache.avro.specific.SpecificRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import net.devaction.kafka.consumer.TopicConsumer;
 
@@ -12,8 +10,6 @@ import net.devaction.kafka.consumer.TopicConsumer;
  * since October 2019
  */
 public class TopicConsumerRunner<T extends SpecificRecord> {
-    private static final Logger log = LoggerFactory.getLogger(TopicConsumerRunner.class);
-
     private final TopicConsumer<T> topicConsumer;
 
     public TopicConsumerRunner(TopicConsumer<T> topicConsumer) {
@@ -26,11 +22,4 @@ public class TopicConsumerRunner<T extends SpecificRecord> {
         thread.setName(topicConsumer.getClass().getSimpleName() + "-thread");
         thread.start();
     }
-
-    /*
-    public void stop() {
-        log.info("We have been told to stop the {}", TopicConsumer.class.getSimpleName());
-        topicConsumer.stop();
-    }
-    */
 }

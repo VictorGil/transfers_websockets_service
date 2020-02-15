@@ -10,6 +10,7 @@ import sun.misc.SignalHandler;
 
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigValues;
 import net.devaction.kafka.transferswebsocketsservice.facade.BalanceAndTransferFacade;
+import net.devaction.kafka.transferswebsocketsservice.facade.CadenceFacade;
 import net.devaction.kafka.transferswebsocketsservice.facade.KafkaStreamsLocalStoresManager;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessor;
 import net.devaction.kafka.transferswebsocketsservice.processor.AccountBalanceRequestProcessorImpl;
@@ -33,7 +34,8 @@ import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSende
 import net.devaction.kafka.transferswebsocketsservice.server.sender.MessageSenderImpl;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferDataResponseSender;
 import net.devaction.kafka.transferswebsocketsservice.server.sender.TransferDataUpdateSender;
-import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStore;
+import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStoreAdder;
+import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStoreGetter;
 import net.devaction.kafka.transferswebsocketsservice.transferscustomstore.TransfersStoreImpl;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumer;
 import net.devaction.kafka.accountbalanceconsumer.AccountBalanceConsumerImpl;
@@ -44,7 +46,8 @@ import net.devaction.kafka.avro.AccountBalance;
 import net.devaction.kafka.transferconsumer.TransferConsumer;
 import net.devaction.kafka.transferconsumer.TransferConsumerImpl;
 import net.devaction.kafka.transferconsumer.TransferUpdateProcessor;
-import net.devaction.kafka.transferconsumer.TransferUpdateProcessorImpl;
+import net.devaction.kafka.transferconsumer.TransferUpdateProcessorWhithCadence;
+import net.devaction.kafka.transferconsumer.TransferUpdateProcessorWithoutCadence;
 import net.devaction.kafka.transferswebsocketsservice.config.ConfigReader;
 
 /**
@@ -58,7 +61,10 @@ public class WebSocketsServiceMain implements SignalHandler {
 
     private static final String WINCH_SIGNAL = "WINCH";
 
-    private BalanceAndTransferFacade storesManager;
+    private BalanceAndTransferFacade balanceAndTransferFacade;
+    private TransfersStoreGetter transfersStoreGetter;
+
+    private TransfersStoreAdder transfersStoreAdder;
 
     private WebSocketsServer server;
 
@@ -67,10 +73,22 @@ public class WebSocketsServiceMain implements SignalHandler {
     private TransferConsumer transferConsumer;
 
     public static void main(String[] args) {
-        new WebSocketsServiceMain().run();
+        boolean usingCadence = false;
+
+        if (args.length > 0 && "-use-cadence".equalsIgnoreCase(args[0])) {
+            usingCadence = true;
+        }
+
+        new WebSocketsServiceMain().run(usingCadence);
     }
 
-    private void run() {
+    private void run(final boolean usingCadence) {
+        if (usingCadence) {
+            log.info("Using Cadence");
+        } else {
+            log.info("Not using Cadence");
+        }
+
         registerThisAsOsSignalHandler();
 
         ConfigValues configValues;
@@ -78,37 +96,49 @@ public class WebSocketsServiceMain implements SignalHandler {
         try {
             configValues = new ConfigReader().read();
         } catch (Exception ex) {
-            log.error("Unable to read the configuration values, exiting");
+            log.error("FATAL: Unable to read the configuration values, exiting");
             return;
         }
 
-        storesManager = new KafkaStreamsLocalStoresManager(configValues.getKafkaBootstrapServers(),
-                configValues.getKafkaSchemaRegistryUrl());
+        if (usingCadence) {
+            final String cadenceDomain = configValues.getCadenceDomain();
+            log.info("The Cadence domain is \"{}\"", cadenceDomain);
+            CadenceFacade cadenceFacade = new CadenceFacade(cadenceDomain);
+            balanceAndTransferFacade = cadenceFacade;
 
-        log.info("Going to start the Kafka local stores.");
-        storesManager.start();
+            transfersStoreGetter = cadenceFacade;
+        } else {
+            balanceAndTransferFacade = new KafkaStreamsLocalStoresManager(configValues.getKafkaBootstrapServers(),
+                    configValues.getKafkaSchemaRegistryUrl());
+        }
 
+        log.info("Going to start the Kafka local stores or alternatively, the Cadence workflow client.");
+        balanceAndTransferFacade.start();
         MessageSender messageSender = new MessageSenderImpl();
         AccountBalanceSender abSender = new AccountBalanceSenderImpl(messageSender);
 
-        AccountBalanceRequestProcessor abReqProcessor =
-                new AccountBalanceRequestProcessorImpl(storesManager, abSender);
+        AccountBalanceRequestProcessor abReqProcessor = new AccountBalanceRequestProcessorImpl(balanceAndTransferFacade, abSender);
 
         TransferDataResponseSender transferDataResponseSender = new TransferDataResponseSender(messageSender);
 
         TransferDataUpdateSender transferDataUpdateSender = new TransferDataUpdateSender(messageSender);
 
-        TransferDataRequestProcessor tdReqProcessor =
-                new TransferDataRequestProcessorImpl(storesManager, transferDataResponseSender);
+        TransferDataRequestProcessor tdReqProcessor = new TransferDataRequestProcessorImpl(balanceAndTransferFacade, transferDataResponseSender);
 
         BalanceUpdatesDispatcher balanceUpdatesDispatcher = new BalanceUpdatesDispatcherImpl(abSender);
         AccountBalanceSubscriptionRequestProcessor abSubsReqProcessor =
                 new AccountBalanceSubscriptionRequestProcessorImpl(balanceUpdatesDispatcher);
 
         TransferDataDispatcher transferDispatcher = new TransferDataDispatcherImpl(transferDataUpdateSender);
-        TransfersStore transfersStore = new TransfersStoreImpl();
+
+        if (!usingCadence) {
+            TransfersStoreImpl transfersStore = new TransfersStoreImpl();
+            transfersStoreGetter = transfersStore;
+            transfersStoreAdder = transfersStore;
+        }
+
         TransferDataSubscriptionRequestProcessor transferSubscriptionReqProcessor =
-                new TransferDataSubscriptionRequestProcessorImpl(transferDispatcher, transfersStore,
+                new TransferDataSubscriptionRequestProcessorImpl(transferDispatcher, transfersStoreGetter,
                         transferDataUpdateSender);
 
         // This is a singleton which is going to be used by the
@@ -123,9 +153,9 @@ public class WebSocketsServiceMain implements SignalHandler {
         server = new WebSocketsServerImpl();
         log.info("Going to start the WebSockets server.");
         try {
-            server.start(configValues.getServerHost(),
-                    configValues.getServerPort(),
-                    configValues.getContextPath());
+            server.start(configValues.getWebsocketsServerHost(),
+                    configValues.getWebsocketsServerPort(),
+                    configValues.getWebsocketsContextPath());
         } catch (Exception ex) {
             log.error("Unable to start the WebSockets server, "
                     + "configuration values: {}", configValues, ex);
@@ -141,9 +171,15 @@ public class WebSocketsServiceMain implements SignalHandler {
         TopicConsumerRunner<AccountBalance> balanceConsumerRunner = new TopicConsumerRunner<>(balanceConsumer);
         balanceConsumerRunner.start();
 
-        // TODO Maybe we can use the same Kafka consumer to receive messages from the two topics
-        TransferUpdateProcessor transferUpdateProcessor = new TransferUpdateProcessorImpl(transferDispatcher, transfersStore);
+        TransferUpdateProcessor transferUpdateProcessor = null;
+        if (usingCadence) {
+            transferUpdateProcessor = new TransferUpdateProcessorWhithCadence(transferDispatcher);
+        } else {
+            transferUpdateProcessor = new TransferUpdateProcessorWithoutCadence(transferDispatcher, transfersStoreAdder);
+        }
+
         log.info("Going to start the \"transfers\" Kafka consumer.");
+        // TODO Maybe we can use the same Kafka consumer to receive messages from the two topics
         transferConsumer = new TransferConsumerImpl(configValues.getKafkaBootstrapServers(),
                 configValues.getKafkaSchemaRegistryUrl(), transferUpdateProcessor);
         transferConsumer.start();
@@ -181,8 +217,8 @@ public class WebSocketsServiceMain implements SignalHandler {
             server.stop();
         }
 
-        if (storesManager != null) {
-            storesManager.stop();
+        if (balanceAndTransferFacade != null) {
+            balanceAndTransferFacade.stop();
         }
     }
 }
